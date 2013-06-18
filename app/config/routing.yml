@@ -1,0 +1,12 @@
+provip_events:
+    resource: "@ProvipEventsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+provip_provip:
+    resource: "@ProvipProvipBundle/Resources/config/routing.yml"
+    prefix:   /
+
+provip_user:
+    resource: "@ProvipUserBundle/Resources/config/routing.yml"
+    prefix:   /
+

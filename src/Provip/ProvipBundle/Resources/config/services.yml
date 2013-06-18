@@ -1,0 +1,7 @@
+parameters:
+#    provip_provip.example.class: Provip\ProvipBundle\Example
+
+services:
+#    provip_provip.example:
+#        class: %provip_provip.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
