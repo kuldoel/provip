@@ -19,6 +19,9 @@ class AppKernel extends Kernel
             new Provip\UserBundle\ProvipUserBundle(),
             new Provip\ProvipBundle\ProvipProvipBundle(),
             new Provip\EventsBundle\ProvipEventsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
