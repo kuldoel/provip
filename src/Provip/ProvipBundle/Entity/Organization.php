@@ -28,7 +28,7 @@ abstract class Organization
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $name;
 
@@ -44,7 +44,7 @@ abstract class Organization
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $field;
 
@@ -65,8 +65,8 @@ abstract class Organization
      * Official Company Language
      *
      *
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Language")
-     * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      *
      * @Assert\Valid
      */
@@ -76,17 +76,17 @@ abstract class Organization
      * supportedLanguages is a collection of other languages spoken in this company
      *
      *
-     * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Language")
-     * @ORM\JoinTable(name="users_supportedlanguages",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
+     * @ORM\ManyToMany(targetEntity="Language")
+     * @ORM\JoinTable(name="organisations_supportedlanguages",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
      *      )
      * @Assert\Valid
      */
     protected $supportedLanguages;
 
     /**
-     * @ORM\OneToMany(targetEntity="Provip\UserBundle\User", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="organization")
     * @Assert\Valid
      */
     protected $staff;

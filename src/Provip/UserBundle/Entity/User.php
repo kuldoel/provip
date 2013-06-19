@@ -23,14 +23,14 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $firstName;
     
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $lastName;
 
@@ -45,7 +45,7 @@ class User extends BaseUser
      *
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $missionStatement;
 
@@ -72,7 +72,7 @@ class User extends BaseUser
      *
      *
      * @ORM\Column(type="string", length=20)
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $phone;
 
@@ -81,7 +81,7 @@ class User extends BaseUser
      *
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $jobDescription;
 
@@ -89,7 +89,7 @@ class User extends BaseUser
      * Language is an relation attribute of Student and is the native language of the Student
      *
      *
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Language")
+     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Language")
      * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
      * @Assert\Valid
      */
@@ -99,21 +99,91 @@ class User extends BaseUser
      * supportedLanguages is an relation attribute of Student and are the other languages that the Student speaks
      *
      *
-     * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Language")
+     * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Entity\Language")
      * @ORM\JoinTable(name="users_supportedlanguages",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
      *      )
      * @Assert\Valid
      */
     protected $supportedLanguages;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Organization", inversedBy="staff")
+     * If a user is a member of staff of a HEI or Company they have a direct link to the company
+     *
+     *
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Organization", inversedBy="staff")
      * @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
      * @Assert\Valid
      **/
     protected $organization;
+
+    /**
+     * If a user is a Student they have a indirect link to a HEI using the Enrollment class.
+     * An Enrollment is default set to false and has to be approved by the HEI
+     *
+     *
+     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Enrollment")
+     * @ORM\JoinColumn(name="enrollment_id", referencedColumnName="id")
+     * @Assert\Valid
+     */
+    protected $enrollment;
+
+
+    /**
+     * Mentoring is the list of opportunities that a COMPANY staff member is mentoring
+     *
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Opportunity", mappedBy="mentor")
+     * @Assert\Valid
+     */
+    protected $mentoring;
+
+    /**
+     * Applications is the list of applications with the opportunity that a STUDENT applied for
+     *
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Application", mappedBy="student")
+     * @Assert\Valid
+     */
+    protected $applications;
+
+    /**
+     * Coaching is  the list of internships that a HEI staff member is coaching
+     *
+     *
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Application", mappedBy="coach")
+     * @Assert\Valid
+     */
+    protected $coaching;
+
+
+    /**
+     * studentsEvents is an list of all events involving the student as actor (can be both author and actor!)
+     *
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\StudentEvent", mappedBy="student")
+     * @Assert\Valid
+     */
+    protected $studentEvents;
+
+
+    /**
+     * Notifications is a list of all notifications for this user
+     *
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\Notification", mappedBy="user")
+     * @Assert\Valid
+     */
+    protected $notifications;
+
+
+    /**
+    * Optional Picture
+    *
+    *
+    * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture")
+    * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
+    *
+    * @Assert\Valid
+    */
+    protected $picture;
 
 
 }

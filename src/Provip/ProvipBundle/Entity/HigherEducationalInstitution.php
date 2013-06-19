@@ -9,27 +9,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  */
-class HigherEducationalInstitution
+class HigherEducationalInstitution extends Organization
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $studyProgram;
 
     /**
-     * @ORM\OneToMany(targetEntity="Skill", mappedBy="organization")
-     * @Assert\Valid
-     */
+     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="higherEducationalInstitutions")
+     * @ORM\JoinTable(name="heis_skills")
+     **/
     protected $skills;
 
     /**
@@ -39,7 +33,7 @@ class HigherEducationalInstitution
     protected $enrollments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="higherEducationalInstitution")
      * @Assert\Valid
      */
     protected $learningGoals;

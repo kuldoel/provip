@@ -8,9 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="skills")
+ * @ORM\Table(name="internships")
  */
-class Skill
+class Internship
 {
     /**
      * @ORM\Id
@@ -19,30 +19,30 @@ class Skill
      */
     protected $id;
 
+
     /**
-     * This is the English word for the skill
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
-    protected $value;
+    protected $publicId;
+
 
     /**
-     * @ORM\Column(length=255, unique=true)
-     * @Gedmo\Slug(fields={"value"})
+     * Default completed is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
      */
-    protected $slug;
+    protected $completed = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity="HigherEducationalInstitution", mappedBy="skills")
-     **/
-    protected $higherEducationalInstitutions;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Opportunity", mappedBy="skills")
-     **/
-    protected $opportunities;
-
+     *
+     * @ORM\OneToOne(targetEntity="Application")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @Assert\Valid
+     */
+    protected $application;
 
 }

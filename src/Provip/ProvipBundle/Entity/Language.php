@@ -34,7 +34,7 @@ class Language
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
-     * @Assert\String()
+     * @Assert\Type(type="string")
      */
     protected $value;
 
