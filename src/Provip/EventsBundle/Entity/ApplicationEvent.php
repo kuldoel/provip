@@ -20,4 +20,28 @@ class ApplicationEvent extends Event
     protected $application;
 
 
+
+    /**
+     * Set application
+     *
+     * @param \Provip\ProvipBundle\Entity\Application $application
+     * @return ApplicationEvent
+     */
+    public function setApplication(\Provip\ProvipBundle\Entity\Application $application = null)
+    {
+        $this->application = $application;
+    
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Provip\ProvipBundle\Entity\Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
 }

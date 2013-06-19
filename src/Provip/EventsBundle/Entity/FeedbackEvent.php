@@ -20,4 +20,61 @@ class FeedbackEvent extends Event
     protected $activityUpdateEvent;
 
 
+    /**
+     *
+     * @ORM\Column(type="integer", length=11)
+     * @Assert\NotNull()
+     * @Assert\Type(type="int")
+     */
+    protected $evaluationValue;
+
+
+    /**
+     * Set evaluationValue
+     *
+     * @param \int $evaluationValue
+     * @return FeedbackEvent
+     */
+    public function setEvaluationValue($evaluationValue)
+    {
+        $this->evaluationValue = $evaluationValue;
+    
+        return $this;
+    }
+
+    /**
+     * Get evaluationValue
+     *
+     * @return \int 
+     */
+    public function getEvaluationValue()
+    {
+        return $this->evaluationValue;
+    }
+
+
+    /**
+     * Set activityUpdateEvent
+     *
+     * @param \Provip\EventsBundle\Entity\ActivityUpdateEvent $activityUpdateEvent
+     * @return FeedbackEvent
+     */
+    public function setActivityUpdateEvent(\Provip\EventsBundle\Entity\ActivityUpdateEvent $activityUpdateEvent = null)
+    {
+        $this->activityUpdateEvent = $activityUpdateEvent;
+    
+        return $this;
+    }
+
+    /**
+     * Get activityUpdateEvent
+     *
+     * @return \Provip\EventsBundle\Entity\ActivityUpdateEvent 
+     */
+    public function getActivityUpdateEvent()
+    {
+        return $this->activityUpdateEvent;
+    }
+
+
 }

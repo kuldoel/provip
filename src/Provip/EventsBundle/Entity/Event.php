@@ -81,4 +81,152 @@ class Event
 
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $message
+     * @return Event
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string 
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Set privacy
+     *
+     * @param string $privacy
+     * @return Event
+     */
+    public function setPrivacy($privacy)
+    {
+        $this->privacy = $privacy;
+    
+        return $this;
+    }
+
+    /**
+     * Get privacy
+     *
+     * @return string 
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Event
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Event
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \Provip\EventsBundle\Entity\Picture $picture
+     * @return Event
+     */
+    public function setPicture(\Provip\EventsBundle\Entity\Picture $picture = null)
+    {
+        $this->picture = $picture;
+    
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Provip\EventsBundle\Entity\Picture 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Provip\UserBundle\Entity\User $author
+     * @return Event
+     */
+    public function setAuthor(\Provip\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Provip\UserBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 }

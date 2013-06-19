@@ -50,4 +50,106 @@ class Notification
     protected $event;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set new
+     *
+     * @param boolean $new
+     * @return Notification
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
+    
+        return $this;
+    }
+
+    /**
+     * Get new
+     *
+     * @return boolean 
+     */
+    public function getNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return Notification
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+    
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Provip\UserBundle\Entity\User $user
+     * @return Notification
+     */
+    public function setUser(\Provip\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Provip\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \Provip\EventsBundle\Entity\Event $event
+     * @return Notification
+     */
+    public function setEvent(\Provip\EventsBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+    
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Provip\EventsBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
 }

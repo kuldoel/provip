@@ -20,4 +20,28 @@ class StudentEvent extends Event
     protected $student;
 
 
+    /**
+     * Set student
+     *
+     * @param \Provip\UserBundle\Entity\User $student
+     * @return StudentEvent
+     */
+    public function setStudent(\Provip\UserBundle\Entity\User $student = null)
+    {
+        $this->student = $student;
+    
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \Provip\UserBundle\Entity\User 
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+
 }

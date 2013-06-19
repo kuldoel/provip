@@ -120,4 +120,352 @@ class Opportunity
     protected $skills;
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projectGoals = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Opportunity
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Opportunity
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set nbrOfPositions
+     *
+     * @param integer $nbrOfPositions
+     * @return Opportunity
+     */
+    public function setNbrOfPositions($nbrOfPositions)
+    {
+        $this->nbrOfPositions = $nbrOfPositions;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbrOfPositions
+     *
+     * @return integer 
+     */
+    public function getNbrOfPositions()
+    {
+        return $this->nbrOfPositions;
+    }
+
+    /**
+     * Set startDate
+     *
+     * @param \DateTime $startDate
+     * @return Opportunity
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get startDate
+     *
+     * @return \DateTime 
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * Set endDate
+     *
+     * @param \DateTime $endDate
+     * @return Opportunity
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get endDate
+     *
+     * @return \DateTime 
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * Set selectionProcedure
+     *
+     * @param string $selectionProcedure
+     * @return Opportunity
+     */
+    public function setSelectionProcedure($selectionProcedure)
+    {
+        $this->selectionProcedure = $selectionProcedure;
+    
+        return $this;
+    }
+
+    /**
+     * Get selectionProcedure
+     *
+     * @return string 
+     */
+    public function getSelectionProcedure()
+    {
+        return $this->selectionProcedure;
+    }
+
+    /**
+     * Set communicationProtocol
+     *
+     * @param string $communicationProtocol
+     * @return Opportunity
+     */
+    public function setCommunicationProtocol($communicationProtocol)
+    {
+        $this->communicationProtocol = $communicationProtocol;
+    
+        return $this;
+    }
+
+    /**
+     * Get communicationProtocol
+     *
+     * @return string 
+     */
+    public function getCommunicationProtocol()
+    {
+        return $this->communicationProtocol;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Opportunity
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set company
+     *
+     * @param \Provip\ProvipBundle\Entity\Company $company
+     * @return Opportunity
+     */
+    public function setCompany(\Provip\ProvipBundle\Entity\Company $company = null)
+    {
+        $this->company = $company;
+    
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return \Provip\ProvipBundle\Entity\Company 
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set mentor
+     *
+     * @param \Provip\UserBundle\Entity\User $mentor
+     * @return Opportunity
+     */
+    public function setMentor(\Provip\UserBundle\Entity\User $mentor = null)
+    {
+        $this->mentor = $mentor;
+    
+        return $this;
+    }
+
+    /**
+     * Get mentor
+     *
+     * @return \Provip\UserBundle\Entity\User 
+     */
+    public function getMentor()
+    {
+        return $this->mentor;
+    }
+
+    /**
+     * Add projectGoals
+     *
+     * @param \Provip\ProvipBundle\Entity\Deliverable $projectGoals
+     * @return Opportunity
+     */
+    public function addProjectGoal(\Provip\ProvipBundle\Entity\Deliverable $projectGoals)
+    {
+        $this->projectGoals[] = $projectGoals;
+    
+        return $this;
+    }
+
+    /**
+     * Remove projectGoals
+     *
+     * @param \Provip\ProvipBundle\Entity\Deliverable $projectGoals
+     */
+    public function removeProjectGoal(\Provip\ProvipBundle\Entity\Deliverable $projectGoals)
+    {
+        $this->projectGoals->removeElement($projectGoals);
+    }
+
+    /**
+     * Get projectGoals
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjectGoals()
+    {
+        return $this->projectGoals;
+    }
+
+    /**
+     * Add applications
+     *
+     * @param \Provip\ProvipBundle\Entity\Application $applications
+     * @return Opportunity
+     */
+    public function addApplication(\Provip\ProvipBundle\Entity\Application $applications)
+    {
+        $this->applications[] = $applications;
+    
+        return $this;
+    }
+
+    /**
+     * Remove applications
+     *
+     * @param \Provip\ProvipBundle\Entity\Application $applications
+     */
+    public function removeApplication(\Provip\ProvipBundle\Entity\Application $applications)
+    {
+        $this->applications->removeElement($applications);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    /**
+     * Add skills
+     *
+     * @param \Provip\ProvipBundle\Entity\Skill $skills
+     * @return Opportunity
+     */
+    public function addSkill(\Provip\ProvipBundle\Entity\Skill $skills)
+    {
+        $this->skills[] = $skills;
+    
+        return $this;
+    }
+
+    /**
+     * Remove skills
+     *
+     * @param \Provip\ProvipBundle\Entity\Skill $skills
+     */
+    public function removeSkill(\Provip\ProvipBundle\Entity\Skill $skills)
+    {
+        $this->skills->removeElement($skills);
+    }
+
+    /**
+     * Get skills
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSkills()
+    {
+        return $this->skills;
+    }
 }

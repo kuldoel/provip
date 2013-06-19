@@ -36,4 +36,60 @@ class Enrollment
     protected $organization;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set approved
+     *
+     * @param boolean $approved
+     * @return Enrollment
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+    
+        return $this;
+    }
+
+    /**
+     * Get approved
+     *
+     * @return boolean 
+     */
+    public function getApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $organization
+     * @return Enrollment
+     */
+    public function setOrganization(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $organization = null)
+    {
+        $this->organization = $organization;
+    
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return \Provip\ProvipBundle\Entity\HigherEducationalInstitution 
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
 }
