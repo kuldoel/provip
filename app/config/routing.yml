@@ -1,3 +1,8 @@
+provip_application:
+    resource: "@ProvipApplicationBundle/Controller/"
+    prefix:   /
+    type: annotation
+
 provip_events:
     resource: "@ProvipEventsBundle/Controller/"
     prefix:   /
