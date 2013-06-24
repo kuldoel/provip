@@ -1,3 +1,7 @@
+{% if form is defined %}
+{% form_theme form 'ProvipUserBundle:Form:fields.html.twig' %}
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +10,10 @@
     <meta name="description" content="Login to Pathway">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    {% stylesheets 'bundles/provipapplication/css/*' filter='cssrewrite' %}
+    {% stylesheets
+        'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
+        'bundles/provipapplication/css/*' filter='cssrewrite'
+    %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
@@ -26,34 +33,20 @@
     <a href="#" class="btn btn-link pull-right"><i class="icon-question icon-large text-default"></i></a>
     <a class="navbar-brand" href="#">Pathway</a>
 </header>
-<!-- / header -->
-<section id="content">
-    <div class="row-fluid">
-        <div class="span4 offset4 m-t-large">
-            <section class="panel">
-                <header class="panel-heading text-center">
-                    Sign up
-                </header>
-                <form action="default.html" class="padder">
-                    <label class="control-label"><strong>Display name</strong></label>
-                    <input type="text" placeholder="eg. Your name or company" class="span12">
-                    <label class="control-label"><strong>Your email address</strong></label>
-                    <input type="email" placeholder="test@example.com" class="span12">
-                    <label class="control-label"><strong>Type a password</strong></label>
-                    <input type="password" id="inputPassword" placeholder="Password" class="span12">
-                    <label class="checkbox">
-                        <input type="checkbox"> Agree the <a href="#">terms and policy</a>
-                    </label>
-                    <button type="submit" class="btn btn-info">Sign up</button>
-                    <div class="line line-dashed"></div>
 
-                    <p class="text-muted text-center"><small>Already have an account?</small></p>
-                    <a href="signin.html" class="btn btn-white btn-block">Sign in</a>
-                </form>
-            </section>
+
+
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
         </div>
-    </div>
-</section>
+    {% endfor %}
+{% endfor %}
+<!-- / header -->
+{% block body %}
+    {{ block('fos_user_content') }}
+{% endblock %}
 <!-- footer -->
 <footer id="footer">
     <div class="text-center padder clearfix">

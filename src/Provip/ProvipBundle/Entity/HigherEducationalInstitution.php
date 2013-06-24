@@ -8,165 +8,55 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="deliverables")
  */
-class Deliverable
+class HigherEducationalInstitution extends Organization
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
-     *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
-     * @Assert\Type(type="string")
-     */
-    protected $description;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Opportunity", inversedBy="projectGoals")
-     * @ORM\JoinColumn(name="opportunity_id", referencedColumnName="id")
-     * @Assert\Valid
-     **/
-    protected $opportunity;
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="learningGoals")
-     * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
-     * @Assert\Valid
-     **/
-    protected $higherEducationalInstitution;
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="deliverable")
+     * @ORM\OneToMany(targetEntity="StudyProgram", mappedBy="higherEducationalInstitution")
      * @Assert\Valid
      */
-    protected $tasks;
-
+    protected $studyPrograms;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
+        parent::__construct();
+        $this->studyPrograms = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Set description
+     * Add studyPrograms
      *
-     * @param string $description
-     * @return Deliverable
+     * @param \Provip\ProvipBundle\Entity\StudyProgram $studyPrograms
+     * @return HigherEducationalInstitution
      */
-    public function setDescription($description)
+    public function addStudyProgram(\Provip\ProvipBundle\Entity\StudyProgram $studyPrograms)
     {
-        $this->description = $description;
+        $this->studyPrograms[] = $studyPrograms;
     
         return $this;
     }
 
     /**
-     * Get description
+     * Remove studyPrograms
      *
-     * @return string 
+     * @param \Provip\ProvipBundle\Entity\StudyProgram $studyPrograms
      */
-    public function getDescription()
+    public function removeStudyProgram(\Provip\ProvipBundle\Entity\StudyProgram $studyPrograms)
     {
-        return $this->description;
+        $this->studyPrograms->removeElement($studyPrograms);
     }
 
     /**
-     * Set opportunity
-     *
-     * @param \Provip\ProvipBundle\Entity\Opportunity $opportunity
-     * @return Deliverable
-     */
-    public function setOpportunity(\Provip\ProvipBundle\Entity\Opportunity $opportunity = null)
-    {
-        $this->opportunity = $opportunity;
-    
-        return $this;
-    }
-
-    /**
-     * Get opportunity
-     *
-     * @return \Provip\ProvipBundle\Entity\Opportunity 
-     */
-    public function getOpportunity()
-    {
-        return $this->opportunity;
-    }
-
-    /**
-     * Set higherEducationalInstitution
-     *
-     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitution
-     * @return Deliverable
-     */
-    public function setHigherEducationalInstitution(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitution = null)
-    {
-        $this->higherEducationalInstitution = $higherEducationalInstitution;
-    
-        return $this;
-    }
-
-    /**
-     * Get higherEducationalInstitution
-     *
-     * @return \Provip\ProvipBundle\Entity\HigherEducationalInstitution 
-     */
-    public function getHigherEducationalInstitution()
-    {
-        return $this->higherEducationalInstitution;
-    }
-
-    /**
-     * Add tasks
-     *
-     * @param \Provip\ProvipBundle\Entity\Task $tasks
-     * @return Deliverable
-     */
-    public function addTask(\Provip\ProvipBundle\Entity\Task $tasks)
-    {
-        $this->tasks[] = $tasks;
-    
-        return $this;
-    }
-
-    /**
-     * Remove tasks
-     *
-     * @param \Provip\ProvipBundle\Entity\Task $tasks
-     */
-    public function removeTask(\Provip\ProvipBundle\Entity\Task $tasks)
-    {
-        $this->tasks->removeElement($tasks);
-    }
-
-    /**
-     * Get tasks
+     * Get studyPrograms
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTasks()
+    public function getStudyPrograms()
     {
-        return $this->tasks;
+        return $this->studyPrograms;
     }
 }

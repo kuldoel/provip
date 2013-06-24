@@ -8,28 +8,55 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="studyprograms")
  */
-class StudyProgram extends Organization
+class StudyProgram
 {
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="higherEducationalInstitutions")
-     * @ORM\JoinTable(name="heis_skills")
+     *
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Type(type="string")
+     */
+    protected $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="studyPrograms")
+     * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
+     * @Assert\Valid
+     **/
+    protected $higherEducationalInstitution;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="studyPrograms")
+     * @ORM\JoinTable(name="studyprogram_skills")
      **/
     protected $skills;
 
     /**
-     * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="studyProgram")
      * @Assert\Valid
      */
     protected $enrollments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="higherEducationalInstitution")
+     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="studyProgram")
      * @Assert\Valid
      */
     protected $learningGoals;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="teachesAt")
+     * @Assert\Valid
+     */
+    protected $staff;
 
 
     /**
@@ -40,6 +67,7 @@ class StudyProgram extends Organization
         $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->enrollments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->learningGoals = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->staff = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -48,9 +76,9 @@ class StudyProgram extends Organization
      * @param string $studyProgram
      * @return HigherEducationalInstitution
      */
-    public function setStudyProgram($studyProgram)
+    public function setHigherEducationalInstitution($hei)
     {
-        $this->studyProgram = $studyProgram;
+        $this->higherEducationalInstitution = $hei;
     
         return $this;
     }
@@ -60,9 +88,9 @@ class StudyProgram extends Organization
      *
      * @return string 
      */
-    public function getStudyProgram()
+    public function getHigherEducationalInstitution()
     {
-        return $this->studyProgram;
+        return $this->higherEducationalInstitution;
     }
 
     /**
@@ -163,5 +191,61 @@ class StudyProgram extends Organization
     {
         return $this->learningGoals;
     }
+
+    /**
+     * Add staff
+     *
+     * @param \Provip\UserBundle\Entity\User $staff
+     * @return Organization
+     */
+    public function addStaff(\Provip\UserBundle\Entity\User $staff)
+    {
+        $this->staff[] = $staff;
+
+        return $this;
+    }
+
+    /**
+     * Remove staff
+     *
+     * @param \Provip\UserBundle\Entity\User $staff
+     */
+    public function removeStaff(\Provip\UserBundle\Entity\User $staff)
+    {
+        $this->staff->removeElement($staff);
+    }
+
+    /**
+     * Get staff
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStaff()
+    {
+        return $this->staff;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 
 }

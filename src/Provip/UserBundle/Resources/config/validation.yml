@@ -1,0 +1,13 @@
+Provip\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: { fields: email, message: "This email has already been registered"}
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: emailCanonical
+    properties:
+        email:
+            - Email: ~
+        emailCanonical:
+            - Email:  ~
+        plainPassword:
+            - Length:
+                min: 7
+                minMessage: "Your password must be at least {{ limit }} characters"

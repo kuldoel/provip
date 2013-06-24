@@ -3,11 +3,12 @@
 namespace Provip\UserBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType;
+use Provip\ProvipBundle\Form\Type\CompanyNewType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class StudentRegistrationType extends RegistrationFormType
+class CompanyRegistrationType extends RegistrationFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -15,12 +16,9 @@ class StudentRegistrationType extends RegistrationFormType
 
         $builder
             ->remove('username')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('hei', 'entity', array(
-                'class' => 'ProvipProvipBundle:HigherEducationalInstitution',
-                'label' => 'Higher Educational Institution'
-            ));
+            ->add('firstName', 'text', array('label' => 'First Name:'))
+            ->add('lastName', 'text', array('label' => 'Last Name:'))
+            ->add('company', new CompanyNewType());
 
     }
 
@@ -28,12 +26,9 @@ class StudentRegistrationType extends RegistrationFormType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Provip\UserBundle\Entity\User',
-            'intention' => 'registration'
+            'intention' => 'registration',
+            'cascade_validation' => true,
         ));
     }
 
-    public function getName()
-    {
-        return 'pathway_student_registration';
-    }
 }

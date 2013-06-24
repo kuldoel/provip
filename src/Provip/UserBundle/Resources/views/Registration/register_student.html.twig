@@ -1,9 +1,6 @@
 {% extends "ProvipUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div class="alert alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
 
 
 <section id="content">
@@ -11,23 +8,51 @@
         <div class="span4 offset4 m-t-large">
             <section class="panel">
                 <header class="panel-heading text-center">
-                    Login
+                    Register as a Student
                 </header>
-                <form action="{{ path("fos_user_security_check") }}" method="post" class="padder">
-                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-                    <input type="text" placeholder="Email or Username" id="username" name="_username" value="{{ last_username }}" required="required" class="span12" />
-                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-                    <input type="password" placeholder="Password" id="password" name="_password" required="required" class="span12" />
-                    <label class="checkbox">
-                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-                    </label>
-                    <input type="submit" id="_submit" class="btn btn-info" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <form action="{{ path('provip_user_provipregistration_registerasstudent') }}" {{ form_enctype(form) }} method="POST" class="padder">
+
+                    <div class="control-group {% if form.firstName.vars.errors|length %} error {% endif %}">
+                        {{ form_label(form.firstName) }}
+                        {{ form_widget(form.firstName, { 'attr': {'placeholder': 'First Name'} }) }}
+                        {{ form_errors(form.firstName) }}
+                    </div>
+
+                    <div class="control-group {% if form.lastName.vars.errors|length %} error {% endif %}">
+                        {{ form_label(form.lastName) }}
+                        {{ form_widget(form.lastName, { 'attr': {'placeholder': 'Last Name'} }) }}
+                        {{ form_errors(form.lastName) }}
+                    </div>
+
+                    <div class="control-group {% if form.email.vars.errors|length %} error {% endif %}">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email, { 'attr': {'placeholder': 'Please use your school issued email'} }) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="control-group {% if form.plainPassword.first.vars.errors|length %} error {% endif %} ">
+                        <label for="pathway_student_registration_plainpassword_first" class="required">Choose a password:</label>
+                        {{ form_widget(form.plainPassword.first, { 'attr': {'placeholder': 'Password'} }) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+
+                    <div class="control-group {% if form.plainPassword.second.vars.errors|length %} error {% endif %}">
+                        <label for="pathway_student_registration_plainpassword_second" class="required">Confirm your password:</label>
+                        {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': 'Confirm your password'} }) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+
+
+                    {{ form_row(form.studyProgram) }}
+
+                    <input type="submit" class="btn btn-info btn-block" value="Create a new Account" />
+
                     <div class="line line-dashed"></div>
 
-                    <p class="text-muted text-center"><small>Not yet registered?</small></p>
-                    <a href="signin.html" class="btn btn-white btn-block">Register as a Student</a> <a href="signin.html" class="btn btn-white btn-block">Register as a Company</a>
+                    <p class="text-muted text-center"><small>Already registered?</small></p>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-white btn-block">Login</a>
                 </form>
+
             </section>
         </div>
     </div>

@@ -1,8 +1,29 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: simon
- * Date: 20/06/13
- * Time: 13:01
- * To change this template use File | Settings | File Templates.
- */
+
+namespace Provip\UserBundle\Factory;
+
+use Provip\UserBundle\Form\Type\StudentRegistrationType;
+use Provip\UserBundle\Form\Type\CompanyRegistrationType;
+use Symfony\Component\Form\FormFactoryInterface;
+
+class UserFormFactory
+{
+
+    protected $formFactory;
+
+    public function __construct(FormFactoryInterface $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
+
+    public function getStudentRegistrationForm()
+    {
+        return $this->formFactory->create(new StudentRegistrationType('User'));
+    }
+
+    public function getCompanyRegistrationForm()
+    {
+        return $this->formFactory->create(new CompanyRegistrationType('User'));
+    }
+}
