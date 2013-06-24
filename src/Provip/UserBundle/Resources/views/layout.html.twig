@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="Login to Pathway">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    {% stylesheets 'bundles/provipapplication/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <!--[if lt IE 9]>
+    {% javascripts
+    '@ProvipApplicationBundle/Resources/public/js/respond.min.js'
+    '@ProvipApplicationBundle/Resources/public/js/html5.js'
+    '@ProvipApplicationBundle/Resources/public/js/excanvas.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <![endif]-->
+
+</head>
+<body>
+<!-- header -->
+<header id="header" class="navbar navbar-sm bg bg-black">
+    <a href="#" class="btn btn-link pull-right"><i class="icon-question icon-large text-default"></i></a>
+    <a class="navbar-brand" href="#">Pathway</a>
+</header>
+<!-- / header -->
+<section id="content">
+    <div class="row-fluid">
+        <div class="span4 offset4 m-t-large">
+            <section class="panel">
+                <header class="panel-heading text-center">
+                    Sign up
+                </header>
+                <form action="default.html" class="padder">
+                    <label class="control-label"><strong>Display name</strong></label>
+                    <input type="text" placeholder="eg. Your name or company" class="span12">
+                    <label class="control-label"><strong>Your email address</strong></label>
+                    <input type="email" placeholder="test@example.com" class="span12">
+                    <label class="control-label"><strong>Type a password</strong></label>
+                    <input type="password" id="inputPassword" placeholder="Password" class="span12">
+                    <label class="checkbox">
+                        <input type="checkbox"> Agree the <a href="#">terms and policy</a>
+                    </label>
+                    <button type="submit" class="btn btn-info">Sign up</button>
+                    <div class="line line-dashed"></div>
+
+                    <p class="text-muted text-center"><small>Already have an account?</small></p>
+                    <a href="signin.html" class="btn btn-white btn-block">Sign in</a>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder clearfix">
+        <p>
+            <small>&copy; Pathway 2013, bringing Students and Companies together for powerful internships</small><br><br>
+            <a href="#" class="btn btn-mini btn-circle btn-white"><i class="icon-twitter"></i></a>
+            <a href="#" class="btn btn-mini btn-circle btn-white"><i class="icon-facebook"></i></a>
+        </p>
+    </div>
+</footer>
+    {% javascripts
+    '@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
+    '@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
+    '@ProvipApplicationBundle/Resources/public/js/app.js'
+    '@ProvipApplicationBundle/Resources/public/js/app.data.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+<!-- / footer -->
+
+</body>
+</html>

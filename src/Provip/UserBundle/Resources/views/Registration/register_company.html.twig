@@ -1,0 +1,55 @@
+{% extends "ProvipUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+
+
+<section id="content">
+    <div class="row-fluid">
+        <div class="span4 offset4 m-t-large">
+            <section class="panel">
+                <header class="panel-heading text-center">
+                    Register as a Student
+                </header>
+                <form action="{{ path('provip_user_provipregistration_registerasstudent') }}" {{ form_enctype(form) }} method="POST" class="padder">
+
+                    {{ form_label(form.firstName) }}
+                    {{ form_widget(form.firstName, { 'attr': {'placeholder': 'First Name', 'class': 'span12 bg-focus'} }) }}
+                    {{ form_errors(form.firstName,{ 'attr': { 'class': 'alert alert-error'} }) }}
+
+                    {{ form_label(form.lastName) }}
+                    {{ form_widget(form.lastName, { 'attr': {'placeholder': 'Last Name', 'class': 'span12 bg-focus'} }) }}
+                    {{ form_errors(form.lastName,{ 'attr': { 'class': 'alert alert-error'} }) }}
+
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, { 'attr': {'placeholder': 'Please use your school issued email', 'class': 'span12'} }) }}
+                    {{ form_errors(form.email,{ 'attr': { 'class': 'alert alert-error'} }) }}
+
+                    <label for="pathway_student_registration_plainpassword_first" class="required">Choose a password:</label>
+                    {{ form_widget(form.plainPassword.first, { 'attr': {'placeholder': 'Password', 'class': 'span12'} }) }}
+                    {{ form_errors(form.plainPassword.first,{ 'attr': { 'class': 'alert alert-error'} }) }}
+
+                    <label for="pathway_student_registration_plainpassword_second" class="required">Confirm your password:</label>
+                    {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': 'Confirm your password', 'class': 'span12'} }) }}
+                    {{ form_errors(form.plainPassword.second,{ 'attr': { 'class': 'alert alert-error'} }) }}
+
+
+                    {{ form_label(form.hei) }}
+                    {{ form_widget(form.hei, { 'attr': {'class' : 'span12'} }) }}
+
+                    {{ form_rest(form) }}
+
+                    <input type="submit" class="btn btn-info btn-block" value="Create a new Account" />
+
+                    <div class="line line-dashed"></div>
+
+                    <p class="text-muted text-center"><small>Already registered?</small></p>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-white btn-block">Login</a>
+                </form>
+
+            </section>
+        </div>
+    </div>
+</section>
+
+
+{% endblock fos_user_content %}

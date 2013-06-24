@@ -8,35 +8,46 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="deliverables")
  */
-class HigherEducationalInstitution extends Organization
+class Deliverable
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
-    protected $studyProgram;
+    protected $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="higherEducationalInstitutions")
-     * @ORM\JoinTable(name="heis_skills")
+     * @ORM\ManyToOne(targetEntity="Opportunity", inversedBy="projectGoals")
+     * @ORM\JoinColumn(name="opportunity_id", referencedColumnName="id")
+     * @Assert\Valid
      **/
-    protected $skills;
+    protected $opportunity;
+
 
     /**
-     * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="organization")
+     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="learningGoals")
+     * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
      * @Assert\Valid
-     */
-    protected $enrollments;
+     **/
+    protected $higherEducationalInstitution;
+
 
     /**
-     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="higherEducationalInstitution")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="deliverable")
      * @Assert\Valid
      */
-    protected $learningGoals;
+    protected $tasks;
 
 
     /**
@@ -44,131 +55,118 @@ class HigherEducationalInstitution extends Organization
      */
     public function __construct()
     {
-        $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->enrollments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->learningGoals = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
-     * Set studyProgram
+     * Get id
      *
-     * @param string $studyProgram
-     * @return HigherEducationalInstitution
+     * @return integer 
      */
-    public function setStudyProgram($studyProgram)
+    public function getId()
     {
-        $this->studyProgram = $studyProgram;
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Deliverable
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Get studyProgram
+     * Get description
      *
      * @return string 
      */
-    public function getStudyProgram()
+    public function getDescription()
     {
-        return $this->studyProgram;
+        return $this->description;
     }
 
     /**
-     * Add skills
+     * Set opportunity
      *
-     * @param \Provip\ProvipBundle\Entity\Skill $skills
-     * @return HigherEducationalInstitution
+     * @param \Provip\ProvipBundle\Entity\Opportunity $opportunity
+     * @return Deliverable
      */
-    public function addSkill(\Provip\ProvipBundle\Entity\Skill $skill)
+    public function setOpportunity(\Provip\ProvipBundle\Entity\Opportunity $opportunity = null)
     {
-        $this->skills[] = $skill;
+        $this->opportunity = $opportunity;
     
         return $this;
     }
 
     /**
-     * Remove skills
+     * Get opportunity
      *
-     * @param \Provip\ProvipBundle\Entity\Skill $skills
+     * @return \Provip\ProvipBundle\Entity\Opportunity 
      */
-    public function removeSkill(\Provip\ProvipBundle\Entity\Skill $skill)
+    public function getOpportunity()
     {
-        $this->skills->removeElement($skill);
+        return $this->opportunity;
     }
 
     /**
-     * Get skills
+     * Set higherEducationalInstitution
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitution
+     * @return Deliverable
      */
-    public function getSkills()
+    public function setHigherEducationalInstitution(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitution = null)
     {
-        return $this->skills;
-    }
-
-    /**
-     * Add enrollments
-     *
-     * @param \Provip\ProvipBundle\Entity\Enrollment $enrollments
-     * @return HigherEducationalInstitution
-     */
-    public function addEnrollment(\Provip\ProvipBundle\Entity\Enrollment $enrollment)
-    {
-        $this->enrollments[] = $enrollment;
+        $this->higherEducationalInstitution = $higherEducationalInstitution;
     
         return $this;
     }
 
     /**
-     * Remove enrollments
+     * Get higherEducationalInstitution
      *
-     * @param \Provip\ProvipBundle\Entity\Enrollment $enrollments
+     * @return \Provip\ProvipBundle\Entity\HigherEducationalInstitution 
      */
-    public function removeEnrollment(\Provip\ProvipBundle\Entity\Enrollment $enrollment)
+    public function getHigherEducationalInstitution()
     {
-        $this->enrollments->removeElement($enrollment);
+        return $this->higherEducationalInstitution;
     }
 
     /**
-     * Get enrollments
+     * Add tasks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Provip\ProvipBundle\Entity\Task $tasks
+     * @return Deliverable
      */
-    public function getEnrollments()
+    public function addTask(\Provip\ProvipBundle\Entity\Task $tasks)
     {
-        return $this->enrollments;
-    }
-
-    /**
-     * Add learningGoals
-     *
-     * @param \Provip\ProvipBundle\Entity\Deliverable $learningGoals
-     * @return HigherEducationalInstitution
-     */
-    public function addLearningGoal(\Provip\ProvipBundle\Entity\Deliverable $learningGoal)
-    {
-        $this->learningGoals[] = $learningGoal;
+        $this->tasks[] = $tasks;
     
         return $this;
     }
 
     /**
-     * Remove learningGoals
+     * Remove tasks
      *
-     * @param \Provip\ProvipBundle\Entity\Deliverable $learningGoals
+     * @param \Provip\ProvipBundle\Entity\Task $tasks
      */
-    public function removeLearningGoal(\Provip\ProvipBundle\Entity\Deliverable $learningGoal)
+    public function removeTask(\Provip\ProvipBundle\Entity\Task $tasks)
     {
-        $this->learningGoals->removeElement($learningGoal);
+        $this->tasks->removeElement($tasks);
     }
 
     /**
-     * Get learningGoals
+     * Get tasks
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLearningGoals()
+    public function getTasks()
     {
-        return $this->learningGoals;
+        return $this->tasks;
     }
-
 }
