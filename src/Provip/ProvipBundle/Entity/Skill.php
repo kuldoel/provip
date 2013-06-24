@@ -35,9 +35,9 @@ class Skill
     protected $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity="HigherEducationalInstitution", mappedBy="skills")
+     * @ORM\ManyToMany(targetEntity="StudyProgram", mappedBy="skills")
      **/
-    protected $higherEducationalInstitutions;
+    protected $studyPrograms;
 
     /**
      * @ORM\ManyToMany(targetEntity="Opportunity", mappedBy="skills")
@@ -50,7 +50,7 @@ class Skill
      */
     public function __construct()
     {
-        $this->higherEducationalInstitutions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->studyPrograms = new \Doctrine\Common\Collections\ArrayCollection();
         $this->opportunities = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -111,36 +111,36 @@ class Skill
     }
 
     /**
-     * Add higherEducationalInstitutions
+     * Add studyPrograms
      *
-     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitutions
+     * @param \Provip\ProvipBundle\Entity\StudyProgram $studyPrograms
      * @return Skill
      */
-    public function addHigherEducationalInstitution(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitutions)
+    public function addStudyProgram(\Provip\ProvipBundle\Entity\StudyProgram $studyProgram)
     {
-        $this->higherEducationalInstitutions[] = $higherEducationalInstitutions;
+        $this->studyPrograms[] = $studyProgram;
     
         return $this;
     }
 
     /**
-     * Remove higherEducationalInstitutions
+     * Remove studyPrograms
      *
-     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitutions
+     * @param \Provip\ProvipBundle\Entity\StudyProgram $studyPrograms
      */
-    public function removeHigherEducationalInstitution(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $higherEducationalInstitutions)
+    public function removeStudyProgram(\Provip\ProvipBundle\Entity\StudyProgram $studyProgram)
     {
-        $this->higherEducationalInstitutions->removeElement($higherEducationalInstitutions);
+        $this->studyPrograms->removeElement($studyProgram);
     }
 
     /**
-     * Get higherEducationalInstitutions
+     * Get studyPrograms
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getHigherEducationalInstitutions()
+    public function getStudyPrograms()
     {
-        return $this->higherEducationalInstitutions;
+        return $this->studyPrograms;
     }
 
     /**
@@ -149,9 +149,9 @@ class Skill
      * @param \Provip\ProvipBundle\Entity\Opportunity $opportunities
      * @return Skill
      */
-    public function addOpportunitie(\Provip\ProvipBundle\Entity\Opportunity $opportunities)
+    public function addOpportunity(\Provip\ProvipBundle\Entity\Opportunity $opportunity)
     {
-        $this->opportunities[] = $opportunities;
+        $this->opportunities[] = $opportunity;
     
         return $this;
     }
@@ -161,9 +161,9 @@ class Skill
      *
      * @param \Provip\ProvipBundle\Entity\Opportunity $opportunities
      */
-    public function removeOpportunitie(\Provip\ProvipBundle\Entity\Opportunity $opportunities)
+    public function removeOpportunity(\Provip\ProvipBundle\Entity\Opportunity $opportunity)
     {
-        $this->opportunities->removeElement($opportunities);
+        $this->opportunities->removeElement($opportunity);
     }
 
     /**

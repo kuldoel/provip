@@ -36,11 +36,11 @@ class Deliverable
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="learningGoals")
-     * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="learningGoals")
+     * @ORM\JoinColumn(name="studyprogram_id", referencedColumnName="id")
      * @Assert\Valid
      **/
-    protected $higherEducationalInstitution;
+    protected $studyProgram;
 
 
     /**
@@ -169,4 +169,22 @@ class Deliverable
     {
         return $this->tasks;
     }
+
+    /**
+     * @param mixed $studyProgram
+     */
+    public function setStudyProgram($studyProgram)
+    {
+        $this->studyProgram = $studyProgram;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudyProgram()
+    {
+        return $this->studyProgram;
+    }
+
+
 }

@@ -1,7 +1,7 @@
 parameters:
-#    provip_user.example.class: Provip\UserBundle\Example
+    user_form_factory.class: Provip\UserBundle\Factory\UserFormFactory
 
 services:
-#    provip_user.example:
-#        class: %provip_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    provip.user_form_factory:
+        class:     %user_form_factory.class%
+        arguments: [@form.factory]

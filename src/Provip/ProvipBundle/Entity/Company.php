@@ -14,8 +14,7 @@ class Company extends Organization
 
     /**
      *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     protected $description;
@@ -29,11 +28,20 @@ class Company extends Organization
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="organization")
+     * @Assert\Valid
+     */
+    protected $staff;
+
+
+    /**
      * Constructor
      */
     public function __construct()
     {
+        parent::__construct();
         $this->opportunities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->staff = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -92,6 +100,40 @@ class Company extends Organization
     {
         return $this->opportunities;
     }
+
+    /**
+     * Add staff
+     *
+     * @param \Provip\UserBundle\Entity\User $staff
+     * @return Organization
+     */
+    public function addStaff(\Provip\UserBundle\Entity\User $staff)
+    {
+        $this->staff[] = $staff;
+
+        return $this;
+    }
+
+    /**
+     * Remove staff
+     *
+     * @param \Provip\UserBundle\Entity\User $staff
+     */
+    public function removeStaff(\Provip\UserBundle\Entity\User $staff)
+    {
+        $this->staff->removeElement($staff);
+    }
+
+    /**
+     * Get staff
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStaff()
+    {
+        return $this->staff;
+    }
+
 
 
 }

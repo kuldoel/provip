@@ -1,0 +1,37 @@
+{% extends "ProvipUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div class="alert alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
+{% endif %}
+
+
+<section id="content">
+    <div class="row-fluid">
+        <div class="span4 offset4 m-t-large">
+            <section class="panel">
+                <header class="panel-heading text-center">
+                    Login
+                </header>
+                <form action="{{ path("fos_user_security_check") }}" method="post" class="padder">
+                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                    <input type="text" placeholder="Email or Username" id="username" name="_username" value="{{ last_username }}" required="required" class="span12" />
+                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                    <input type="password" placeholder="Password" id="password" name="_password" required="required" class="span12" />
+                    <label class="checkbox">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                    </label>
+                    <input type="submit" id="_submit" class="btn btn-info btn-block" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    <div class="line line-dashed"></div>
+
+                    <p class="text-muted text-center"><small>Not yet registered?</small></p>
+                    <a href="{{ path('provip_user_provipregistration_registerasstudent') }}" class="btn btn-white btn-block">Register as a Student</a> <a href="{{ path('provip_user_provipregistration_registerascompany') }}" class="btn btn-white btn-block">Register as a Company</a>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+
+
+{% endblock fos_user_content %}

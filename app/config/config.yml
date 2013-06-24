@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: %locale% }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -29,7 +29,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['ProvipApplicationBundle']
+    bundles:        ['ProvipApplicationBundle', 'ProvipUserBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -69,6 +69,7 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Provip\UserBundle\Entity\User
+
     
 # Liip Avalanche Imagine Bundle Configuration
 liip_imagine:

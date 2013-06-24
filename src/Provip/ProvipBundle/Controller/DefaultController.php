@@ -3,11 +3,15 @@
 namespace Provip\ProvipBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    /**
+     * @Route("/student")
+     */
+    public function indexAction()
     {
-        return $this->render('ProvipProvipBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('ProvipProvipBundle:Default:index.html.twig');
     }
 }

@@ -4,6 +4,10 @@ namespace Provip\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Provip\ProvipBundle\Entity\Company;
+use Provip\ProvipBundle\Entity\Enrollment;
+use Provip\ProvipBundle\Entity\HigherEducationalInstitution;
+use Provip\ProvipBundle\Entity\StudyProgram;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -53,7 +57,7 @@ class User extends BaseUser
      * Nationality is an attribute of Student and follows the Country ISO Code
      *
      *
-     * @ORM\Column(type="string", length=7)
+     * @ORM\Column(type="string", length=7, nullable=true)
      * @Assert\Country
      */
     protected $nationality;
@@ -62,7 +66,7 @@ class User extends BaseUser
      * URL is an attribute of Student and it a link to their LinkedIn or other profile
      *
      *
-     * @ORM\Column(type="string", length=7)
+     * @ORM\Column(type="string", length=7, nullable=true)
      * @Assert\Url()
      */
     protected $url;
@@ -71,7 +75,7 @@ class User extends BaseUser
      * Phone is an attribute of StaffMember
      *
      *
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\Type(type="string")
      */
     protected $phone;
@@ -86,11 +90,19 @@ class User extends BaseUser
     protected $jobDescription;
 
     /**
+     * Default profileComplete is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $profileComplete = false;
+
+    /**
      * Language is an relation attribute of Student and is the native language of the Student
      *
      *
      * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Language")
-     * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="primarylanguage_id", referencedColumnName="id")
      * @Assert\Valid
      */
     protected $language;
@@ -109,21 +121,25 @@ class User extends BaseUser
     protected $supportedLanguages;
 
     /**
-     * If a user is a member of staff of a HEI or Company they have a direct link to the company
+     * If a user is a member of staff of a Company they have a direct link to the company
      *
      *
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Organization", inversedBy="staff")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Company", inversedBy="staff", cascade={"persist"})
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
      * @Assert\Valid
      **/
-    protected $organization;
+    protected $company;
+
+
+
+    protected $teachesAt;
 
     /**
      * If a user is a Student they have a indirect link to a HEI using the Enrollment class.
      * An Enrollment is default set to false and has to be approved by the HEI
      *
      *
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Enrollment")
+     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Enrollment", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="enrollment_id", referencedColumnName="id")
      * @Assert\Valid
      */
@@ -141,7 +157,7 @@ class User extends BaseUser
     /**
      * Applications is the list of applications with the opportunity that a STUDENT applied for
      *
-     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Application", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Application", mappedBy="student", cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $applications;
@@ -159,7 +175,7 @@ class User extends BaseUser
     /**
      * studentsEvents is an list of all events involving the student as actor (can be both author and actor!)
      *
-     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\StudentEvent", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\StudentEvent", mappedBy="student", cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $studentEvents;
@@ -168,7 +184,7 @@ class User extends BaseUser
     /**
      * Notifications is a list of all notifications for this user
      *
-     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\Notification", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\Notification", mappedBy="user", cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $notifications;
@@ -178,7 +194,7 @@ class User extends BaseUser
     * Optional Picture
     *
     *
-    * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture")
+    * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture", cascade={"persist", "remove"})
     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
     *
     * @Assert\Valid
@@ -191,6 +207,10 @@ class User extends BaseUser
      */
     public function __construct()
     {
+
+        parent::__construct();
+
+        $this->username = md5(crypt(rand(0, 50000).time()));
         $this->supportedLanguages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->mentoring = new \Doctrine\Common\Collections\ArrayCollection();
         $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
@@ -449,27 +469,22 @@ class User extends BaseUser
         return $this->supportedLanguages;
     }
 
-    /**
-     * Set organization
-     *
-     * @param \Provip\ProvipBundle\Entity\Organization $organization
-     * @return User
-     */
-    public function setOrganization(\Provip\ProvipBundle\Entity\Organization $organization = null)
+
+    public function setCompany(Company $company)
     {
-        $this->organization = $organization;
-    
+        $this->company = $company;
+
         return $this;
     }
 
     /**
-     * Get organization
+     * Get Company
      *
-     * @return \Provip\ProvipBundle\Entity\Organization 
+     * @return \Provip\ProvipBundle\Entity\Company
      */
-    public function getOrganization()
+    public function getCompany()
     {
-        return $this->organization;
+        return $this->company;
     }
 
     /**
@@ -681,5 +696,63 @@ class User extends BaseUser
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    public function getHei()
+    {
+        if($this->enrollment instanceof Enrollment)
+        {
+            return $this->enrollment->getStudyProgram()->getHigherEducationalInstitution();
+        }
+        else{
+            return null;
+        }
+    }
+
+    public function setStudyProgram(StudyProgram $sp)
+    {
+        $this->setEnrollment(new Enrollment($sp));
+
+        return $this;
+    }
+
+    public function getStudyProgram()
+    {
+        if($this->enrollment instanceof Enrollment)
+        {
+            return $this->getEnrollment()->getStudyProgram();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
+
+    /**
+     * @param mixed $profileComplete
+     */
+    public function setProfileComplete($profileComplete)
+    {
+        $this->profileComplete = $profileComplete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileComplete()
+    {
+        return $this->profileComplete;
+    }
+
+    /**
+     * __toString()
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

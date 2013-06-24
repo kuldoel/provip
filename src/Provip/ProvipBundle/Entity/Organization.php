@@ -34,23 +34,21 @@ abstract class Organization
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Country
-     * @Assert\NotNull()
      */
     protected $country;
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type(type="string")
      */
     protected $field;
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      */
     protected $url;
@@ -60,6 +58,14 @@ abstract class Organization
      * @Gedmo\Slug(fields={"name"})
      */
     protected $slug;
+
+    /**
+     * Default profileComplete is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $profileComplete = false;
 
     /**
      * Official Company Language
@@ -85,11 +91,7 @@ abstract class Organization
      */
     protected $supportedLanguages;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="organization")
-    * @Assert\Valid
-     */
-    protected $staff;
+
 
     /**
      * Constructor
@@ -97,7 +99,7 @@ abstract class Organization
     public function __construct()
     {
         $this->supportedLanguages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->staff = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
     
     /**
@@ -281,36 +283,34 @@ abstract class Organization
         return $this->supportedLanguages;
     }
 
+
     /**
-     * Add staff
-     *
-     * @param \Provip\UserBundle\Entity\User $staff
-     * @return Organization
+     * @param mixed $profileComplete
      */
-    public function addStaff(\Provip\UserBundle\Entity\User $staff)
+    public function setProfileComplete($profileComplete)
     {
-        $this->staff[] = $staff;
-    
-        return $this;
+        $this->profileComplete = $profileComplete;
     }
 
     /**
-     * Remove staff
-     *
-     * @param \Provip\UserBundle\Entity\User $staff
+     * @return mixed
      */
-    public function removeStaff(\Provip\UserBundle\Entity\User $staff)
+    public function getProfileComplete()
     {
-        $this->staff->removeElement($staff);
+        return $this->profileComplete;
     }
 
+
+
     /**
-     * Get staff
+     * __toString()
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return string
      */
-    public function getStaff()
+    public function __toString()
     {
-        return $this->staff;
+       return $this->getName();
     }
+
+
 }

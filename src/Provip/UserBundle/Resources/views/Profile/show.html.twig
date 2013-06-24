@@ -1,0 +1,12 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+    <div class="row-fluid">
+        <div class="span12">
+           <article>
+               <a class="btn btn-wuxia" href="{{ path('stones_admin_default_index') }}">Terug naar het dashboard</a>
+           </article>
+        </div>
+    </div>
+{% endblock fos_user_content %}

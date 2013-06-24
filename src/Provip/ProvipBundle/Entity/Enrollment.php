@@ -29,12 +29,16 @@ class Enrollment
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="enrollments")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="enrollments")
+     * @ORM\JoinColumn(name="studyprogram_id", referencedColumnName="id")
      * @Assert\Valid
      **/
-    protected $organization;
+    protected $studyProgram;
 
+    function __construct(StudyProgram $studyProgram)
+    {
+        $this->studyProgram = $studyProgram;
+    }
 
 
     /**
@@ -73,12 +77,12 @@ class Enrollment
     /**
      * Set organization
      *
-     * @param \Provip\ProvipBundle\Entity\HigherEducationalInstitution $organization
+     * @param \Provip\ProvipBundle\Entity\StudyProgram $studyProgram
      * @return Enrollment
      */
-    public function setOrganization(\Provip\ProvipBundle\Entity\HigherEducationalInstitution $organization = null)
+    public function setStudyProgram(\Provip\ProvipBundle\Entity\StudyProgram $studyProgram = null)
     {
-        $this->organization = $organization;
+        $this->studyProgram = $studyProgram;
     
         return $this;
     }
@@ -86,10 +90,10 @@ class Enrollment
     /**
      * Get organization
      *
-     * @return \Provip\ProvipBundle\Entity\HigherEducationalInstitution 
+     * @return \Provip\ProvipBundle\Entity\StudyProgram
      */
-    public function getOrganization()
+    public function getStudyProgram()
     {
-        return $this->organization;
+        return $this->studyProgram;
     }
 }
