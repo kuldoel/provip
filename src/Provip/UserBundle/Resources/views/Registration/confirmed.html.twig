@@ -1,0 +1,30 @@
+{% extends "ProvipUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+
+<section id="content">
+    <div class="row-fluid">
+        <div class="span4 offset4 m-t-large">
+            <section class="panel">
+                <header class="panel-heading text-center">
+                    Thank your for registering
+                </header>
+
+                <p>Welcome to Pathway {{ user.firstName }} {{ user.lastName }}</p>
+
+                <p>Your account is now active.</p>
+
+                <div class="line line-dashed"></div>
+                <a href="{{ path('provip_provip_default_studentdashboard') }}" class="btn btn-primary btn-block">Go to your dashboard</a>
+
+                {% if app.session is not empty %}
+                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
+                {% endif %}
+
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock fos_user_content %}
