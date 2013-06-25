@@ -1,23 +1,24 @@
 {% if form is defined %}
-{% form_theme form 'ProvipUserBundle:Form:fields.html.twig' %}
+    {% form_theme form 'ProvipUserBundle:Form:fields.html.twig' %}
 {% endif %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<head>
     <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="Login to Pathway">
+    <title>Get access to Pathway</title>
+    <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    {% stylesheets
-        'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
-        'bundles/provipapplication/css/*' filter='cssrewrite'
-    %}
+    {% stylesheets 'bundles/provipapplication/css/*' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
     <!--[if lt IE 9]>
+    {% stylesheets 'bundles/provipapplication/css/ie.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
     {% javascripts
     '@ProvipApplicationBundle/Resources/public/js/respond.min.js'
     '@ProvipApplicationBundle/Resources/public/js/html5.js'
@@ -30,15 +31,17 @@
 <body>
 <!-- header -->
 <header id="header" class="navbar navbar-sm bg bg-black">
-    <a href="#" class="btn btn-link pull-right"><i class="icon-question icon-large text-default"></i></a>
+    <a href="docs.html" class="btn btn-link pull-right"><i class="icon-question icon-xlarge text-default"></i></a>
     <a class="navbar-brand" href="#">Pathway</a>
 </header>
+
+<!-- / header -->
 
 
 
 {% for type, messages in app.session.flashbag.all() %}
     {% for message in messages %}
-        <div class="alert alert-{{ type }}">
+        <div class="alert alert-{{ type }} rect">
             {{ message }}
         </div>
     {% endfor %}
@@ -57,15 +60,16 @@
         </p>
     </div>
 </footer>
-    {% javascripts
-    '@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
-    '@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
-    '@ProvipApplicationBundle/Resources/public/js/app.js'
-    '@ProvipApplicationBundle/Resources/public/js/app.data.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% javascripts
+'@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
+'@ProvipApplicationBundle/Resources/public/js/app.js'
+'@ProvipApplicationBundle/Resources/public/js/app.data.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <!-- / footer -->
 
 </body>
 </html>
+

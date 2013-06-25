@@ -2,13 +2,13 @@
 
 {% block fos_user_content %}
 {% if error %}
-    <div class="alert alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
+    <div class="alert alert-danger rect">{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
 
 <section id="content">
-    <div class="row-fluid">
-        <div class="span4 offset4 m-t-large">
+    <div class="row">
+        <div class="col col-lg-4 col-offset-4 m-t-large">
             <section class="panel">
                 <header class="panel-heading text-center">
                     Login

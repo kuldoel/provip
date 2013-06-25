@@ -1,27 +1,26 @@
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
-    <input class="span12" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input class="input-with-feedback" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endblock form_widget_simple %}
 
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-            <div class="alert alert-error">
 
-                    {% for error in errors %}
-                        <span>{{ error.message }}</span><br />
-                    {% endfor %}
 
-            </div>
+            {% for error in errors %}
+                <span class="text-danger">{{ error.message }}</span><br />
+            {% endfor %}
+
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
 
 
 {% block form_row %}
-    <div class="control-group {% if form.vars.errors|length %} error {% endif %}">
+    <div class="block {% if form.vars.errors|length %} has-error {% endif %}">
         {{ form_label(form) }}
         {{ form_errors(form) }}
-        {{ form_widget(form, { 'attr': {'class': 'span12', 'placeholder': (form.vars.label)  } }) }}
+        {{ form_widget(form, { 'attr': {'placeholder': (form.vars.label)  } }) }}
     </div>
 {% endblock form_row %}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<head>
+    <meta charset="utf-8">
+    <title>{{ app.user }} - Pathway</title>
+    <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    {% stylesheets 'bundles/provipapplication/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <!--[if lt IE 9]>
+    {% stylesheets 'bundles/provipapplication/css/ie.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% javascripts
+    '@ProvipApplicationBundle/Resources/public/js/respond.min.js'
+    '@ProvipApplicationBundle/Resources/public/js/html5.js'
+    '@ProvipApplicationBundle/Resources/public/js/excanvas.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <![endif]-->
+
+</head>
+<body>
+<!-- header -->
+<header id="header" class="navbar navbar-sm navbar-fixed bg bg-black">
+    <ul class="nav navbar-nav navbar-avatar pull-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="hidden-sm-only">{{ app.user }}</span>
+                <span class="thumb-small avatar inline"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="{{ app.user }}" class="img-circle"></span>
+                <b class="caret hidden-sm-only"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Account Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="docs.html">Help</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+    <a class="navbar-brand" href="#">Pathway</a>
+    <button type="button" class="btn btn-link pull-left nav-toggle hidden-lg" data-toggle="class:show" data-target="#nav">
+        <i class="icon-reorder icon-xlarge text-default"></i>
+    </button>
+    <ul class="nav navbar-nav hidden-sm">
+        <li>
+            <div class="m-t m-b-small">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-comment-alt icon-xlarge text-default"></i><b class="badge badge-notes bg-danger">3</b></a>
+                <section class="dropdown-menu m-l-small m-t-mini">
+                    <section class="panel panel-large arrow-top">
+                        <header class="panel-heading bg-white"><span class="h5"><strong>You have 3 notifications</strong></span></header>
+                        <div class="list-group list-group-flush m-t-n">
+                            <a href="#" class="media list-group-item">
+                                <span class="pull-left thumb-small"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="John said" class="img-circle"></span>
+                  <span class="media-body block m-b-none">
+                    Bootstrap 3.0 is comming<br>
+                    <small class="text-muted">3 minutes ago</small>
+                  </span>
+                            </a>
+                            <a href="#" class="media list-group-item">
+                                <span class="pull-left thumb-small"><i class="icon-share icon-2x text-default"></i></span>
+                  <span class="media-body block m-b-none">
+                    Jone shared a file to you<br>
+                    <small class="text-muted">2 minutes ago</small>
+                  </span>
+                            </a>
+                            <a href="#" class="media list-group-item">
+                  <span class="media-body block m-b-none">
+                    Admin upgrade the app to ver 2.0<br>
+                    <small class="text-muted">1 minute ago</small>
+                  </span>
+                            </a>
+                        </div>
+                        <footer class="panel-footer text-small">
+                            <a href="#" class="pull-right"><i class="icon-cog"></i></a>
+                            <a href="#">See all the notifications</a>
+                        </footer>
+                    </section>
+                </section>
+            </div>
+        </li>
+        <li><div class="m-t-small"><a class="btn btn-small btn-info" data-toggle="modal" href="#modal"><i class="icon-plus"></i> POST</a></div></li>
+        
+    </ul>
+    <form class="navbar-form pull-left shift" action="" data-toggle="shift:appendTo" data-target=".nav-primary">
+        <i class="icon-search text-muted"></i>
+        <input type="text" class="input-small" placeholder="Search">
+    </form>
+</header>
+<!-- / header -->
+<!-- nav -->
+<nav id="nav" class="nav-primary visible-lg nav-vertical bg-light">
+    {% block nav %}
+    {% endblock %}
+</nav>
+<!-- / nav -->
+<section id="content">
+<main class="main">
+    {% block main %}
+    {% endblock %}
+</main>
+</section>
+<!-- .modal -->
+<div id="modal" class="modal fade">
+    <form class="m-b-none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Post your first idea</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="block">
+                        <label class="control-label">Title</label>
+                        <input type="text" placeholder="Post title">
+                    </div>
+                    <div class="block">
+                        <label class="control-label">Content</label>
+                        <textarea placeholder="Content" rows="5"></textarea>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Share with all memebers of first
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-small btn-primary" data-loading-text="Publishing...">Publish</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </form>
+</div>
+<!-- / .modal -->
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder clearfix">
+        <p>
+            <small>&copy; Pathway {{ "now" |date("Y") }} Provip Consortium</small><br><br>
+            <a href="#" class="btn btn-mini btn-circle btn-twitter"><i class="icon-twitter"></i></a>
+            <a href="#" class="btn btn-mini btn-circle btn-facebook"><i class="icon-facebook"></i></a>
+            <a href="#" class="btn btn-mini btn-circle btn-gplus"><i class="icon-google-plus"></i></a>
+        </p>
+    </div>
+</footer>
+<!-- / footer -->
+
+{% javascripts
+'@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
+'@ProvipApplicationBundle/Resources/public/js/app.js'
+'@ProvipApplicationBundle/Resources/public/js/app.data.js'
+'@ProvipApplicationBundle/Resources/public/js/jquery.sparkline.min.js'
+'@ProvipApplicationBundle/Resources/public/js/jquery.easy-pie-chart.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+</body>
+</html>

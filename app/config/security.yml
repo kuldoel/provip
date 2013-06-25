@@ -29,8 +29,11 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register_student, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register_company, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/css, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/js, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_SUPER_ADMIN }
         - { path: ^/student, role: ROLE_STUDENT }
         - { path: ^/company, role: ROLE_COMPANY_STAFF }
         - { path: ^/hei, role: ROLE_HEI_STAFF }
+        - { path: ^/, role: ROLE_USER }
  

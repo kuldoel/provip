@@ -4,41 +4,40 @@
 
 
 <section id="content">
-    <div class="row-fluid">
-        <div class="span4 offset4 m-t-large">
+    <div class="row">
+        <div class="col col-lg-4 col-offset-4 m-t-large">
             <section class="panel">
                 <header class="panel-heading text-center">
                     Register as a Student
                 </header>
                 <form action="{{ path('provip_user_provipregistration_registerasstudent') }}" {{ form_enctype(form) }} method="POST" class="padder">
 
-                    {{ form_errors(form) }}
 
-                    <div class="control-group {% if form.firstName.vars.errors|length %} error {% endif %}">
+                    <div class="block {% if form.firstName.vars.errors|length %} has-error {% endif %}">
                         {{ form_label(form.firstName) }}
                         {{ form_widget(form.firstName, { 'attr': {'placeholder': 'First Name'} }) }}
                         {{ form_errors(form.firstName) }}
                     </div>
 
-                    <div class="control-group {% if form.lastName.vars.errors|length %} error {% endif %}">
+                    <div class="block {% if form.lastName.vars.errors|length %} has-error {% endif %}">
                         {{ form_label(form.lastName) }}
                         {{ form_widget(form.lastName, { 'attr': {'placeholder': 'Last Name'} }) }}
                         {{ form_errors(form.lastName) }}
                     </div>
 
-                    <div class="control-group {% if form.email.vars.errors|length %} error {% endif %}">
+                    <div class="block {% if form.email.vars.errors|length %} has-error {% endif %}">
                         {{ form_label(form.email) }}
                         {{ form_widget(form.email, { 'attr': {'placeholder': 'Please use your school issued email'} }) }}
                         {{ form_errors(form.email) }}
                     </div>
 
-                    <div class="control-group {% if form.plainPassword.first.vars.errors|length %} error {% endif %} ">
+                    <div class="block {% if form.plainPassword.first.vars.errors|length %} has-error {% endif %} ">
                         <label for="pathway_student_registration_plainpassword_first" class="required">Choose a password:</label>
                         {{ form_widget(form.plainPassword.first, { 'attr': {'placeholder': 'Password'} }) }}
                         {{ form_errors(form.plainPassword.first) }}
                     </div>
 
-                    <div class="control-group {% if form.plainPassword.second.vars.errors|length %} error {% endif %}">
+                    <div class="block {% if form.plainPassword.second.vars.errors|length %} has-error {% endif %}">
                         <label for="pathway_student_registration_plainpassword_second" class="required">Confirm your password:</label>
                         {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': 'Confirm your password'} }) }}
                         {{ form_errors(form.plainPassword.second) }}

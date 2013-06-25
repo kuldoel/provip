@@ -20,7 +20,7 @@ $(document).ready(function() {
 		$target = $($el.data('target'));
 		$('.progress', $target).each(
 			function(){
-				var $max = 50, $data, $ps = $('.bar',this).last();
+				var $max = 50, $data, $ps = $('.progress-bar',this).last();
 				($(this).hasClass('progress-mini') || $(this).hasClass('progress-small')) && ($max = 100);
 				console.log($max);
 				$data = Math.floor(Math.random()*$max)+'%';
