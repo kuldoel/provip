@@ -15,7 +15,14 @@
                 <p>Your account is now active.</p>
 
                 <div class="line line-dashed"></div>
-                <a href="{{ path('provip_provip_default_studentdashboard') }}" class="btn btn-primary btn-block">Go to your dashboard</a>
+
+                {% if is_granted('ROLE_STUDENT') %}
+                    <a href="{{ path('provip_application_default_studentdashboard') }}" class="btn btn-primary btn-block">Go to your student dashboard</a>
+                {% elseif is_granted('ROLE_COMPANY_STAFF_ADMIN') %}
+                    <a href="{{ path('provip_application_default_companydashboard') }}" class="btn btn-primary btn-block">Go to your company dashboard</a>
+                {% else %}
+                {% endif %}
+
 
                 {% if app.session is not empty %}
                 {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}

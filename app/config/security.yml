@@ -6,8 +6,8 @@ security:
         ROLE_STUDENT:               [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_COMPANY_STAFF:         [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_COMPANY_STAFF_ADMIN:   [ROLE_COMPANY_STAFF, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_HEI:                   [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_HEI_STAFF_ADMIN:       [ROLE_HEI, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_HEI_STAFF:                   [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_HEI_STAFF_ADMIN:       [ROLE_HEI_STAFF, ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN:                 [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -31,4 +31,6 @@ security:
         - { path: ^/register_company, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_SUPER_ADMIN }
         - { path: ^/student, role: ROLE_STUDENT }
+        - { path: ^/company, role: ROLE_COMPANY_STAFF }
+        - { path: ^/hei, role: ROLE_HEI_STAFF }
  

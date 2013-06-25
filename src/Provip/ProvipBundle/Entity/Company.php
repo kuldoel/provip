@@ -28,7 +28,7 @@ class Company extends Organization
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="company")
      * @Assert\Valid
      */
     protected $staff;

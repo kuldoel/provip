@@ -12,6 +12,8 @@
                 </header>
                 <form action="{{ path('provip_user_provipregistration_registerasstudent') }}" {{ form_enctype(form) }} method="POST" class="padder">
 
+                    {{ form_errors(form) }}
+
                     <div class="control-group {% if form.firstName.vars.errors|length %} error {% endif %}">
                         {{ form_label(form.firstName) }}
                         {{ form_widget(form.firstName, { 'attr': {'placeholder': 'First Name'} }) }}
@@ -42,8 +44,11 @@
                         {{ form_errors(form.plainPassword.second) }}
                     </div>
 
+                    {{ form_row(form.hei) }}
 
                     {{ form_row(form.studyProgram) }}
+
+                    {{ form_rest(form) }}
 
                     <input type="submit" class="btn btn-info btn-block" value="Create a new Account" />
 

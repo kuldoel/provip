@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>{{ app.user }} - Pathway</title>
     <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,11 +23,11 @@
 <body>
 <!-- header -->
 <header id="header" class="navbar navbar-sm bg bg-black">
-    <ul class="nav navbar-nav navbar-avatar pull-right">
+    <ul class="nav navbar-nav navbar-avatar pull-right navbar-fixed">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="hidden-sm-only">Mika Sokeil</span>
-                <span class="thumb-small avatar inline"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="Mika Sokeil" class="img-circle"></span>
+                <span class="hidden-sm-only">{{ app.user }}</span>
+                <span class="thumb-small avatar inline"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="{{ app.user }}" class="img-circle"></span>
                 <b class="caret hidden-sm-only"></b>
             </a>
             <ul class="dropdown-menu">
@@ -40,7 +40,7 @@
             </ul>
         </li>
     </ul>
-    <a class="navbar-brand" href="#">first</a>
+    <a class="navbar-brand" href="#">Pathway</a>
     <button type="button" class="btn btn-link nav-toggle pull-left hidden-desktop" data-toggle="class:show" data-target="#nav">
         <i class="icon-reorder icon-xlarge text-default"></i>
     </button>
@@ -78,37 +78,6 @@
                     </footer>
                 </section>
             </div>
-        </li>
-        <li class="dropdown shift" data-toggle="shift:appendTo" data-target=".nav-primary .nav">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-xlarge visible-phone visible-sm-inline"></i>Settings <b class="caret hidden-sm-only"></b></a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="#" data-toggle="class:navbar-fixed" data-target='body'>Navbar
-                        <span class="text-active">auto</span>
-                        <span class="text">fixed</span>
-                    </a>
-                </li>
-                <li class="visible-lg">
-                    <a href="#" data-toggle="class:nav-vertical" data-target="#nav">Nav
-                        <span class="text-active">vertical</span>
-                        <span class="text">horizontal</span>
-                    </a>
-                </li>
-                <li class="divider hidden-phone"></li>
-                <li class="nav-header">Colors</li>
-                <li>
-                    <a href="#" data-toggle="class:bg bg-black" data-target='.navbar'>Navbar
-                        <span class="text">white</span>
-                        <span class="text-active">inverse</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-toggle="class:bg-light" data-target='#nav'>Nav
-                        <span class="text">inverse</span>
-                        <span class="text-active">light</span>
-                    </a>
-                </li>
-            </ul>
         </li>
     </ul>
     <form class="navbar-form pull-left shift" action="" data-toggle="shift:appendTo" data-target=".nav-primary">

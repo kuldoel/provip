@@ -132,6 +132,14 @@ class User extends BaseUser
 
 
 
+    /**
+     * If a user is a member of staff of a StudyProgram they have a direct link to the StudyProgram
+     *
+     *
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\StudyProgram", inversedBy="staff", cascade={"persist"})
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @Assert\Valid
+     **/
     protected $teachesAt;
 
     /**
@@ -707,6 +715,11 @@ class User extends BaseUser
         else{
             return null;
         }
+    }
+
+    public function setHei(HigherEducationalInstitution $hei)
+    {
+        return $this;
     }
 
     public function setStudyProgram(StudyProgram $sp)

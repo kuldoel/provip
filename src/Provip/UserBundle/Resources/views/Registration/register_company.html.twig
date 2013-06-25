@@ -32,7 +32,7 @@
 
                     <div class="control-group {% if form.email.vars.errors|length %} error {% endif %}">
                         {{ form_label(form.email) }}
-                        {{ form_widget(form.email, { 'attr': {'placeholder': 'Please use your school issued email', 'class': 'span12'} }) }}
+                        {{ form_widget(form.email, { 'attr': {'placeholder': 'Please use your work email', 'class': 'span12'} }) }}
                         {{ form_errors(form.email,{ 'attr': { 'class': 'alert alert-error'} }) }}
                     </div>
 

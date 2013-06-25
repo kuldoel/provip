@@ -29,7 +29,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['ProvipApplicationBundle', 'ProvipUserBundle']
+    bundles:        ['ProvipApplicationBundle', 'ProvipUserBundle', 'FOSUserBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
