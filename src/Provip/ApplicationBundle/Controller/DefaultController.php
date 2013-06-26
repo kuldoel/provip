@@ -16,18 +16,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/student")
+     * @Route("/profile", name="fos_user_profile_show")
      */
-    public function studentDashboardAction()
+    public function profileRouting()
     {
-        return $this->render('ProvipApplicationBundle:Student:index.html.twig');
+        $securityContext = $this->container->get('security.context');
+
+        if($securityContext->isGranted('ROLE_STUDENT'))
+        {
+            return $this->redirect($this->generateUrl('provip_application_student_settings'));
+        }
+        elseif($securityContext->isGranted('ROLE_COMPANY_STAFF'))
+        {
+            return $this->redirect($this->generateUrl('provip_application_company_settings'));
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('provip_application_hei_settings'));
+        }
     }
 
-    /**
-     * @Route("/company")
-     */
-    public function companyDashboardAction()
-    {
-        return $this->render('ProvipApplicationBundle:Company:index.html.twig');
-    }
 }

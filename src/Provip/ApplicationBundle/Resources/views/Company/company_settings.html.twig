@@ -3,12 +3,12 @@
 
 {% block main %}
 <div class="padder clearfix">
-    <h4><i class="icon-cog">Account Settings</i></h4>
+    <h4><i class="icon-sitemap">Company Settings</i></h4>
 </div>
 <div class="row">
     <div class="col col-lg-6">
         <section class="panel">
-            <form class="form-horizontal" action="{{ path('provip_application_company_settings') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="{{ path('provip_application_company_info') }}" method="POST" enctype="multipart/form-data">
 
                 {{ form_errors(form) }}
 
@@ -18,10 +18,10 @@
                             {{ form_label(form.picture, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
                             <div class="col col-lg-9 media">
                                 <div class="bg-light pull-left text-center media-large thumb-large">
-                                    {% if app.user.picture %}
-                                        <img width="150" height="150" src="{{(app.user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
+                                    {% if company.picture %}
+                                        <img class="img-rounded" width="150" height="150" src="{{(company.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
                                     {% else %}
-                                        <i class="icon-user inline icon-light icon-3x m-t-large m-b-large"></i>
+                                        <i class="icon-user inline icon-sitemap icon-3x m-t-large m-b-large"></i>
                                     {% endif %}
                                 </div>
                                 <div class="media-body">
@@ -32,44 +32,35 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col col-lg-3 control-label">Email</label>
+                            <label class="col col-lg-3 control-label">Company Name</label>
                             {{ form_widget(form._token) }}
                             <div class="col col-lg-9">
-                                <span class="text">{{ app.user.email }}</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col col-lg-3 control-label">Password</label>
-                            <div class="col col-lg-9">
-                                <a href="{{ path('fos_user_change_password') }}" class="text link">Change your password</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col col-lg-3 control-label">Name</label>
-                            <div class="col col-lg-9">
-                                <span class="text">{{ app.user }}</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col col-lg-3 control-label">Company</label>
-                            <div class="col col-lg-9">
-                                <a href="#" class="text link">{{ app.user.company }}</a>
+                                <span class="text">{{ company.name }}</span>
+                                <div class="line line-dashed m-t-large"></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <label class="col col-lg-3 control-label">Phone Number</label>
+                            <label class="col col-lg-3 control-label">Country</label>
                             <div class="col col-lg-9">
-                               {{ form_widget(form.phone) }}
-                                {{ form_errors(form.phone) }}
+                                {{ form_widget(form.country, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.country) }}
                             </div>
                         </div>
 
                         <div class="row">
-                            <label class="col col-lg-3 control-label">Job Description</label>
+                            <label class="col col-lg-3 control-label">Company language</label>
                             <div class="col col-lg-9">
-                               {{ form_widget(form.jobDescription) }}
-                                {{ form_errors(form.jobDescription) }}
+                                {{ form_widget(form.language, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.language) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Other accepted languages</label>
+                            <div class="col col-lg-9">
+                                {{ form_widget(form.supportedLanguages, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.supportedLanguages) }}
                             </div>
                         </div>
 

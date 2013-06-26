@@ -54,6 +54,10 @@ Date.now = Date.now || function() { return +new Date; };
 
   $(function(){
 
+    // select boxes bootstrap-select.min.js
+    $('.selectpicker').selectpicker();
+
+
   	// placeholder
   	$('input[placeholder], textarea[placeholder]').placeholder();
 
@@ -267,6 +271,10 @@ Date.now = Date.now || function() { return +new Date; };
 		  return false;
 		};
 	});
+
+
+
+
 
   });
 }(window.jQuery);

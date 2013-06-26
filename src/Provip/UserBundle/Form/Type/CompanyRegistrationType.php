@@ -27,7 +27,7 @@ class CompanyRegistrationType extends RegistrationFormType
         $resolver->setDefaults(array(
             'data_class' => 'Provip\UserBundle\Entity\User',
             'intention' => 'registration',
-            'cascade_validation' => true,
+            'error_bubbling' => true,
         ));
     }
 

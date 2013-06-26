@@ -28,8 +28,7 @@ class Company extends Organization
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="company")
-     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="company", cascade={"persist", "remove"})
      */
     protected $staff;
 

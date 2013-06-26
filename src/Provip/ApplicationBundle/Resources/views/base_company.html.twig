@@ -7,13 +7,15 @@
     <li><a href="#"><i class="icon-road icon-xlarge"></i>My Interns</a></li>
     <li><a href="{{ path('provip_application_company_settings') }}"><i class="icon-cog icon-xlarge"></i>Settings</a></li>
     {% if is_granted('ROLE_COMPANY_STAFF_ADMIN') %}
-    <li><a href="#"><i class="icon-sitemap icon-xlarge"></i>Company</a></li>
+    <li><a href="{{ path('provip_application_company_info') }}"><i class="icon-sitemap icon-xlarge"></i>Company</a></li>
+    <li><a href="{{ path('provip_application_company_staff') }}"><i class="icon-group icon-xlarge"></i>Staff</a></li>
     {% endif %}
 </ul>
 {% endblock %}
 
 {% block user_menu %}
     <ul class="dropdown-menu">
+        <li><a href="#"><span class="badge bg-danger pull-right">3</span>Notifications</a></li>
         <li><a href="{{ path('provip_application_company_settings') }}">Settings</a></li>
         <li class="divider"></li>
         <li><a href="docs.html">Help</a></li>

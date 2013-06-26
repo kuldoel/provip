@@ -6,7 +6,7 @@ security:
         ROLE_STUDENT:               [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_COMPANY_STAFF:         [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_COMPANY_STAFF_ADMIN:   [ROLE_COMPANY_STAFF, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_HEI_STAFF:                   [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_HEI_STAFF:             [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_HEI_STAFF_ADMIN:       [ROLE_HEI_STAFF, ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN:                 [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
@@ -35,5 +35,4 @@ security:
         - { path: ^/student, role: ROLE_STUDENT }
         - { path: ^/company, role: ROLE_COMPANY_STAFF }
         - { path: ^/hei, role: ROLE_HEI_STAFF }
-        - { path: ^/, role: ROLE_USER }
  

@@ -549,3 +549,14 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
 }
+
+form .text {
+    padding-top: 6px;
+    display: inline-block;
+}
+
+form .link {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+;
+}

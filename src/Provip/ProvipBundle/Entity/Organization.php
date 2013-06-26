@@ -84,12 +84,21 @@ abstract class Organization
      *
      * @ORM\ManyToMany(targetEntity="Language")
      * @ORM\JoinTable(name="organisations_supportedlanguages",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      joinColumns={@ORM\JoinColumn(name="organization_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
      *      )
      * @Assert\Valid
      */
     protected $supportedLanguages;
+
+    /**
+     * Optional Picture
+     *
+     *
+     * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id", nullable=true)
+     */
+    protected $picture;
 
 
 
@@ -300,6 +309,21 @@ abstract class Organization
         return $this->profileComplete;
     }
 
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
 
 
     /**

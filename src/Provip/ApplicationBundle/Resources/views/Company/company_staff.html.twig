@@ -1,0 +1,65 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+
+{% block main %}
+<section class="panel">
+    <header class="panel-heading bg bg-default">
+        <div class="input-group">
+            <input type="text" class="input-small" placeholder="Search">
+                <span class="input-group-btn">
+                  <button class="btn btn-small btn-white" type="button">Go!</button>
+                </span>
+        </div>
+    </header>
+    <ul class="list-group list-group-flush m-t-n">
+        <li class="list-group-item">
+            <div class="media">
+                <span class="pull-left thumb-small"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="John said" class="img-rounded"></span>
+                <div class="pull-right text-success m-t-small">
+                    <i class="icon-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div><a href="#" class="h5">Chris Fox</a></div>
+                    <small class="text-muted">about 2 minutes ago</small>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item bg">
+            <div class="media">
+                <span class="pull-left thumb-small"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="John said" class="img-rounded"></span>
+                <div class="pull-right text-success m-t-small">
+                    <i class="icon-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div><a href="#" class="h5">Amanda Conlan</a></div>
+                    <small class="text-muted">about 2 hours ago</small>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="media">
+                <span class="pull-left thumb-small"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="John said" class="img-rounded"></span>
+                <div class="pull-right text-warning m-t-small">
+                    <i class="icon-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div><a href="#" class="h5">Dan Doorack</a></div>
+                    <small class="text-muted">3 days ago</small>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item bg">
+            <div class="media">
+                <span class="pull-left thumb-small"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" alt="John said" class="img-rounded"></span>
+                <div class="pull-right text-danger m-t-small">
+                    <i class="icon-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div><a href="#" class="h5">Lauren Taylor</a></div>
+                    <small class="text-muted">about 2 minutes ago</small>
+                </div>
+            </div>
+        </li>
+    </ul>
+</section>
+{% endblock %}

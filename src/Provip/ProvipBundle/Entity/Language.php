@@ -36,7 +36,7 @@ class Language
      * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
-    protected $value;
+    protected $valueAttr;
 
 
     /**
@@ -78,9 +78,9 @@ class Language
      * @param string $value
      * @return Language
      */
-    public function setValue($value)
+    public function setValueAttr($valueAttr)
     {
-        $this->value = $value;
+        $this->valueAttr = $valueAttr;
     
         return $this;
     }
@@ -90,8 +90,13 @@ class Language
      *
      * @return string 
      */
-    public function getValue()
+    public function getValueAttr()
     {
-        return $this->value;
+        return $this->valueAttr;
+    }
+
+    public function __toString()
+    {
+        return $this->valueAttr;
     }
 }

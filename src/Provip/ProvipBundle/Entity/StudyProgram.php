@@ -244,7 +244,7 @@ class StudyProgram
 
     public function __toString()
     {
-        return $this->getName() . ' ('. $this->getHigherEducationalInstitution()->getName() .') ';
+        return $this->getName();
     }
 
 

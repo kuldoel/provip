@@ -30,7 +30,7 @@ class User extends BaseUser
      * @Assert\Type(type="string")
      */
     protected $firstName;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
@@ -66,8 +66,8 @@ class User extends BaseUser
      * URL is an attribute of Student and it a link to their LinkedIn or other profile
      *
      *
-     * @ORM\Column(type="string", length=7, nullable=true)
-     * @Assert\Url()
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Url
      */
     protected $url;
 
@@ -124,9 +124,8 @@ class User extends BaseUser
      * If a user is a member of staff of a Company they have a direct link to the company
      *
      *
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Company", inversedBy="staff", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Company", inversedBy="staff",cascade={"persist"})
      * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     * @Assert\Valid
      **/
     protected $company;
 
@@ -137,7 +136,7 @@ class User extends BaseUser
      *
      *
      * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\StudyProgram", inversedBy="staff", cascade={"persist"})
-     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="studyprogram_id", referencedColumnName="id")
      * @Assert\Valid
      **/
     protected $teachesAt;
@@ -202,10 +201,8 @@ class User extends BaseUser
     * Optional Picture
     *
     *
-    * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture", cascade={"persist", "remove"})
-    * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
-    *
-    * @Assert\Valid
+    * @ORM\OneToOne(targetEntity="Provip\EventsBundle\Entity\Picture",cascade={"persist", "remove"})
+    * @ORM\JoinColumn(name="picture_id", referencedColumnName="id", nullable=true)
     */
     protected $picture;
 

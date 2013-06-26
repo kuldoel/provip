@@ -17,9 +17,9 @@
                 <div class="line line-dashed"></div>
 
                 {% if is_granted('ROLE_STUDENT') %}
-                    <a href="{{ path('provip_application_default_studentdashboard') }}" class="btn btn-primary btn-block">Go to your student dashboard</a>
+                    <a href="{{ path('provip_application_student_dashboard') }}" class="btn btn-primary btn-block">Go to your student dashboard</a>
                 {% elseif is_granted('ROLE_COMPANY_STAFF_ADMIN') %}
-                    <a href="{{ path('provip_application_default_companydashboard') }}" class="btn btn-primary btn-block">Go to your company dashboard</a>
+                    <a href="{{ path('provip_application_company_dashboard') }}" class="btn btn-primary btn-block">Go to your company dashboard</a>
                 {% else %}
                 {% endif %}
 
