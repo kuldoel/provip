@@ -1,0 +1,90 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+
+{% block main %}
+<div class="padder clearfix">
+    <h4><i class="icon-cog">Account Settings</i></h4>
+</div>
+<div class="row">
+    <div class="col col-lg-6">
+        <section class="panel">
+            <form class="form-horizontal" action="{{ path('provip_application_company_settings') }}" method="POST" enctype="multipart/form-data">
+
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="col col-lg-12">
+                        <div class="row">
+                            {{ form_label(form.picture, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
+                            <div class="col col-lg-9 media">
+                                <div class="bg-light pull-left text-center media-large thumb-large">
+                                    {% if app.user.picture %}
+                                        <img width="150" height="150" src="{{(app.user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <i class="icon-user inline icon-light icon-3x m-t-large m-b-large"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="media-body">
+                                    {{ form_widget(form.picture, { 'attr': {'class': 'btn btn-small btn-info m-b-small'  } }) }}
+                                    <br>
+                                    <a href="{{ path('provip_application_company_deletepicture') }}" class="btn btn-small btn-default">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Email</label>
+                            {{ form_widget(form._token) }}
+                            <div class="col col-lg-9">
+                                <span class="text">{{ app.user.email }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Password</label>
+                            <div class="col col-lg-9">
+                                <a href="{{ path('fos_user_change_password') }}" class="text link">Change your password</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Name</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ app.user }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Company</label>
+                            <div class="col col-lg-9">
+                                <a href="#" class="text link">{{ app.user.company }}</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Phone Number</label>
+                            <div class="col col-lg-9">
+                               {{ form_widget(form.phone) }}
+                                {{ form_errors(form.phone) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Job Description</label>
+                            <div class="col col-lg-9">
+                               {{ form_widget(form.jobDescription) }}
+                                {{ form_errors(form.jobDescription) }}
+                            </div>
+                        </div>
+
+
+                        {{ form_rest(form) }}
+
+                        <div class="row">
+                            <div class="col col-lg-9 col-offset-3">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "ProvipApplicationBundle::base_student.html.twig" %}
+{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+
+{% block main %}
+<div class="padder clearfix">
+    <h4><i class="icon-cog">Account Settings</i></h4>
+</div>
+<div class="row">
+    <div class="col col-lg-6">
+        <section class="panel">
+            <form class="form-horizontal" action="{{ path('provip_application_student_settings') }}" method="POST" enctype="multipart/form-data">
+
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="col col-lg-12">
+                        <div class="row">
+                            {{ form_label(form.picture, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
+                            <div class="col col-lg-9 media">
+                                <div class="bg-light pull-left text-center media-large thumb-large">
+                                    {% if app.user.picture %}
+                                        <img width="150" height="150" src="{{(app.user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <i class="icon-user inline icon-light icon-3x m-t-large m-b-large"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="media-body">
+                                    {{ form_widget(form.picture, { 'attr': {'class': 'btn btn-small btn-info m-b-small'  } }) }}
+                                    <br>
+                                    <a href="{{ path('provip_application_student_deletepicture') }}" class="btn btn-small btn-default">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Email</label>
+                            {{ form_widget(form._token) }}
+                            <div class="col col-lg-9">
+                                <span class="text">{{ app.user.email }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Password</label>
+                            <div class="col col-lg-9">
+                                <a href="{{ path('fos_user_change_password') }}" class="text link">Change your password</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Name</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ app.user }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Institution</label>
+                            <div class="col col-lg-9">
+                                <a href="#" class="text link">{{ app.user.enrollment.studyprogram.higherEducationalInstitution }}</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Study Program</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ app.user.enrollment.studyprogram}} ({% if app.user.enrollment.approved %}<span class="text-success link" data-toggle="tooltip" data-placement="right" title="Your application has been approved">Application Approved</span> {% else %}<span data-toggle="tooltip" data-placement="right" class="text-warning link" title="An administrator of your school will review your application">Application Pending</span>{% endif %})</span>
+                                <div class="line line-dashed m-t-large"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Nationality</label>
+                            <div class="col col-lg-9">
+                               {{ form_widget(form.nationality, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.nationality) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Primary language</label>
+                            <div class="col col-lg-9">
+                               {{ form_widget(form.language, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.language) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Other proficient languages</label>
+                            <div class="col col-lg-9">
+                                {{ form_widget(form.supportedLanguages, { 'attr': {'class': 'selectpicker'} }) }}
+                                {{ form_errors(form.supportedLanguages) }}
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <div class="row">
+                            <div class="col col-lg-9 col-offset-3">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
