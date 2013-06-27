@@ -54,6 +54,39 @@ Date.now = Date.now || function() { return +new Date; };
 
   $(function(){
 
+
+      $('button.new-staff').click(function(e){
+
+          e.preventDefault();
+
+          $.post(Routing.generate('provip_application_company_staff'),$('form.new-staff').serialize())
+              .fail(function(xhr, status, error){
+                $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                $('#new-staff-member').modal('hide');
+                $('#staff-list').prepend(data);
+                setTimeout(function() {$('#staff-list .new').removeClass('new')}, 0);
+                $('form.new-staff').trigger("reset");
+                $('.errors').hide();
+              })
+
+      });
+
+      $('.staff-search').keyup(function() {
+
+          $('.loader').show();
+
+          $.get(Routing.generate('provip_application_company_search',{ q: $(this).val() }))
+              .fail(function(xhr, status, error){
+                  alert(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#staff-list').html(data);
+                  $('.loader').hide();
+              })
+      });
+
     // select boxes bootstrap-select.min.js
     $('.selectpicker').selectpicker();
 

@@ -9,6 +9,7 @@ use Provip\UserBundle\Form\Type\CompanyStaffProfileType;
 use Provip\UserBundle\Form\Type\NewStaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -81,7 +82,7 @@ class CompanyController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', 'Your changes were succesfully saved!');
-                return $this->redirect($this->generateUrl('provip_application_company_companyinfo'));
+                return $this->redirect($this->generateUrl('provip_application_company_info'));
 
             }
 
@@ -116,7 +117,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @Route("/company/staff")
+     * @Route("/company/staff", options={"expose"=true})
      */
     public function staffAction(Request $request)
     {
@@ -125,7 +126,49 @@ class CompanyController extends Controller
         $user = new User();
         $form = $this->createForm(new NewStaffType(), $user);
 
+        if ('POST' === $request->getMethod()) {
+
+            $form->handleRequest($request);
+
+            $user->setPlainPassword(md5(crypt(rand(0, 50000).time())));
+
+            if ($form->isValid()) {
+
+                $userManager = $this->get('fos_user.user_manager');
+
+                $user->addRole('ROLE_COMPANY_STAFF');
+                $user->setCompany($this->getUser()->getCompany());
+
+                $userManager->updateUser($user);
+
+                // @TODO
+                // Send email to new staff member to reset password
+
+                return new Response($this->renderView('ProvipApplicationBundle:Widgets:staff_member.html.twig', array('user' => $user, 'status' => 'new')), 201);
+
+            }
+            else
+            {
+                return new Response($this->renderView('ProvipApplicationBundle:Widgets:form_errors.html.twig', array('errors' => $form->getErrors())), 400);
+
+            }
+        }
+
         return $this->render('ProvipApplicationBundle:Company:company_staff.html.twig', array('form' => $form->createView(), 'staff' => $staff));
+
+    }
+
+
+    /**
+     * @Route("/company/staff/search/{q}", defaults={"q" = ""}, options={"expose"=true})
+     */
+    public function searchAction($q)
+    {
+        $company = $this->getUser()->getCompany();
+
+        $staff = $this->getDoctrine()->getRepository('ProvipUserBundle:User')->getStaffByPartial($q, $company);
+
+        return $this->render('ProvipApplicationBundle:Widgets:company_staff_search.html.twig',array('staff' => $staff, 'status' => ''));
 
     }
 }

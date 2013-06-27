@@ -1,0 +1,75 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+
+
+{% block main %}
+
+
+<div class="padder clearfix" style="min-height: 15px">
+
+</div>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <a class="pull-right btn btn-small btn-primary" href="#new-opportunity" data-toggle="modal"><i class="icon-plus"></i> OPPORTUNITY</a>
+                <h4><i class="icon-tag"></i> Opportunities</h4>
+            </header>
+            <div class="pull-out">
+                <table class="table table-striped m-b-none text-small">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Mentor</th>
+                        <th>Positions</th>
+                        <th>Admin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+
+<!-- .modal -->
+
+<form class="form-horizontal new-staff" action="{{ path('provip_application_opportunity_index') }}" method="POST">
+    <div id="new-opportunity" class="modal fade">
+        <form class="m-b-none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">Create a new opportunity</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="errors">
+
+                        </div>
+
+                        {{ form_widget(form) }}
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-small btn-primary new-staff">Create</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+    </div>
+</form>
+<!-- / .modal -->
+
+{% endblock %}

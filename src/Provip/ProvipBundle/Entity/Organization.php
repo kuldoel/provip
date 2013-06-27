@@ -85,7 +85,7 @@ abstract class Organization
      * @ORM\ManyToMany(targetEntity="Language")
      * @ORM\JoinTable(name="organisations_supportedlanguages",
      *      joinColumns={@ORM\JoinColumn(name="organization_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id")}
      *      )
      * @Assert\Valid
      */

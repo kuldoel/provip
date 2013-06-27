@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Provip\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
 class User extends BaseUser

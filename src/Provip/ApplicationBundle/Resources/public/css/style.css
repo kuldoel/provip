@@ -558,5 +558,22 @@ form .text {
 form .link {
     border-bottom: 1px dashed;
     cursor: pointer;
-;
+}
+
+
+ul li.list-group-item:nth-child(even) {
+    background-color: #f7f8f9;
+}
+
+.new {
+    background-color: #FFFF99 !important;
+}
+
+.list-group-item:first-child {
+    transition-duration: 5s;
+    -webkit-transition-duration: 5s; /* Safari */
+}
+
+.loader {
+    display: none;
 }

@@ -30,7 +30,6 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="text")
-     * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
     protected $description;
@@ -66,7 +65,6 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="text")
-     * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
     protected $selectionProcedure;
@@ -75,10 +73,18 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
     protected $communicationProtocol;
+
+
+    /**
+     * Default published is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $published = false;
 
     /**
      * @ORM\Column(length=255, unique=true)
@@ -123,11 +129,12 @@ class Opportunity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Company $company)
     {
         $this->projectGoals = new \Doctrine\Common\Collections\ArrayCollection();
         $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
         $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->company = $company;
     }
     
     /**
@@ -468,4 +475,22 @@ class Opportunity
     {
         return $this->skills;
     }
+
+    /**
+     * @param mixed $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+
 }

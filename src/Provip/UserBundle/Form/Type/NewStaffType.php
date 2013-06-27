@@ -11,16 +11,16 @@ class NewStaffType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('firstName')
-            ->add('lastName')
+            ->add('email', 'email', array('error_bubbling' => true))
+            ->add('firstName', 'text', array('error_bubbling' => true))
+            ->add('lastName', 'text', array('error_bubbling' => true))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Provip\UserBundle\Entity\User'
+            'data_class' => 'Provip\UserBundle\Entity\User',
         ));
     }
 
