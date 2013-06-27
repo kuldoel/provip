@@ -54,10 +54,15 @@ Date.now = Date.now || function() { return +new Date; };
 
   $(function(){
 
+      $('.date').datepicker().on('changeDate', function(ev){
+          $('.datepicker').hide();
+      });
 
       $('button.new-staff').click(function(e){
 
           e.preventDefault();
+
+          $('.loader').show();
 
           $.post(Routing.generate('provip_application_company_staff'),$('form.new-staff').serialize())
               .fail(function(xhr, status, error){
@@ -69,6 +74,32 @@ Date.now = Date.now || function() { return +new Date; };
                 setTimeout(function() {$('#staff-list .new').removeClass('new')}, 0);
                 $('form.new-staff').trigger("reset");
                 $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $('button.new-opportunity').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_opportunity_index'),$('form.new-opportunity').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-opportunity').modal('hide');
+                  $('#opportunity-list').prepend(data);
+                  setTimeout(function() {$('#opportunity-list .new').removeClass('new')}, 0);
+                  $('form.new-opportunity').trigger("reset");
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
               })
 
       });

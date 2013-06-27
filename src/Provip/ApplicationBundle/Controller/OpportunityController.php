@@ -18,13 +18,15 @@ use Symfony\Component\HttpFoundation\Response;
 class OpportunityController extends Controller
 {
     /**
-     * @Route("/company/opportunities")
+     * @Route("/company/opportunities", options={"expose"=true})
      */
     public function indexAction(Request $request)
     {
 
+        $opportunities = $this->getUser()->getCompany()->getOpportunities();
+
         $opportunity = new Opportunity($this->getUser()->getCompany());
-        $form = $this->createForm(new OpportunityNewType(), $opportunity);
+        $form = $this->createForm(new OpportunityNewType($this->getUser()->getCompany()), $opportunity);
 
         if ('POST' === $request->getMethod()) {
 
@@ -47,7 +49,7 @@ class OpportunityController extends Controller
             }
         }
 
-        return $this->render('ProvipApplicationBundle:Company:opportunities.html.twig');
+        return $this->render('ProvipApplicationBundle:Company:opportunities.html.twig', array('opportunities' => $opportunities, 'form' => $form->createView()));
     }
 
 

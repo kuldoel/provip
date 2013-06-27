@@ -30,6 +30,7 @@ class CompanyController extends Controller
     {
 
 
+
         $user = $this->getUser();
         $form = $this->createForm(new CompanyStaffProfileType(), $user);
 

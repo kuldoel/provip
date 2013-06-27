@@ -375,15 +375,15 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
 /* Footer*/
 
 /*comments*/
-[class*="arrow"]:before, [class*="arrow"]:after{position: absolute;display: inline-block;border-color: transparent;border-style: solid;content:"";}
-.arrow-left:before{margin-left:-7px;top: 6px;left: 0px;border-right-color: #d1d4d7;border-width:7px 7px 7px 0;-moz-border-right-colors: #fff;}
-.arrow-left:after{margin-left:-6px;top: 7px;left: 0px;border-right-color: #fff;border-width:6px 6px 6px 0;}
+[class*="arrow-comments"]:before, [class*="arrow"]:after{position: absolute;display: inline-block;border-color: transparent;border-style: solid;content:"";}
+.arrow-comments-left:before{margin-left:-7px;top: 6px;left: 0px;border-right-color: #d1d4d7;border-width:7px 7px 7px 0;-moz-border-right-colors: #fff;}
+.arrow-comments-left:after{margin-left:-6px;top: 7px;left: 0px;border-right-color: #fff;border-width:6px 6px 6px 0;}
 
-.arrow-right:before{margin-right:-7px;top: 6px;right: 0px;border-left-color: #d1d4d7;border-width:7px 0 7px 7px;;-moz-border-left-colors: #fff;}
-.arrow-right:after{margin-right:-6px;top: 7px;right: 0px;border-left-color: #fff;border-width:6px 0 6px 6px;;}
+.arrow-comments-right:before{margin-right:-7px;top: 6px;right: 0px;border-left-color: #d1d4d7;border-width:7px 0 7px 7px;;-moz-border-left-colors: #fff;}
+.arrow-comments-right:after{margin-right:-6px;top: 7px;right: 0px;border-left-color: #fff;border-width:6px 0 6px 6px;;}
 
-.arrow-top:before{margin-top:-7px;top: 0;left: 6px;border-bottom-color: #d1d4d7;border-width:0 7px 7px 7px;;-moz-border-top-colors: #fff;}
-.arrow-top:after{margin-top:-6px;top: 0;left: 7px;border-bottom-color: #fff;border-width:0 6px 6px 6px;;}
+.arrow-comments-top:before{margin-top:-7px;top: 0;left: 6px;border-bottom-color: #d1d4d7;border-width:0 7px 7px 7px;;-moz-border-top-colors: #fff;}
+.arrow-comments-top:after{margin-top:-6px;top: 0;left: 7px;border-bottom-color: #fff;border-width:0 6px 6px 6px;;}
 
 .chat-item{position: relative;}
 .chat-item.arrow-left:before{top:11px;left:47px;}
@@ -569,11 +569,25 @@ ul li.list-group-item:nth-child(even) {
     background-color: #FFFF99 !important;
 }
 
-.list-group-item:first-child {
+.list-group-item:first-child, table.table tbody tr  {
     transition-duration: 5s;
     -webkit-transition-duration: 5s; /* Safari */
 }
 
 .loader {
     display: none;
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    width: 150px;
+    margin-left: -75px;
+    background-color:#FFFF99;
+    border: solid 1px #859900;
+    z-index: 9999;
+    padding: 5px;
+    text-align: center;
+}
+
+.datepicker {
+    z-index: 1999;
 }

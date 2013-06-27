@@ -29,7 +29,7 @@ class Opportunity
 
     /**
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     protected $description;
@@ -64,7 +64,7 @@ class Opportunity
 
     /**
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     protected $selectionProcedure;
@@ -72,7 +72,7 @@ class Opportunity
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type(type="string")
      */
     protected $communicationProtocol;
