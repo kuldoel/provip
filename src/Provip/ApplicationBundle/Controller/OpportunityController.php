@@ -5,6 +5,7 @@ namespace Provip\ApplicationBundle\Controller;
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
+use Provip\ProvipBundle\Form\Type\OpportunityEditType;
 use Provip\ProvipBundle\Form\Type\OpportunityNewType;
 use Provip\UserBundle\Entity\User;
 use Provip\UserBundle\Form\Type\CompanyStaffProfileType;
@@ -50,6 +51,22 @@ class OpportunityController extends Controller
         }
 
         return $this->render('ProvipApplicationBundle:Company:opportunities.html.twig', array('opportunities' => $opportunities, 'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/company/opportunities/{slug}", options={"expose"=true})
+     */
+    public function detailAction(Opportunity $opportunity, Request $request)
+    {
+        if(!$opportunity->getCompany() == $this->getUser()->getCompany())
+        {
+            return new Response('Not owner of this opportunity',403);
+        }
+
+        $form = $this->createForm(new OpportunityEditType($this->getUser()->getCompany()), $opportunity);
+
+        return $this->render('ProvipApplicationBundle:Company:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'form' => $form->createView()));
+
     }
 
 

@@ -591,3 +591,7 @@ ul li.list-group-item:nth-child(even) {
 .datepicker {
     z-index: 1999;
 }
+
+.tooltip {
+    z-index: 9999 !important;
+}

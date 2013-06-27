@@ -87,6 +87,14 @@ class Opportunity
     protected $published = false;
 
     /**
+     * Default complete is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $complete = false;
+
+    /**
      * @ORM\Column(length=255, unique=true)
      * @Gedmo\Slug(fields={"title"})
      */
@@ -491,6 +499,24 @@ class Opportunity
     {
         return $this->published;
     }
+
+    /**
+     * @param mixed $complete
+     */
+    public function setComplete($complete)
+    {
+        $this->complete = $complete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComplete()
+    {
+        return $this->complete;
+    }
+
+
 
 
 }

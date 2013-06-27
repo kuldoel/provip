@@ -8,12 +8,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OpportunityNewType extends AbstractType
+class OpportunityEditType extends AbstractType
 {
 
     protected $company;
 
-    public function __construct(Company $company = null)
+    public function __construct(Company $company)
     {
         $this->company = $company;
     }
@@ -22,7 +22,6 @@ class OpportunityNewType extends AbstractType
     {
 
         $company = $this->company;
-
 
         $builder
             ->add('title', 'text', array('label' => 'Title', 'error_bubbling' => true))
@@ -53,6 +52,29 @@ class OpportunityNewType extends AbstractType
                 'attr' => array('class' => 'selectpicker'),
                 'error_bubbling' => true,
             ))
+            ->add('description', 'textarea', array(
+                'label' => 'Description',
+                'error_bubbling' => true,
+                'attr' => array('placeholder' => 'Give as much information as possible to get the best applicants')
+            ))
+            ->add('selectionProcedure', 'textarea', array(
+                'label' => 'Selection Procedure',
+                'error_bubbling' => true,
+                'attr' => array('placeholder' => 'Explain the selection procedure for the applicant')
+            ))
+            ->add('communicationProtocol', 'text', array(
+                'label' => 'How to contact us?',
+                'error_bubbling' => true,
+                'attr' => array('placeholder' => 'Email, telephone, office, ...')
+            ))
+            ->add('skills', 'entity', array(
+                'class' => 'ProvipProvipBundle:Skill',
+                'label' => 'Necessary Skills',
+                'attr' => array('class' => 'selectpicker'),
+                'multiple' => true,
+                'error_bubbling' => true,
+            ))
+            ->add('projectGoals')
         ;
     }
 
