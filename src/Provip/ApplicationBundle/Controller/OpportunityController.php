@@ -3,8 +3,10 @@
 namespace Provip\ApplicationBundle\Controller;
 
 use Provip\EventsBundle\Entity\Picture;
+use Provip\ProvipBundle\Entity\Deliverable;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
+use Provip\ProvipBundle\Form\Type\DeliverableType;
 use Provip\ProvipBundle\Form\Type\OpportunityEditType;
 use Provip\ProvipBundle\Form\Type\OpportunityNewType;
 use Provip\UserBundle\Entity\User;
@@ -36,6 +38,7 @@ class OpportunityController extends Controller
 
             if ($form->isValid()) {
 
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($opportunity);
                 $em->flush();
@@ -58,15 +61,96 @@ class OpportunityController extends Controller
      */
     public function detailAction(Opportunity $opportunity, Request $request)
     {
+
+        $deliverable = new Deliverable();
+
         if(!$opportunity->getCompany() == $this->getUser()->getCompany())
         {
-            return new Response('Not owner of this opportunity',403);
+            return new Response('Not an owner of this opportunity',403);
         }
 
         $form = $this->createForm(new OpportunityEditType($this->getUser()->getCompany()), $opportunity);
+        $form2 = $this->createForm(new DeliverableType(), $deliverable);
 
-        return $this->render('ProvipApplicationBundle:Company:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'form' => $form->createView()));
+        if ('POST' === $request->getMethod()) {
 
+            if($request->request->has('provip_provipbundle_opportunityedittype'))
+
+            {
+                $form->handleRequest($request);
+
+                if ($form->isValid()) {
+
+                    $opportunity->setComplete(true);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($opportunity);
+                    $em->flush();
+
+                    return new Response($opportunity->getSlug(), 201);
+
+                }
+                else
+                {
+                    return new Response($this->renderView('ProvipApplicationBundle:Widgets:form_errors.html.twig', array('errors' => $form->getErrors())), 400);
+
+                }
+            }
+
+            if($request->request->has('provip_provipbundle_deliverabletype'))
+            {
+
+                $em = $this->getDoctrine()->getManager();
+
+                $form2->handleRequest($request);
+
+                if ($form2->isValid()) {
+
+                    $deliverable->setOpportunity($opportunity);
+
+                    foreach($deliverable->getTasks() as $task)
+                    {
+                        $task->setDeliverable($deliverable);
+                        $em->persist($task);
+                    }
+
+
+                    $em->persist($deliverable);
+                    $em->flush();
+
+                    return new Response($deliverable->getDescription(), 201);
+
+                }
+                else
+                {
+                    return new Response($this->renderView('ProvipApplicationBundle:Widgets:form_errors.html.twig', array('errors' => $form2->getErrors())), 400);
+
+                }
+            }
+
+        }
+
+        return $this->render('ProvipApplicationBundle:Company:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'form' => $form->createView(), 'form2' => $form2->createView()));
+
+    }
+
+    /**
+     * @Route("/company/opportunities/delete/{slug}")
+     */
+    public function deleteAction(Opportunity $opportunity)
+    {
+        if(!$opportunity->getCompany() == $this->getUser()->getCompany())
+        {
+            return new Response('Not an owner of this opportunity',403);
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($opportunity);
+        $em->flush();
+
+
+        $this->get('session')->getFlashBag()->add('success', 'This opportunity has been deleted.');
+        return $this->redirect($this->generateUrl('provip_application_opportunity_index'));
     }
 
 

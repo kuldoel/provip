@@ -22,7 +22,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Please enter a title")
      * @Assert\Type(type="string")
      */
     protected $title;
@@ -30,6 +30,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(groups={"complete_opportunity"}, message="Please enter a description for this internship")
      * @Assert\Type(type="string")
      */
     protected $description;
@@ -38,7 +39,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="integer", length=12)
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Please specify the number of available positions for this internship")
      * @Assert\Type(type="int")
      */
     protected $nbrOfPositions;
@@ -47,7 +48,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="date")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Please specify a start date")
      * @Assert\Date()
      */
     protected $startDate;
@@ -56,7 +57,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="date")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Please specify an end date")
      * @Assert\Date()
      */
     protected $endDate;
@@ -65,6 +66,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotNull(groups={"complete_opportunity"}, message="Please give more information about the selection procedure")
      * @Assert\Type(type="string")
      */
     protected $selectionProcedure;
@@ -73,6 +75,7 @@ class Opportunity
     /**
      *
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotNull(groups={"complete_opportunity"}, message="Please specify how the applicants can contact your for more information")
      * @Assert\Type(type="string")
      */
     protected $communicationProtocol;

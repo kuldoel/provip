@@ -175,4 +175,9 @@ class Skill
     {
         return $this->opportunities;
     }
+
+    public function __toString()
+    {
+        return $this->value;
+    }
 }

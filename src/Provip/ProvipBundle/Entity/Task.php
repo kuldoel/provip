@@ -29,14 +29,6 @@ class Task
 
     /**
      *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
-     * @Assert\Type(type="string")
-     */
-    protected $description;
-
-    /**
-     *
      * @ORM\Column(type="datetime")
      * @Assert\NotNull()
      * @Assert\DateTime()
@@ -99,28 +91,6 @@ class Task
         return $this->title;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Task
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
     /**
      * Set deadline

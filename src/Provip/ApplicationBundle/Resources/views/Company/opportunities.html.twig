@@ -34,7 +34,7 @@
                             <th>{% if opportunity.complete and opportunity.published == false %}
                                     <button class="btn btn-mini btn-info" data-toggle="tooltip" data-placement="right" title="{{ opportunity.title }} is ready to be published"><i class="icon-cloud"></i> Publish</button>
                                 {% elseif opportunity.complete == false %}
-                                    <a href="#" class="btn btn-white btn-mini" data-toggle="tooltip" data-placement="right" title="Add additional information to {{ opportunity.title }}"><i class="icon-pencil"></i>Complete</a>
+                                    <a href="{{ path('provip_application_opportunity_detail', {'slug': opportunity.slug}) }}" class="btn btn-white btn-mini" data-toggle="tooltip" data-placement="right" title="Add additional information to {{ opportunity.title }}"><i class="icon-pencil"></i>Complete</a>
                                 {% else %}
                                    <button class="btn btn-mini btn-success active" data-toggle="tooltip" data-placement="right" title="{{ opportunity.title }} is currently visible. Click to hide from marketplace"><i class="icon-ok"></i> Published</button>
                                 {% endif %}

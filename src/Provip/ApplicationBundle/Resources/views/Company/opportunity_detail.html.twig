@@ -9,14 +9,16 @@
     </div>
 
     <div class="row">
-        <div class="col col-lg-6">
-            <form class="form-horizontal" action="{{ path('provip_application_opportunity_detail',{'slug':opportunity.slug}) }}" method="POST" enctype="multipart/form-data">
+        <div class="col col-lg-7">
+            <form class="form-horizontal complete-opportunity"  action="{{ path('provip_application_opportunity_detail',{'slug':opportunity.slug}) }}" method="POST">
                 <section class="panel">
                     <header class="panel-heading">
                         <ul class="nav nav-tabs nav-justified">
                             <li class="active"><a href="#home" data-toggle="tab">General</a></li>
-                            <li class=""><a href="#process" data-toggle="tab">Application Process</a></li>
-                            <li class=""><a href="#goals" data-toggle="tab">Skills & Goals</a></li>
+                            <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
+                            <li class=""><a href="#goals" data-toggle="tab">Goals</a></li>
+                            <li class=""><a href="#applications" data-toggle="tab">Applications <span class="label">{{ opportunity.applications | length  }}</span></a></li>
+                            <li class=""><a href="#danger" data-toggle="tab"><span class="text-danger">Danger Zone</span></a></li>
                         </ul>
 
                     </header>
@@ -26,101 +28,208 @@
                            {{ form_row(form.startDate) }}
                            {{ form_row(form.endDate) }}
                            {{ form_row(form.nbrOfPositions) }}
-                          {{ form_row(form.mentor) }}
+                           {{ form_row(form.mentor) }}
+
+                            <div  class="row">
+                                <div class="col col-lg-12">
+                                    <div class="btn-group pull-right">
+                                        <a href="{{ path('provip_application_opportunity_index') }}" class="btn btn-white"><i class="icon-arrow-left"></i>Go back to overview </a>
+                                        <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
+
                         <div class="tab-pane" id="profile">
-
-                        </div>
-                        <div class="tab-pane" id="process">
                             {{ form_row(form.description) }}
+                            {{ form_row(form.skills) }}
                             {{ form_row(form.selectionProcedure) }}
                             {{ form_row(form.communicationProtocol) }}
-                        </div>
-                        <div class="tab-pane" id="goals">
                             {{ form_rest(form) }}
-                        </div>
 
-                        <div  class="row">
-                            <div class="col col-lg-12">
-                                <a class="pull-right btn btn-success btn-small">Save Changes</a>
+                            <div class="padder clearfix" style="min-height: 15px">
+
+                            </div>
+
+
+                            <div  class="row">
+                                <div class="col col-lg-12">
+                                    <div class="btn-group pull-right">
+                                        <a href="{{ path('provip_application_opportunity_index') }}" class="btn btn-white"><i class="icon-arrow-left"></i>Go back to overview </a>
+                                        <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane" id="goals">
+
+                                            <section class="panel-content">
+                                                <article class="media">
+                                                    <div class="pull-left thumb-small">
+                                  <span class="icon-stack">
+                                    <i class="icon-circle text-success icon-stack-base"></i>
+                                    <i class="icon-flag icon-light"></i>
+                                  </span>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="pull-right media-mini text-center text-muted">
+                                                            <strong class="h4">12:18</strong><br>
+                                                            <small class="label bg-light">pm</small>
+                                                        </div>
+                                                        <a href="#" class="h4">Bootstrap 3.0 is comming</a>
+                                                        <small class="block">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small>
+                                                    </div>
+                                                </article>
+                                                <div class="line pull-in"></div>
+                                                <article class="media">
+                                                    <div class="pull-left thumb-small">
+                                  <span class="icon-stack">
+                                    <i class="icon-circle text-danger icon-stack-base"></i>
+                                    <i class="icon-file icon-light"></i>
+                                  </span>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="pull-right media-mini text-center text-muted">
+                                                            <strong class="h4">17</strong><br>
+                                                            <small class="label bg-light">feb</small>
+                                                        </div>
+                                                        <a href="#" class="h4">Bootstrap documents</a>
+                                                        <small class="block">There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</small>
+                                                    </div>
+                                                </article>
+                                                <div class="line pull-in"></div>
+                                                <article class="media">
+                                                    <div class="pull-left thumb-small">
+                                  <span class="icon-stack">
+                                    <i class="icon-circle text-warning icon-stack-base"></i>
+                                    <i class="icon-star icon-light"></i>
+                                  </span>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="pull-right media-mini text-center text-muted">
+                                                            <strong class="h4">09</strong><br>
+                                                            <small class="label bg-light">jan</small>
+                                                        </div>
+                                                        <a href="#" class="h4 text-success">Mobile first html/css framework</a>
+                                                        <small class="block">Bootstrap, Ratchet</small>
+                                                    </div>
+                                                </article>
+                                                <article class="media">
+                                                    <a href="#new-goal" data-toggle="modal" class="btn btn-block btn-info"><i class="icon-plus"></i> PROJECT GOAL</a>
+                                                </article>
+                                            </section>
+
+                        </div>
+
+                        <div class="tab-pane" id="applications">
+
+                        </div>
+
+                        <div class="tab-pane" id="danger">
+                            <div class="alert alert-danger alert-block">
+                                <h4>
+                                   <i class="icon-warning-sign"></i>
+                                    Danger!
+                                </h4>
+                                <p>Deleting this internship will delete all activity, applications, project goals and feedback for this internship.
+                                <br />Are you sure you want to do this?</p>
+                            </div>
+
+                            <a class="btn btn-danger block" href="{{ path('provip_application_opportunity_delete', {'slug': opportunity.slug}) }}">I understand the consequences and want to delete this internship</a>
+                        </div>
+
+
                     </div>
                 </section>
+
             </form>
         </div>
 
         <div class="col col-lg-4 col-offset-1">
-            <section class="comment-list block">
-                <article id="comment-id-1" class="comment-item media arrow-left">
-                    <a class="pull-left thumb-small avatar"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" class="img-circle"></a>
-                    <section class="media-body panel">
-                        <header class="panel-heading clearfix">
-                            <a href="#">John smith</a><label class="label bg-info m-l-mini">Editor</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>24 minutes ago</span>
-                        </header>
-                        <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
-                        <div class="comment-action m-t-small">
-                            <a href="#" data-toggle="class" class="btn btn-white btn-mini active"><i class="icon-star-empty text-muted text"></i><i class="icon-star text-danger text-active"></i>Like</a>
-                            <a href="#comment-form" class="btn btn-white btn-mini"><i class="icon-mail-reply text-muted"></i>Reply</a>
-                        </div>
-                    </section>
-                </article>
-                <!-- .comment-reply -->
-                <article id="comment-id-2" class="comment-item comment-reply media arrow-left">
-                    <a class="pull-left thumb-small"><span class="btn btn-circle btn-white btn-mini"><i class="icon-user"></i></span></a>
-                    <section class="media-body panel text-small">
-                        <a href="#">Mika Sam</a><label class="label bg-inverse m-l-mini">Admin</label> Report this comment is helpful <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>10 minutes ago</span>
-                    </section>
-                </article>
-                <!-- / .comment-reply -->
-                <article id="comment-id-3" class="comment-item media arrow-left">
-                    <a class="pull-left thumb-small avatar"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" class="img-circle"></a>
-                    <section class="media-body panel">
-                        <header class="panel-heading clearfix">
-                            <a href="#">By me</a><label class="label bg-default m-l-mini">User</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>about 1 hour ago</span>
-                        </header>
-                        <div>This comment was posted by you.</div>
-                        <div class="comment-action m-t-small">
-                            <a href="#comment-id-3" data-dismiss="alert" class="btn btn-white btn-mini"><i class="icon-trash text-muted"></i>Remove</a>
-                        </div>
-                    </section>
-                </article>
-                <article id="comment-id-4" class="comment-item media arrow-left">
-                    <a class="pull-left thumb-small avatar"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" class="img-circle"></a>
-                    <section class="media-body panel">
-                        <header class="panel-heading clearfix">
-                            <a href="#">Peter</a><label class="label bg-primary m-l-mini">Vip</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>2 hours ago</span>
-                        </header>
-                        <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                        </blockquote>
-                        <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
-                        <div class="comment-action m-t-small">
-                            <a href="#" data-toggle="class" class="btn btn-white btn-mini"><i class="icon-star-empty text-muted text"></i><i class="icon-star text-danger text-active"></i>Like</a>
-                            <a href="#comment-form" class="btn btn-white btn-mini"><i class="icon-mail-reply text-muted"></i>Reply</a>
-                        </div>
-                    </section>
-                </article>
-                <!-- comment form -->
-                <article class="comment-item media" id="comment-form">
-                    <a class="pull-left thumb-small avatar"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" class="img-circle"></a>
-                    <section class="media-body">
-                        <form action="" class="m-b-none">
-                            <div class="input-group">
-                                <input type="text" placeholder="Input your comment here">
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary" type="button">POST</button>
-                    </span>
-                            </div>
-                        </form>
-                    </section>
-                </article>
-            </section>
         </div>
 
+
+    <div id="errors" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">There were issues with your submitted data</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="errors">
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close and correct errors</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
     </div>
 
+    <form class="form-horizontal new-goal"  action="{{ path('provip_application_opportunity_detail',{'slug':opportunity.slug}) }}" method="POST">
+    <div id="new-goal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">Add a new goal</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <div class="errors">
+                        </div>
+
+                        <article class="media">
+
+                            {{ form_row(form2.description) }}
+
+                        </article>
+
+                        <div class="line pull-in"></div>
+
+                        {{ form_label(form2.tasks) }}
+
+                        <article class="tasks media" data-prototype="
+
+                            &lt;div class=&quot;row&quot; style=&quot;margin-bottom: 20px&quot; &gt;
+                            &lt;div class=&quot;col col-lg-8&quot;&gt;
+                              {{ form_widget(form2.tasks.vars.prototype.title)|e }}
+                            &lt;/div&gt;
+                            &lt;div class=&quot;col col-lg-3&quot;&gt;
+                               {{ form_widget(form2.tasks.vars.prototype.deadline)|e }}
+                            &lt;/div&gt;
+                            &lt;div class=&quot;col col-lg-1&quot;&gt;
+                              &lt;a href=&quot;#&quot; class=&quot;remove-task-pre-submit&quot;&gt;&lt;span class=&quot;text-danger&quot;&gt;&lt;i class=&quot;icon-remove&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        ">
+
+                        </article>
+
+                        {{ form_widget(form2._token) }}
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-small btn-primary new-goal">Create</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+    </div>
+    </form>
 
 {% endblock %}

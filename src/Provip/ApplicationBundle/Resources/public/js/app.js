@@ -54,6 +54,11 @@ Date.now = Date.now || function() { return +new Date; };
 
   $(function(){
 
+
+      $('.remove-task-pre-submit').click(function() {
+          $(this).closest('.row').remove();
+      });
+
       $('.date').datepicker().on('changeDate', function(ev){
           $('.datepicker').hide();
       });
@@ -79,6 +84,65 @@ Date.now = Date.now || function() { return +new Date; };
                   $('.loader').hide();
               })
 
+      });
+
+      $('button.new-goal').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_opportunity_detail',{ slug: $('button.complete-opportunity').attr('data-slug') }),$('form.new-goal').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-goal').modal('hide');
+                  $('.comment-list').prepend(data);
+                  setTimeout(function() {$('.comment-list .new').removeClass('new')}, 0);
+                  $('form.new-goal').trigger("reset");
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $('button.complete-opportunity').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_opportunity_detail',{ slug: $(this).attr('data-slug') }),$('form.complete-opportunity').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+                  $("#errors").modal('show');
+              })
+              .done(function(xhr, status){
+                  console.log(xhr);
+                  $('.errors').hide();
+                  $('button.complete-opportunity').removeClass('btn-success')
+                      .addClass('disabled')
+                      .text('Saved!');
+                  $('button.complete-opportunity').attr('data-slug', xhr);
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $("form.complete-opportunity :input").focus(function() {
+          if($('button.complete-opportunity').hasClass('disabled'))
+          {
+              $('button.complete-opportunity')
+                  .removeClass('disabled')
+                  .addClass('btn-success')
+                  .text('Save changes')
+          }
       });
 
       $('button.new-opportunity').click(function(e){
@@ -117,6 +181,8 @@ Date.now = Date.now || function() { return +new Date; };
                   $('.loader').hide();
               })
       });
+
+
 
     // select boxes bootstrap-select.min.js
     $('.selectpicker').selectpicker();
@@ -342,3 +408,50 @@ Date.now = Date.now || function() { return +new Date; };
 
   });
 }(window.jQuery);
+
+
+// Get the ul that holds the collection of tags
+var collectionHolder = $('article.tasks');
+
+// setup an "add a tag" link
+var $addTagLink = $('<div class="row"><div class="col col-lg-12"><a href="#" class="btn btn-info btn-small"><i class="icon-plus"></i>Add a task</a></div></div>');
+var $newLinkLi = $('<div></div>').append($addTagLink);
+
+jQuery(document).ready(function() {
+    // add the "add a tag" anchor and li to the tags ul
+    collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+
+    $addTagLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm(collectionHolder, $newLinkLi);
+    });
+});
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<div></div>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    $('.date').datepicker().on('changeDate', function(ev){
+        $('.datepicker').hide();
+    });
+}

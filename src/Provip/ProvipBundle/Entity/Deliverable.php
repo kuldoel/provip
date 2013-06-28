@@ -44,7 +44,7 @@ class Deliverable
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="deliverable")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="deliverable",cascade={"persist","remove"})
      * @Assert\Valid
      */
     protected $tasks;

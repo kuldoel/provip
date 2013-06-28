@@ -74,19 +74,18 @@ class OpportunityEditType extends AbstractType
                 'multiple' => true,
                 'error_bubbling' => true,
             ))
-            ->add('projectGoals')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Provip\ProvipBundle\Entity\Opportunity'
+            'data_class' => 'Provip\ProvipBundle\Entity\Opportunity',
         ));
     }
 
     public function getName()
     {
-        return 'provip_provipbundle_opportunitytype';
+        return 'provip_provipbundle_opportunityedittype';
     }
 }

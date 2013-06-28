@@ -40,7 +40,10 @@ class OpportunityNewType extends AbstractType
                 'label' => 'End of the internship',
                 'error_bubbling' => true,
             ))
-            ->add('nbrOfPositions', 'integer', array('label' => 'Available positions','error_bubbling' => true))
+            ->add('nbrOfPositions', 'integer', array(
+                'label' => 'Available positions',
+                'data' => 1,
+                'error_bubbling' => true))
             ->add('mentor', 'entity', array(
                 'class' => 'ProvipUserBundle:User',
                 'query_builder' => function(EntityRepository $er) use ($company) {

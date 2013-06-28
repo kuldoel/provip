@@ -1,6 +1,6 @@
 <tr class="{{ status }}">
-    <th><a href="#" class="btn btn-white btn-mini"><i class="icon-pencil"></i>Complete</a></th>
-    <th>{{ opportunity.title }}</th>
+    <th><a href="{{ path('provip_application_opportunity_detail', {'slug': opportunity.slug}) }}" class="btn btn-white btn-mini"  data-toggle="tooltip" data-placement="right" title="Add additional information to {{ opportunity.title }}"><i class="icon-pencil"></i>Complete</a></th>
+    <th><a href="{{ path('provip_application_opportunity_detail', {'slug': opportunity.slug}) }}">{{ opportunity.title }}</a></th>
     <th>{{ opportunity.startDate  | date("d-m-Y") }}</th>
     <th>{{ opportunity.endDate  | date("d-m-Y") }}</th>
     <th>{{ opportunity.mentor }}</th>
