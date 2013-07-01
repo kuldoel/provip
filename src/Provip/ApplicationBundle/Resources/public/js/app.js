@@ -55,9 +55,10 @@ Date.now = Date.now || function() { return +new Date; };
   $(function(){
 
 
-      $('.remove-task-pre-submit').click(function() {
-          $(this).closest('.row').remove();
-      });
+     $(document).on('click', '.remove-task-pre-submit', function(e) {
+         $btn = $(e.target);
+         console.log($btn.closest('.row').remove());
+     });
 
       $('.date').datepicker().on('changeDate', function(ev){
           $('.datepicker').hide();
@@ -94,12 +95,14 @@ Date.now = Date.now || function() { return +new Date; };
 
           $.post(Routing.generate('provip_application_opportunity_detail',{ slug: $('button.complete-opportunity').attr('data-slug') }),$('form.new-goal').serialize())
               .fail(function(xhr, status, error){
+                  $('.errors').show();
                   $('.errors').html(xhr.responseText);
               })
               .done(function(data){
+
                   $('#new-goal').modal('hide');
-                  $('.comment-list').prepend(data);
-                  setTimeout(function() {$('.comment-list .new').removeClass('new')}, 0);
+                  $('.panel-content.goals').prepend(data);
+                  setTimeout(function() {$('.panel-content .new').removeClass('new')}, 0);
                   $('form.new-goal').trigger("reset");
                   $('.errors').hide();
               })
@@ -134,6 +137,81 @@ Date.now = Date.now || function() { return +new Date; };
               })
 
       });
+
+      $('body').on('click', '.show-goal', function(e){
+
+          $('.loader').show();
+
+          var goalId = $(this).attr('data-goal');
+          var opportunitySlug = $(this).attr('data-opportunity');
+
+          var jqxhr = $.get(Routing.generate('provip_application_opportunity_editgoal',{ slug: opportunitySlug, deliverable_id: goalId  }), function() {
+             console.log("loading goal")
+          })
+              .done(function(data) {
+                  $('.goal-form').html(data);
+                  $('#edit-goal').modal('show');
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
+      $('body').on('click', '.delete-goal', function(e){
+
+          $('.loader').show();
+
+          var goalId = $(this).attr('data-goal');
+          var opportunitySlug = $(this).attr('data-opportunity');
+
+          $(this).parent().parent().parent().hide();
+
+          var jqxhr = $.get(Routing.generate('provip_application_opportunity_deletegoal',{ slug: opportunitySlug, deliverable_id: goalId  }), function() {
+              console.log("deleting goal")
+          })
+              .done(function(data) {
+                  console.log($(this).parent().parent().parent().remove());
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
+      $('.toggle-opportunity').click(function(){
+
+
+          var btn = $(this);
+
+          $('.loader').show();
+
+          var opportunitySlug = $(this).attr('data-opportunity');
+
+          var jqxhr = $.get(Routing.generate('provip_application_opportunity_toggle',{ slug: opportunitySlug }), function() {
+              console.log("toggling...")
+          })
+          .done(function(data) {
+                console.log(data);
+                  if(data == "complete")
+                  {
+                      btn
+                          .removeClass('btn-success')
+                          .removeClass('active')
+                          .addClass('btn-info')
+                          .text('Publish')
+                  }
+                  if(data == "published")
+                  {
+                      btn
+                          .removeClass('btn-info')
+                          .addClass('active')
+                          .addClass('btn-success')
+                          .text('Published')
+                  }
+          })
+          .always(function() { $('.loader').hide(); });
+
+
+      });
+
+
 
       $("form.complete-opportunity :input").focus(function() {
           if($('button.complete-opportunity').hasClass('disabled'))
@@ -410,14 +488,16 @@ Date.now = Date.now || function() { return +new Date; };
 }(window.jQuery);
 
 
+
+function setupTaskForm() {
+
 // Get the ul that holds the collection of tags
-var collectionHolder = $('article.tasks');
+    var collectionHolder = $('article.tasks');
 
 // setup an "add a tag" link
-var $addTagLink = $('<div class="row"><div class="col col-lg-12"><a href="#" class="btn btn-info btn-small"><i class="icon-plus"></i>Add a task</a></div></div>');
-var $newLinkLi = $('<div></div>').append($addTagLink);
+    var $addTagLink = $('<div class="row"><div class="col col-lg-12"><a href="#" class="btn btn-info btn-small"><i class="icon-plus"></i>Add a task</a></div></div>');
+    var $newLinkLi = $('<div></div>').append($addTagLink);
 
-jQuery(document).ready(function() {
     // add the "add a tag" anchor and li to the tags ul
     collectionHolder.append($newLinkLi);
 
@@ -432,7 +512,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see next code block)
         addTagForm(collectionHolder, $newLinkLi);
     });
-});
+};
 
 function addTagForm(collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
@@ -455,3 +535,7 @@ function addTagForm(collectionHolder, $newLinkLi) {
         $('.datepicker').hide();
     });
 }
+
+$(document).ready(function(){
+   setupTaskForm();
+});

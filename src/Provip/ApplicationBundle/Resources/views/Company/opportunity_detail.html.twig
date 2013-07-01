@@ -9,11 +9,11 @@
     </div>
 
     <div class="row">
-        <div class="col col-lg-7">
+        <div class="col col-lg-12">
             <form class="form-horizontal complete-opportunity"  action="{{ path('provip_application_opportunity_detail',{'slug':opportunity.slug}) }}" method="POST">
                 <section class="panel">
                     <header class="panel-heading">
-                        <ul class="nav nav-tabs nav-justified">
+                        <ul class="nav nav-tabs pull-right">
                             <li class="active"><a href="#home" data-toggle="tab">General</a></li>
                             <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
                             <li class=""><a href="#goals" data-toggle="tab">Goals</a></li>
@@ -31,12 +31,12 @@
                            {{ form_row(form.mentor) }}
 
                             <div  class="row">
-                                <div class="col col-lg-12">
-                                    <div class="btn-group pull-right">
-                                        <a href="{{ path('provip_application_opportunity_index') }}" class="btn btn-white"><i class="icon-arrow-left"></i>Go back to overview </a>
+                                <div class="col col-lg-9 col-offset-3">
+
+
                                         <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
 
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -55,73 +55,54 @@
 
 
                             <div  class="row">
-                                <div class="col col-lg-12">
-                                    <div class="btn-group pull-right">
-                                        <a href="{{ path('provip_application_opportunity_index') }}" class="btn btn-white"><i class="icon-arrow-left"></i>Go back to overview </a>
+                                <div class="col col-lg-9 col-offset-3">
+
                                         <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
 
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="goals">
 
-                                            <section class="panel-content">
-                                                <article class="media">
-                                                    <div class="pull-left thumb-small">
-                                  <span class="icon-stack">
-                                    <i class="icon-circle text-success icon-stack-base"></i>
-                                    <i class="icon-flag icon-light"></i>
-                                  </span>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="pull-right media-mini text-center text-muted">
-                                                            <strong class="h4">12:18</strong><br>
-                                                            <small class="label bg-light">pm</small>
-                                                        </div>
-                                                        <a href="#" class="h4">Bootstrap 3.0 is comming</a>
-                                                        <small class="block">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small>
-                                                    </div>
-                                                </article>
-                                                <div class="line pull-in"></div>
-                                                <article class="media">
-                                                    <div class="pull-left thumb-small">
-                                  <span class="icon-stack">
-                                    <i class="icon-circle text-danger icon-stack-base"></i>
-                                    <i class="icon-file icon-light"></i>
-                                  </span>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="pull-right media-mini text-center text-muted">
-                                                            <strong class="h4">17</strong><br>
-                                                            <small class="label bg-light">feb</small>
-                                                        </div>
-                                                        <a href="#" class="h4">Bootstrap documents</a>
-                                                        <small class="block">There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</small>
-                                                    </div>
-                                                </article>
-                                                <div class="line pull-in"></div>
-                                                <article class="media">
-                                                    <div class="pull-left thumb-small">
-                                  <span class="icon-stack">
-                                    <i class="icon-circle text-warning icon-stack-base"></i>
-                                    <i class="icon-star icon-light"></i>
-                                  </span>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="pull-right media-mini text-center text-muted">
-                                                            <strong class="h4">09</strong><br>
-                                                            <small class="label bg-light">jan</small>
-                                                        </div>
-                                                        <a href="#" class="h4 text-success">Mobile first html/css framework</a>
-                                                        <small class="block">Bootstrap, Ratchet</small>
-                                                    </div>
-                                                </article>
-                                                <article class="media">
-                                                    <a href="#new-goal" data-toggle="modal" class="btn btn-block btn-info"><i class="icon-plus"></i> PROJECT GOAL</a>
-                                                </article>
-                                            </section>
+                             <section class="panel-content goals">
+
+                                {% for goal in opportunity.projectGoals %}
+
+                                <article class="media">
+
+                                    <div class="pull-left thumb-small">
+
+                                        <span class="icon-stack">
+                                            <i class="icon-circle text-success icon-stack-base"></i>
+                                            <i data-opportunity="{{ opportunity.slug }}" data-goal="{{ goal.id }}"  class="icon-flag icon-light show-goal"></i>
+                                        </span>
+
+                                    </div>
+
+                                    <div class="media-body">
+
+                                        <div class="pull-right media-mini text-center text-muted">
+                                           <a href="#" data-opportunity="{{ opportunity.slug }}" data-goal="{{ goal.id }}" class="show-goal"><small class="label bg-light">{{ goal.tasks | length }} tasks</small><a>
+                                            <a href="#" data-opportunity="{{ opportunity.slug }}" data-goal="{{ goal.id }}" class="delete-goal"><small class="label bg-warning">Delete</small><a>
+
+                                        </div>
+
+                                        <a href="#" data-opportunity="{{ opportunity.slug }}" data-goal="{{ goal.id }}"  class="h4 show-goal">{{ goal.description }}</a>
+
+                                    </div>
+                                 </article>
+
+                                 <div class="line pull-in"></div>
+
+                                 {% endfor %}
+
+
+                                <article class="media">
+                                    <a href="#new-goal" data-toggle="modal" class="btn btn-block btn-info"><i class="icon-plus"></i> PROJECT GOAL</a>
+                                </article>
+                            </section>
 
                         </div>
 
@@ -231,5 +212,34 @@
             </div>
     </div>
     </form>
+
+
+    <div id="edit-goal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Project Goal</h4>
+                </div>
+
+                <div class="modal-body">
+
+
+                    <div class="errors">
+                    </div>
+
+                    <div class="goal-form">
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+
 
 {% endblock %}

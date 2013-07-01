@@ -1,0 +1,21 @@
+
+<article class="media">
+
+    {{ deliverable.description }}
+
+</article>
+
+<div class="line pull-in"></div>
+
+<label>Tasks</label>
+
+<article class="tasks media">
+
+{% for task in deliverable.tasks %}
+
+    <span class="block">{{ task.deadline | date("d-m-Y") }} &mdash; {{ task.title }}</span>
+
+{% endfor %}
+
+</article>
+

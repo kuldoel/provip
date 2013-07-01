@@ -119,13 +119,13 @@ class Opportunity
     protected $mentor;
 
     /**
-     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="opportunity")
+     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="opportunity",cascade={"persist","remove"})
      * @Assert\Valid
      */
     protected $projectGoals;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application", mappedBy="opportunity")
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="opportunity",cascade={"persist","remove"})
      * @Assert\Valid
      */
     protected $applications;

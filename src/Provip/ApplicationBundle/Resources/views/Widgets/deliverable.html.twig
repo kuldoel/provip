@@ -1,0 +1,25 @@
+<article class="media {{ status }}">
+
+    <div class="pull-left thumb-small">
+
+    <span class="icon-stack">
+        <i class="icon-circle text-success icon-stack-base"></i>
+        <i data-opportunity="{{ goal.opportunity.slug }}" data-goal="{{ goal.id }}"  class="icon-flag icon-light show-goal"></i>
+    </span>
+
+    </div>
+
+    <div class="media-body">
+
+        <div class="pull-right media-mini text-center text-muted">
+            <a href="#" data-opportunity="{{ goal.opportunity.slug }}" data-goal="{{ goal.id }}" class="show-goal"><small class="label bg-light">{{ goal.tasks | length }} tasks</small><a>
+                    <a href="#" data-opportunity="{{ goal.opportunity.slug }}" data-goal="{{ goal.id }}" class="delete-goal"><small class="label bg-warning">Delete</small><a>
+
+        </div>
+
+        <a href="#" data-opportunity="{{ goal.opportunity.slug }}" data-goal="{{ goal.id }}"  class="h4 show-goal">{{ goal.description }}</a>
+
+    </div>
+</article>
+
+<div class="line pull-in"></div>

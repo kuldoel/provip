@@ -569,7 +569,7 @@ ul li.list-group-item:nth-child(even) {
     background-color: #FFFF99 !important;
 }
 
-.list-group-item:first-child, table.table tbody tr  {
+.list-group-item:first-child, table.table tbody tr, .goals article  {
     transition-duration: 5s;
     -webkit-transition-duration: 5s; /* Safari */
 }
@@ -595,3 +595,5 @@ ul li.list-group-item:nth-child(even) {
 .tooltip {
     z-index: 9999 !important;
 }
+
+li a .active span.text{display: inline-block !important;}

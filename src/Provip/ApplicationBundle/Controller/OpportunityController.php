@@ -14,6 +14,7 @@ use Provip\UserBundle\Form\Type\CompanyStaffProfileType;
 use Provip\UserBundle\Form\Type\NewStaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,7 +118,8 @@ class OpportunityController extends Controller
                     $em->persist($deliverable);
                     $em->flush();
 
-                    return new Response($deliverable->getDescription(), 201);
+                    return new Response($this->renderView('ProvipApplicationBundle:Widgets:deliverable.html.twig', array('goal' => $deliverable, 'status' => 'new')), 201);
+
 
                 }
                 else
@@ -132,6 +134,74 @@ class OpportunityController extends Controller
         return $this->render('ProvipApplicationBundle:Company:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'form' => $form->createView(), 'form2' => $form2->createView()));
 
     }
+
+    /**
+     * @Route("/company/opportunities/{slug}/goals/{deliverable_id}", options={"expose"=true})
+     * @ParamConverter("deliverable", class="ProvipProvipBundle:Deliverable", options={"id" = "deliverable_id"})
+     */
+    public function editGoalAction(Opportunity $opportunity, Deliverable $deliverable, Request $request)
+    {
+
+        if(!$opportunity->getCompany() == $this->getUser()->getCompany())
+        {
+            return new Response('Not an owner of this opportunity',403);
+        }
+
+        return $this->render('ProvipApplicationBundle:Widgets:deliverable_edit.html.twig', array('deliverable' => $deliverable));
+
+    }
+
+    /**
+     * @Route("/company/opportunities/{slug}/goals/{deliverable_id}/delete", options={"expose"=true})
+     * @ParamConverter("deliverable", class="ProvipProvipBundle:Deliverable", options={"id" = "deliverable_id"})
+     */
+    public function deleteGoalAction(Opportunity $opportunity, Deliverable $deliverable, Request $request)
+    {
+
+        if(!$opportunity->getCompany() == $this->getUser()->getCompany())
+        {
+            return new Response('Not an owner of this opportunity',403);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($deliverable);
+        $em->flush();
+
+        return new Response("Object removed from database", 204);
+    }
+
+    /**
+     * @Route("/company/opportunities/{slug}/toggle", options={"expose"=true})
+     */
+    public function toggleAction(Opportunity $opportunity)
+    {
+
+        if(!$opportunity->getCompany() == $this->getUser()->getCompany())
+        {
+            return new Response('Not an owner of this opportunity',403);
+        }
+
+        if($opportunity->getPublished())
+        {
+            $state = 'complete';
+            $opportunity->setPublished(false);
+        }
+        else
+        {
+            $state = 'published';
+            $opportunity->setPublished(true);
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($opportunity);
+        $em->flush();
+
+        return new Response($state, 200);
+    }
+
+
+
 
     /**
      * @Route("/company/opportunities/delete/{slug}")
