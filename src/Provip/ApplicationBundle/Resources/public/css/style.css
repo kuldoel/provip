@@ -236,7 +236,7 @@ fieldset[disabled] .btn.active {
 .icon-stack [class^="icon-"]:before, .icon-stack [class*=" icon-"]:before{margin: 0;}
 .icon-xlarge:before{font-size:1.5em;vertical-align: -14%;}
 .btn-block{padding-left: 12px;padding-right: 12px}
-.text-active, .active .text{display: none !important;}
+.text-active, {display: none !important;}
 .active .text-active{display: inline-block !important;}
 .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active, .btn-link.active{border:none;background-color: transparent;background-image: none;-webkit-box-shadow: none;box-shadow: none;text-decoration: none;color: #3a5a7a}
 form, .carousel, .form-horizontal .control-group, .nav-tabs, .alert, .panel, .progress, .breadcrumb, .accordion{margin-bottom: 10px}
@@ -597,3 +597,17 @@ ul li.list-group-item:nth-child(even) {
 }
 
 li a .active span.text{display: inline-block !important;}
+li a span.text{display: inline-block !important;}
+form li a span.text{display: inline-block !important;}
+
+ul.thumbnails {
+    list-style-type: none;
+}
+
+.multi-padder {
+    padding: 9px;
+}
+
+.ul-break {
+    margin-top: 25px;
+}

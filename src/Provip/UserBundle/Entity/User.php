@@ -101,8 +101,8 @@ class User extends BaseUser
      * Language is an relation attribute of Student and is the native language of the Student
      *
      *
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Language")
-     * @ORM\JoinColumn(name="primarylanguage_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Language")
+     * @ORM\JoinColumn(name="primarylanguage_id", referencedColumnName="id", unique=false)
      * @Assert\Valid
      */
     protected $language;
@@ -114,7 +114,7 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Entity\Language")
      * @ORM\JoinTable(name="users_supportedlanguages",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id")}
      *      )
      * @Assert\Valid
      */

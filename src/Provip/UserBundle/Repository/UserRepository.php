@@ -25,4 +25,14 @@ class UserRepository extends EntityRepository
 
     }
 
+    public function findByRole($role) {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from('ProvipUserBundle:User', 'u')
+            ->where('u.roles LIKE :roles')
+            ->addOrderBy('u.id', 'desc')
+            ->setParameter('roles', '%' . $role . '%');
+        return $qb->getQuery()->getResult();
+    }
+
 }

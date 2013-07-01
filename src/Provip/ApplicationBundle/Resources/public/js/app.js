@@ -55,6 +55,24 @@ Date.now = Date.now || function() { return +new Date; };
   $(function(){
 
 
+     $(document).on('click', '.student-details', function() {
+
+         $btn  = $(this);
+         $slug = $(this).attr('data-student');
+
+         var jqxhr = $.get(Routing.generate('provip_application_marketplace_detailuser',{ slug: $slug }), function() {
+         })
+         .done(function(data) {
+                 $btn.popover({
+                     'content': data
+                 });
+         })
+         .always(function() {
+
+         });
+
+     })
+
      $(document).on('click', '.remove-task-pre-submit', function(e) {
          $btn = $(e.target);
          console.log($btn.closest('.row').remove());
@@ -231,6 +249,7 @@ Date.now = Date.now || function() { return +new Date; };
 
           $.post(Routing.generate('provip_application_opportunity_index'),$('form.new-opportunity').serialize())
               .fail(function(xhr, status, error){
+                  $('.errors').show();
                   $('.errors').html(xhr.responseText);
               })
               .done(function(data){
@@ -537,5 +556,6 @@ function addTagForm(collectionHolder, $newLinkLi) {
 }
 
 $(document).ready(function(){
+   $('a[rel="popover"]').popover();
    setupTaskForm();
 });

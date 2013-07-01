@@ -12,9 +12,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\UserBundle\Mailer\MailerInterface;
+use FOS\UserBundle\Util\TokenGeneratorInterface;
 
 class CompanyController extends Controller
 {
+
+    protected $mailer;
+    protected $tokenGenerator;
+
+
     /**
      * @Route("/company")
      */
@@ -118,6 +125,30 @@ class CompanyController extends Controller
     }
 
     /**
+     * @Route("/company/company-settings/delete-picture")
+     */
+    public function deleteCompanyPictureAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $company = $this->getUser()->getCompany();
+        $picture = $company->getPicture();
+
+
+        if($picture instanceof Picture)
+
+        {
+            $company->setPicture(null);
+            $em->flush();
+        }
+
+        $this->get('session')->getFlashBag()->add('success', 'Your company logo was succesfully deleted.');
+        return $this->redirect($this->generateUrl('provip_application_company_info'));
+
+    }
+
+    /**
      * @Route("/company/staff", options={"expose"=true})
      */
     public function staffAction(Request $request)
@@ -135,6 +166,9 @@ class CompanyController extends Controller
 
             if ($form->isValid()) {
 
+                $this->mailer = $this->get('fos_user.mailer');
+                $this->tokenGenerator = $this->get('fos_user.util.token_generator');
+
                 $userManager = $this->get('fos_user.user_manager');
 
                 $user->addRole('ROLE_COMPANY_STAFF');
@@ -142,8 +176,14 @@ class CompanyController extends Controller
 
                 $userManager->updateUser($user);
 
-                // @TODO
-                // Send email to new staff member to reset password
+                if (null === $user->getConfirmationToken()) {
+                    /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
+                    $user->setConfirmationToken($this->tokenGenerator->generateToken());
+                }
+
+                $this->mailer->sendResettingEmailMessage($user);
+                $user->setPasswordRequestedAt(new \DateTime());
+                $userManager->updateUser($user);
 
                 return new Response($this->renderView('ProvipApplicationBundle:Widgets:staff_member.html.twig', array('user' => $user, 'status' => 'new')), 201);
 

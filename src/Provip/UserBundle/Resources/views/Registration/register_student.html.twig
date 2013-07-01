@@ -12,6 +12,7 @@
                 </header>
                 <form action="{{ path('provip_user_provipregistration_registerasstudent') }}" {{ form_enctype(form) }} method="POST" class="padder">
 
+                    {{ form_errors(form) }}
 
                     <div class="block {% if form.firstName.vars.errors|length %} has-error {% endif %}">
                         {{ form_label(form.firstName) }}

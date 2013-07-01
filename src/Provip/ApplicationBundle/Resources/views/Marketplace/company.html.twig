@@ -1,0 +1,96 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-9">
+            <div class="row">
+                <ul class="thumbnails">
+                    {% for student in students %}
+                    <li class="col col-lg-4">
+                        <div class="thumbnail">
+                            <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if student.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ student.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" />
+                                    {% endif %}
+                                </span>
+                                <div class="pull-right text-success m-t-small">
+                                    <i class="icon-circle" class="has-tooltip" data-toggle="tooltip" title="This user is currently in an internship"></i>
+                                </div>
+                                <div class="media-body">
+                                    <div><a href="#" class="h5">{{ student }}</a></div>
+                                    <small class="text-muted">{{ student.nationality }}</small>
+                                </div>
+                            </div>
+                            <div class="caption">
+
+                                <div class="line pull-in"></div>
+
+                                <table class="table table-striped m-b-none text-small">
+                                    <tr>
+                                        <td><small>University</small></td>
+                                        <td><small>{{ student.enrollment.studyprogram.higherEducationalInstitution }}</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td><small>Study Program</small></td>
+                                        <td><small>{{ student.enrollment.studyprogram }}</small></td>
+                                    </tr>
+                                </table>
+
+                                <div class="line pull-in"></div>
+                                <p>
+                                    <a rel="popover" data-content="
+                                    &lt;table class=&quot;table&quot;&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Skills&lt;/td&gt;
+        &lt;td&gt;
+            {% for skill in student.enrollment.studyProgram.skills %}
+                &lt;span class=&quot;label bg-success&quot;&gt;{{ skill.value }}&lt;/span&gt;
+            {% endfor %}
+        &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Language&lt;/small&gt;&lt;/td&gt;
+        &lt;td&gt;{{ student.language }}&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Other languages&lt;/td&gt;
+        &lt;td&gt;
+            {% for language in student.supportedLanguages %}
+                &lt;span class=&quot;label bg-success&quot;&gt;{{ language.valueAttr }}&lt;/span&gt;
+            {% endfor %}
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+                                    " data-html="true" data-student="{{ student.slug }}" data-placement="right" data-title="{{ student }}" class="btn btn-white btn-small">Details</a>
+
+                                    <a class="btn btn-white btn-small"><i class="icon-envelope"></i> Send Message</a>
+
+                                </p>
+
+
+                            </div>
+                        </div>
+                    </li>
+                    {% if loop.index is divisibleby(3) %}
+                        </ul>
+                        </div>
+                        <div class="row ul-break">
+                         <ul class="thumbnails">
+                    {% endif  %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

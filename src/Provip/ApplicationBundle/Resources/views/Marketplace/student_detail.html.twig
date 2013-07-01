@@ -1,0 +1,22 @@
+<table class="table">
+    <tr>
+        <td>Skills</td>
+        <td>
+            {% for skill in student.enrollment.studyProgram.skills %}
+                <span class="label bg-success">{{ skill.value }}</span>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Language</small></td>
+        <td>{{ student.language }}</small></td>
+    </tr>
+    <tr>
+        <td>Other languages</td>
+        <td>
+            {% for language in student.supportedLanguages %}
+                <span class="label bg-success">{{ language.valueAttr }}</span>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
