@@ -1,0 +1,76 @@
+{% extends "ProvipApplicationBundle::base_student.html.twig" %}
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-9">
+            <div class="row">
+                <ul class="thumbnails">
+                    {% for opportunity in opportunities %}
+                    <li class="col col-lg-4">
+                        <div class="thumbnail">
+                            <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if opportunity.company.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ opportunity.company.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-company.png') }}" />
+                                    {% endif %}
+                                </span>
+
+                                <div class="media-body">
+                                    <div><a href="#" class="h5">{{ opportunity.title }}</a></div>
+                                    <small class="text-muted">{{ opportunity.company }}, {{ opportunity.company.country }} <br />
+                                    <i class="icon-user"></i> {{ opportunity.nbrOfPositions }} &mdash; from {{ opportunity.startDate | date('M Y') }} until {{ opportunity.endDate | date('M Y') }}</small>
+                                </div>
+                            </div>
+                            <div class="caption">
+
+                                <div class="line pull-in"></div>
+
+                                <div class="fixed-height">
+
+                                    <p>
+                                        <small>
+                                            {% if opportunity.description | length > 300 %}
+                                                {{ opportunity.description[:300] }}...
+
+                                            {% else %}
+                                                {{ opportunity.description }}
+                                            {% endif %}
+                                        </small>
+                                    </p>
+
+                                </div>
+
+
+                                <div class="line pull-in"></div>
+                                <p>
+
+                                    <a class="btn btn-white btn-small" href="{{ path('provip_application_marketplace_detail', {'slug': opportunity.slug}) }}"><i class="icon-list"></i> Details</a>
+
+                                </p>
+
+
+                            </div>
+                        </div>
+                    </li>
+                    {% if loop.index is divisibleby(3) %}
+                        </ul>
+                        </div>
+                        <div class="row ul-break">
+                         <ul class="thumbnails">
+                    {% endif  %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
