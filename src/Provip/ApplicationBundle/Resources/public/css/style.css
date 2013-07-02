@@ -569,7 +569,7 @@ ul li.list-group-item:nth-child(even) {
     background-color: #FFFF99 !important;
 }
 
-.list-group-item:first-child, table.table tbody tr, .goals article  {
+.list-group-item:first-child, table.table tbody tr, .goals article, .skills span  {
     transition-duration: 5s;
     -webkit-transition-duration: 5s; /* Safari */
 }
@@ -611,3 +611,20 @@ ul.thumbnails {
 .ul-break {
     margin-top: 25px;
 }
+
+.kpi-title {
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #111;
+}
+
+.kpi-title + p.text-small {
+    margin: 0 0 20px!important;
+}
+
+.skills .btn {
+    margin-bottom: 7px;
+}
+

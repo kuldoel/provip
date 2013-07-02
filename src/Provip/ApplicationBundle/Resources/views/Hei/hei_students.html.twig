@@ -1,38 +1,34 @@
 {% extends "ProvipApplicationBundle::base_hei.html.twig" %}
-{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+
 
 {% block main %}
 <section class="panel">
-    <header class="panel-heading bg bg-default">
-        <div class="row">
-            <div class="col col-lg-10">
-                <input type="text" class="input-small block hei-staff-search" placeholder="Search for Staff Members">
-            </div>
-            <div class="col col-lg-2">
-                <a data-toggle="modal" href="#new-staff-member" class="btn btn-info btn-small block"><i class="icon-plus"></i> STAFF MEMBER</a>
-            </div>
-        </div>
+    <header class="panel-heading bg-default">
+        Students
     </header>
     <ul id="staff-list" class="list-group list-group-flush m-t-n">
-        {% for user in staff %}
+        {% for e in enrollments %}
         <li class="list-group-item">
             <div class="media">
                 <span class="pull-left thumb-small">
-                    {% if user.picture %}
-                        <img src="{{(user.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ user }}" class="img-rounded">
+                    {% if e.student.picture %}
+                        <img src="{{(e.student.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ e.student }}" class="img-rounded">
                     {% else %}
-                        <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ user }}" class="img-rounded">
+                        <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ e.student }}" class="img-rounded">
                     {% endif %}
 
                 </span>
-                <div class="pull-right {% if user.lastLogin %}text-success{% else %}text-danger{% endif %} m-t-small">
-                    <i class="icon-circle"></i>
+                <div class="pull-right">
+                   {% if e.approved %}
+                   {% else %}
+                       <button data-enrollment="{{ e.id }}" class="btn btn-success btn-small approve">Approve Enrollment</button>
+                   {% endif %}
                 </div>
                 <div class="media-body">
-                    <div><a href="#" class="h5">{{ user }}</a></div>
+                    <div><a href="#" class="h5">{{ e.student }}</a></div>
                     <small class="text-muted">
-                        {% if user.lastLogin %}
-                        <span class="moment">{{ user.lastLogin | date("Ymd H:m:s")  }}</span>
+                        {% if e.student.lastLogin %}
+                        <span class="moment">{{ e.student.lastLogin | date("Ymd H:m:s")  }}</span>
                         {% else %}
                             Did not log in yet
                         {% endif %}
@@ -45,37 +41,6 @@
 </section>
 
 
-<!-- .modal -->
-
-<form class="form-horizontal new-staff" action="{{ path('provip_application_hei_staff') }}" method="POST">
-<div id="new-staff-member" class="modal fade">
-    <form class="m-b-none">
-        <div class="modal-dialog">
-           <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-                    <h4 class="modal-title" id="myModalLabel">Create a new staff member</h4>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="errors">
-
-                    </div>
-
-                        {{ form_widget(form) }}
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-small btn-primary new-hei-staff">Create</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div>
-</div>
-</form>
-<!-- / .modal -->
 {% endblock %}
 
 

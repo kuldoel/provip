@@ -82,6 +82,28 @@ Date.now = Date.now || function() { return +new Date; };
           $('.datepicker').hide();
       });
 
+
+      $('a.new-skill').click(function(e){
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_hei_info'),$('form.new-skill').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('div.skills').append(data);
+                  setTimeout(function() {$('div.skills .new').removeClass('new')}, 0);
+                  $('form.new-skill').trigger("reset");
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
       $('button.new-staff').click(function(e){
 
           e.preventDefault();
@@ -90,6 +112,7 @@ Date.now = Date.now || function() { return +new Date; };
 
           $.post(Routing.generate('provip_application_company_staff'),$('form.new-staff').serialize())
               .fail(function(xhr, status, error){
+                $('.errors').show();
                 $('.errors').html(xhr.responseText);
               })
               .done(function(data){
@@ -104,6 +127,31 @@ Date.now = Date.now || function() { return +new Date; };
               })
 
       });
+
+      $('button.new-hei-staff').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_hei_staff'),$('form.new-staff').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-staff-member').modal('hide');
+                  $('#staff-list').prepend(data);
+                  setTimeout(function() {$('#staff-list .new').removeClass('new')}, 0);
+                  $('form.new-staff').trigger("reset");
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
 
       $('button.new-goal').click(function(e){
 
@@ -121,6 +169,31 @@ Date.now = Date.now || function() { return +new Date; };
                   $('#new-goal').modal('hide');
                   $('.panel-content.goals').prepend(data);
                   setTimeout(function() {$('.panel-content .new').removeClass('new')}, 0);
+                  $('form.new-goal').trigger("reset");
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $('button.new-learning-goal').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_hei_info'),$('form.new-goal').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+
+                  $('#new-goal').modal('hide');
+                  $('ul.goals').prepend(data);
+                  setTimeout(function() {$('ul.goals .new').removeClass('new')}, 0);
                   $('form.new-goal').trigger("reset");
                   $('.errors').hide();
               })
@@ -229,6 +302,32 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+      $('.approve').click(function(){
+
+          var btn = $(this);
+
+          $('.loader').show();
+
+          var enrollment = $(this).attr('data-enrollment');
+
+          var jqxhr = $.get(Routing.generate('provip_application_hei_approve',{ id: enrollment }), function() {
+              console.log("approving...")
+          })
+              .done(function(data) {
+                  console.log(data);
+                  if(data == "complete")
+                  {
+                      btn
+                          .removeClass('btn-success')
+                          .addClass('btn-disabled')
+                          .text('Approved')
+                  }
+              })
+              .always(function() { $('.loader').hide(); });
+
+
+      });
+
 
 
       $("form.complete-opportunity :input").focus(function() {
@@ -270,6 +369,21 @@ Date.now = Date.now || function() { return +new Date; };
           $('.loader').show();
 
           $.get(Routing.generate('provip_application_company_search',{ q: $(this).val() }))
+              .fail(function(xhr, status, error){
+                  alert(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#staff-list').html(data);
+                  $('.loader').hide();
+              })
+      });
+
+
+      $('.hei-staff-search').keyup(function() {
+
+          $('.loader').show();
+
+          $.get(Routing.generate('provip_application_hei_search',{ q: $(this).val() }))
               .fail(function(xhr, status, error){
                   alert(xhr.responseText);
               })
@@ -555,7 +669,18 @@ function addTagForm(collectionHolder, $newLinkLi) {
     });
 }
 
+function setupBoxes() {
+    boxes = $('.fixed-height');
+    maxHeight = Math.max.apply(
+        Math, boxes.map(function() {
+            return $(this).height();
+        }).get());
+    boxes.height(maxHeight);
+}
+
 $(document).ready(function(){
    $('a[rel="popover"]').popover();
    setupTaskForm();
+   setupBoxes();
+
 });

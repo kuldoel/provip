@@ -3,6 +3,7 @@
 namespace Provip\ApplicationBundle\Controller;
 
 use Provip\EventsBundle\Entity\Picture;
+use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
 use Provip\UserBundle\Entity\User;
 use Provip\UserBundle\Form\Type\CompanyStaffProfileType;
@@ -38,12 +39,22 @@ class MarketplaceController extends Controller
         return $this->render('ProvipApplicationBundle:Marketplace:student.html.twig', array('opportunities' => $opportunities));
     }
 
+
     /**
-     * @Route("/company/marketplace/student/{slug}", options={"expose"=true})
+     * @Route("/student/marketplace/internship/{slug}", options={"expose"=true})
      */
-    public function detailUserAction(User $user)
+    public function detailAction(Opportunity $opportunity)
     {
-        return new Response($this->renderView('ProvipApplicationBundle:Marketplace:student_detail.html.twig', array('student' => $user)), 200);
+        if($opportunity->getPublished())
+        {
+            return $this->render('ProvipApplicationBundle:Marketplace:opportunity_detail.html.twig', array('opportunity' => $opportunity));
+        }
+        else
+        {
+            return new Response("",404);
+        }
+
+
     }
 
 }

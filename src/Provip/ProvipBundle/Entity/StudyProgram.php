@@ -58,6 +58,11 @@ class StudyProgram
      */
     protected $staff;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User", mappedBy="adminOf")
+     */
+    protected $admin;
+
 
     /**
      * Constructor
@@ -246,6 +251,23 @@ class StudyProgram
     {
         return $this->getName();
     }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
 
 
 }

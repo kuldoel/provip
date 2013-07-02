@@ -18,6 +18,7 @@ class HigherEducationalInstitution extends Organization
      */
     protected $studyPrograms;
 
+
     /**
      * Constructor
      */
@@ -59,4 +60,7 @@ class HigherEducationalInstitution extends Organization
     {
         return $this->studyPrograms;
     }
+
+
+
 }

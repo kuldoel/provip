@@ -1,0 +1,138 @@
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
+
+{% block main %}
+<div class="multi-padder">
+</div>
+<div class="row">
+    <div class="col col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">
+                {{ app.user.adminOf }}
+            </header>
+
+            <div class="panel-content">
+
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <label>Name</label>
+                    </div>
+                    <div class="col col-lg-9">
+                        <p>{{ studyProgram }} ({{ studyProgram.higherEducationalInstitution }})</p>
+                    </div>
+                </div>
+
+                <div class="line pull-in"></div>
+
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <label>Skills</label>
+                    </div>
+                    <div class="col col-lg-9">
+                        <div class="skills">
+                            {% for skill in studyProgram.skills %}
+                               <button class="btn btn-white btn-small">{{ skill.value }}</button>
+                            {% endfor %}
+                        </div>
+                        <div class="multi-padder">
+                        </div>
+                        <form class="new-skill" action="#" method="POST">
+                            <div class="row">
+                                <div class="col col-lg-8">
+                                    {{  form_widget(formSkill) }}
+                                </div>
+                                <div class="col col-lg-4">
+                                    <label>Click to add</label>
+                                    <a class="btn btn-success new-skill block" href="#">Add</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="line pull-in"></div>
+
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <label>Learning Goals</label>
+                    </div>
+                    <div class="col col-lg-9">
+                        <ul class="goals">
+                            {% for learningGoal in studyProgram.learningGoals %}
+                                <li>
+                                    {{ learningGoal.description }}
+                                    <ul>
+                                        {% for task in learningGoal.tasks %}
+                                            <li>{{ task.title }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="#new-goal" class="btn btn-info btn-small" data-toggle="modal"><i class="icon-plus"> LEARNING GOAL</i></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </section>
+    </div>
+</div>
+
+
+    <form class="form-horizontal new-goal"  action="{{ path('provip_application_hei_info') }}" method="POST">
+        <div id="new-goal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">Add a new learning goal</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <div class="errors">
+                        </div>
+
+                        <article class="media">
+
+                            {{ form_row(formGoal.description) }}
+
+                        </article>
+
+                        <div class="line pull-in"></div>
+
+                        {{ form_label(formGoal.tasks) }}
+
+                        <article class="tasks media" data-prototype="
+
+                            &lt;div class=&quot;row&quot; style=&quot;margin-bottom: 20px&quot; &gt;
+                            &lt;div class=&quot;col col-lg-8&quot;&gt;
+                              {{ form_widget(formGoal.tasks.vars.prototype.title)|e }}
+                            &lt;/div&gt;
+                            &lt;div class=&quot;col col-lg-3&quot;&gt;
+                               {{ form_widget(formGoal.tasks.vars.prototype.deadline)|e }}
+                            &lt;/div&gt;
+                            &lt;div class=&quot;col col-lg-1&quot;&gt;
+                              &lt;a href=&quot;#&quot; class=&quot;remove-task-pre-submit&quot;&gt;&lt;span class=&quot;text-danger&quot;&gt;&lt;i class=&quot;icon-remove&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        ">
+
+                        </article>
+
+                        {{ form_widget(formGoal._token) }}
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-small btn-primary new-learning-goal">Create</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+        </div>
+    </form>
+{% endblock %}

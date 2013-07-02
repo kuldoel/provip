@@ -1,6 +1,6 @@
 <?php
 
-namespace Provip\ProvipBundle\Form;
+namespace Provip\ProvipBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,10 +11,13 @@ class SkillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('value')
-            ->add('slug')
-            ->add('studyPrograms')
-            ->add('opportunities')
+            ->add('value', 'text', array(
+                    'label' => 'Add a new skill',
+                    'attr' =>  array(
+                        'placeholder' => 'Skill name'
+                    )
+                )
+            )
         ;
     }
 

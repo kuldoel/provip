@@ -12,7 +12,25 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ProvipApplicationBundle:Default:index.html.twig');
+        $securityContext = $this->container->get('security.context');
+
+        if($securityContext->isGranted('ROLE_STUDENT'))
+        {
+            return $this->redirect($this->generateUrl('provip_application_student_dashboard'));
+        }
+        elseif($securityContext->isGranted('ROLE_COMPANY_STAFF'))
+        {
+            return $this->redirect($this->generateUrl('provip_application_company_dashboard'));
+        }
+        elseif($securityContext->isGranted('ROLE_HEI_STAFF'))
+        {
+            return $this->redirect($this->generateUrl('provip_application_hei_dashboard'));
+        }
+        else
+        {
+            return $this->render('ProvipApplicationBundle:Default:main.html.twig');
+        }
+
     }
 
     /**

@@ -519,6 +519,11 @@ class Opportunity
         return $this->complete;
     }
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
 
 
 

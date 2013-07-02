@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CompanyStaffProfileType extends AbstractType
+class HeiStaffProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,6 +28,6 @@ class CompanyStaffProfileType extends AbstractType
 
     public function getName()
     {
-        return 'provip_userbundle_companystaffprofiletype';
+        return 'provip_userbundle_heistaffprofiletype';
     }
 }

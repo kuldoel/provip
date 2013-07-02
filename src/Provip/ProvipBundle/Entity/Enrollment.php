@@ -35,6 +35,12 @@ class Enrollment
      **/
     protected $studyProgram;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User", mappedBy="enrollment")
+     */
+    protected $student;
+
+
     function __construct(StudyProgram $studyProgram)
     {
         $this->studyProgram = $studyProgram;
@@ -96,4 +102,22 @@ class Enrollment
     {
         return $this->studyProgram;
     }
+
+    /**
+     * @param mixed $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+
 }

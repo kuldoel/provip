@@ -206,6 +206,12 @@ class User extends BaseUser
     */
     protected $picture;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\StudyProgram", inversedBy="admin")
+     * @ORM\JoinColumn(name="is_admin_of_studyprogram", referencedColumnName="id")
+     */
+    protected $adminOf;
+
 
     /**
      * Constructor
@@ -765,4 +771,40 @@ class User extends BaseUser
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
+
+    /**
+     * @param mixed $teachesAt
+     */
+    public function setTeachesAt($teachesAt)
+    {
+        $this->teachesAt = $teachesAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeachesAt()
+    {
+        return $this->teachesAt;
+    }
+
+    /**
+     * @param mixed $adminOf
+     */
+    public function setAdminOf($adminOf)
+    {
+        $this->adminOf = $adminOf;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdminOf()
+    {
+        return $this->adminOf;
+    }
+
+
+
+
 }
