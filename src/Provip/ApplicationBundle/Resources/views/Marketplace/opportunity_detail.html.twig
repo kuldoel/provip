@@ -60,9 +60,20 @@
 
         <div class="col col-lg-4">
             <div class="panel">
-                <a href="#" class="btn btn-info btn-s-large block">Apply</a>
+                {% if application %}
+                <a href="{{ path('provip_application_application_apply', {'slug': opportunity.slug}) }}" class="btn btn-default btn-s-large block"><i class="icon-check"></i> Applied</a>
+
+                <div class="line pull-in"></div>
+                <p class="text-muted text-small text-center">You have applied for this internship. Click on the button to review your application</p>
+
+                {% else %}
+                <a href="{{ path('provip_application_application_apply', {'slug': opportunity.slug}) }}" class="btn btn-info btn-s-large block">Apply</a>
+
                 <div class="line pull-in"></div>
                 <p class="text-muted text-small text-center">You will be guided through the application process where you will create an internship charter. Once approved by the company and your institution this internship will appear in "My Internships"</p>
+
+                {% endif %}
+
             </div>
 
             <div class="panel">

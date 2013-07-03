@@ -73,6 +73,103 @@ Date.now = Date.now || function() { return +new Date; };
 
      })
 
+      $(document).on('click', '.add-new-activity', function() {
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $application = $(this).attr('data-application');
+          $task        = $(this).attr('data-task');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $btn2 = $('button.new-activity');
+          $btn2.attr('data-application', $application);
+          $btn2.attr('data-task', $task);
+          $btn2.attr('data-append-to', $appendTo)
+
+          var jqxhr = $.get(Routing.generate('provip_application_application_addactivitytotaskforapplication',{ task: $task, application: $application }), function() {
+          })
+              .done(function(data) {
+                  $('#new-activity').modal('show');
+                  $('#new-activity-form').html(data);
+                  $('.date').datepicker().on('changeDate', function(ev){
+                      $('.datepicker').hide();
+                  });
+              })
+              .always(function() {
+                 $('.loader').hide();
+              });
+
+      })
+
+      $('button.new-activity').click(function(e){
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $application = $(this).attr('data-application');
+          $task        = $(this).attr('data-task');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $.post(Routing.generate('provip_application_application_addactivitytotaskforapplication',{ task: $task, application: $application }),$('form.new-activity').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#'+$appendTo).append(data);
+                  setTimeout(function() {$('.activities .new').removeClass('new')}, 0);
+                  $('form.new-activity').trigger("reset");
+                  $('.errors').hide();
+                  $('#new-activity').modal('hide');
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $(document).on('click', 'button.submit-for-review', function(e) {
+
+          $btn = $(this);
+          $slug = $(this).attr('data-slug');
+
+
+          $('.loader').show();
+          console.log('saving...');
+
+          $.post(Routing.generate('provip_application_application_apply', {slug: $slug}),$('form.application-settings').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  console.log('saved and submitted for review!');
+                  $('.errors').hide();
+                  $btn
+                      .removeClass('submit-for-review')
+                      .removeClass('btn-info')
+                      .addClass('btn-success')
+                      .addClass('active')
+                      .text('Submitted');
+
+                  $('.progress-bar')
+                      .css('width', '50%')
+                      .removeClass('progress-bar-danger')
+                      .addClass('progress-bar-success')
+                      .attr('data-original-title', '50%');
+
+                  $('.information')
+                      .removeClass('text-danger')
+                      .addClass('text-muted')
+                      .text('Your application has been submitted and will now be reviewed by your school and the internship company.')
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
      $(document).on('click', '.remove-task-pre-submit', function(e) {
          $btn = $(e.target);
          console.log($btn.closest('.row').remove());
@@ -266,6 +363,24 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+      $('body').on('click', '.delete-activity', function(e){
+
+          $('.loader').show();
+
+          $activity = $(this).attr('data-activity');
+          $element  = $(this).attr('data-element');
+
+
+          var jqxhr = $.get(Routing.generate('provip_application_application_removeactivity',{ activity : $activity  }), function() {
+              console.log("deleting activity")
+          })
+              .done(function(data) {
+                  console.log($('#'+$element).remove());
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
       $('.toggle-opportunity').click(function(){
 
 
@@ -364,6 +479,39 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+
+      $('button.reject').click(function(e){
+
+          e.preventDefault();
+
+          $btn         = $(this);
+          $application = $(this).attr('data-application');
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_application_reviewascompany', { application: $application}),$('form.reject').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#reject').modal('hide');
+                  $('.reject-application-company')
+                      .addClass('active')
+                      .text('Rejected');
+
+                  $('.accept-application-company').remove();
+
+                  $('.progress-bar').css('width', '100%').removeClass('progress-bar-success').addClass('progress-bar-danger');
+
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
       $('.staff-search').keyup(function() {
 
           $('.loader').show();
@@ -391,6 +539,32 @@ Date.now = Date.now || function() { return +new Date; };
                   $('#staff-list').html(data);
                   $('.loader').hide();
               })
+      });
+
+
+      $('body').on('click', '.accept-application-company', function(e){
+
+          $('.loader').show();
+
+          $btn         = $(this);
+          $application = $(this).attr('data-application');
+
+          var jqxhr = $.get(Routing.generate('provip_application_application_acceptascompany',{ application: $application  }), function() {
+              console.log("accepting")
+          })
+              .done(function(data) {
+                  console.log('accepted');
+                  $btn
+                      .removeClass('accept-application-company')
+                      .addClass('active')
+                      .text('Accepted!');
+
+                  $('.reject-application-company').remove();
+
+                  $('.progress-bar').css('width', data+'%')
+              })
+              .always(function() { $('.loader').hide(); });
+
       });
 
 
@@ -680,6 +854,7 @@ function setupBoxes() {
 
 $(document).ready(function(){
    $('a[rel="popover"]').popover();
+   $("[data-toggle-tooltip]").tooltip();
    setupTaskForm();
    setupBoxes();
 

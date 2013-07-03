@@ -49,7 +49,7 @@ class Activity
      * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
-    protected $state;
+    protected $state = "Not yet started";
 
     /**
      *
@@ -72,6 +72,13 @@ class Activity
      * @Assert\Valid
      **/
     protected $application;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="activities")
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     * @Assert\Valid
+     **/
+    protected $student;
 
     /**
      * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ActivityUpdateEvent", mappedBy="activity")
@@ -291,4 +298,22 @@ class Activity
     {
         return $this->activityUpdateEvents;
     }
+
+    /**
+     * @param mixed $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+
 }

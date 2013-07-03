@@ -1,0 +1,10 @@
+<li class="{{ status }}" id="activity-{{ activity.id }}">
+    <strong><span class="label label-success">You</span> {{ activity.title }}</strong> <a data-element="activity-{{ activity.id }}" data-activity="{{ activity.id }}" class="delete-activity"><span class="text-danger"><i class="icon-remove-circle"></i></span></a>
+    <p class="text-muted text-small">
+        {{ activity.description }} <br>
+        {{ activity.deadline | date("d M Y") }} <br>
+        Occurs {{ activity.nbrOfOccurrences }} times<br>
+        {{ activity.state }}
+    </p>
+
+</li>

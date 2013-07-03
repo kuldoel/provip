@@ -1,0 +1,437 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+
+
+        <div class="col col-lg-8">
+
+            <div class="row">
+                <div class="col col-lg-6">
+
+                    <div class="panel">
+                        <header class="panel-heading">
+                            Learning Goals from {{ application.student.enrollment.studyProgram }}
+                        </header>
+
+                        <div class="panel-content">
+                            <!-- .accordion -->
+                            <div class="accordion" id="accordion2">
+                                {% for goal in application.student.enrollment.studyProgram.learningGoals %}
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse-learning-{{ loop.index }}">
+                                                <i class="icon-flag"></i> {{ goal.description }}
+                                                <span class="pull-right"><span class="label">{{ goal.tasks | length }} tasks</span></span>
+                                            </a>
+                                        </div>
+                                        <div id="collapse-learning-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
+                                            <div class="accordion-inner">
+                                                {% for task in goal.tasks %}
+                                                    <article class="media">
+                                            <span class="pull-left thumb-small">
+
+                                            </span>
+                                                        <div class="media-body">
+                                                            <div class="pull-right media-mini text-center text-muted">
+                                                                <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                            </div>
+
+                                                <span class="h4">
+                                                    {{ task.title }}
+                                                </span>
+
+                                                            <ul class="activities" id="list-learning-{{ task.id }}-{{ loop.index }}">
+                                                                {% for activity in activities %}
+                                                                    {% if activity.task.id == task.id %}
+                                                                        <li id="activity-{{ activity.id }}">
+                                                                            <strong><span class="label label-success">You</span> {{ activity.title }}</strong>
+                                                                            <p class="text-muted text-small">
+                                                                                {{ activity.description }} <br>
+                                                                                {{ activity.deadline | date("d M Y") }} <br>
+                                                                                Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                                {{ activity.state }}
+                                                                            </p>
+
+                                                                        </li>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </article>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- / .accordion -->
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="col col-lg-6">
+
+                    <div class="panel">
+                        <header class="panel-heading">
+                            Project Goals from {{ opportunity.company }}
+                        </header>
+
+                        <div class="panel-content">
+                            <!-- .accordion -->
+                            <div class="accordion" id="accordion3">
+                                {% for goal in opportunity.projectGoals %}
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse-project-{{ loop.index }}">
+                                                <i class="icon-flag"></i> {{ goal.description }}
+                                                <span class="pull-right"><span class="label"add-new-activity>{{ goal.tasks | length }} tasks</span></span>
+                                            </a>
+                                        </div>
+                                        <div id="collapse-project-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
+                                            <div class="accordion-inner">
+                                                {% for task in goal.tasks %}
+                                                    <article class="media">
+                                            <span class="pull-left thumb-small">
+
+                                            </span>
+                                                        <div class="media-body">
+                                                            <div class="pull-right media-mini text-center text-muted">
+                                                                <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                            </div>
+
+                                                <span class="h4">
+                                                    {{ task.title }}
+                                                </span>
+
+                                                            <ul class="activities" id="list-project-{{ task.id }}-{{ loop.index }}">
+                                                                {% for activity in activities %}
+                                                                    {% if activity.task.id == task.id %}
+                                                                        <li id="activity-{{ activity.id }}">
+                                                                            <strong><span class="label label-success">You</span> {{ activity.title }}</strong>
+                                                                            <p class="text-muted text-small">
+                                                                                {{ activity.description }} <br>
+                                                                                {{ activity.deadline | date("d M Y") }} <br>
+                                                                                Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                                {{ activity.state }}
+                                                                            </p>
+
+                                                                        </li>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </article>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- / .accordion -->
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-lg-12">
+                    <div class="panel">
+                        <header class="panel-heading">
+                            Internship Settings
+                        </header>
+
+                        <div class="panel-content">
+
+                            <span class="kpi-title">Start Date (by Student)</span>
+                            <p>{{ application.startDate | date("d M Y") }}</p>
+
+                            <span class="kpi-title">End Date (by Student)</span>
+                            <p>{{ application.endDate | date("d M Y") }}</p>
+
+                            <span class="kpi-title">Student's Mentor at school for this internship</span>
+                            <p>{{ application.coach }} (<a href="mailto:{{ application.coach.email }}">{{ application.coach.email }}</a>)</p>
+
+                            <span class="kpi-title">Mentor for this internship for your company</span>
+                            <p>{{ application.opportunity.mentor }} (<a href="mailto:{{ application.opportunity.mentor.email }}">{{ application.opportunity.mentor.email }}</a>)</p>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="thumbnail">
+                        <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if opportunity.company.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ opportunity.company.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-company.png') }}" />
+                                    {% endif %}
+                                </span>
+
+                            <div class="media-body">
+                                <div><a href="#" class="h5">{{ opportunity.title }}</a></div>
+                                <small class="text-muted">{{ opportunity.company }}, {{ opportunity.company.country }} <br />
+                                    <i class="icon-user"></i> {{ opportunity.nbrOfPositions }} &mdash; from {{ opportunity.startDate | date('M Y') }} until {{ opportunity.endDate | date('M Y') }}</small>
+                            </div>
+                        </div>
+                        <div class="caption">
+
+                            <div class="line pull-in"></div>
+
+                            <div class="fixed-height">
+
+                                <p>
+                                    <small>
+                                        {% if opportunity.description | length > 300 %}
+                                            {{ opportunity.description[:300] }}...
+
+                                        {% else %}
+                                            {{ opportunity.description }}
+                                        {% endif %}
+                                    </small>
+                                </p>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col col-lg-4">
+
+
+            <div class="panel">
+                <header class="panel-heading">
+                    Application Progress
+                </header>
+
+                <div class="panel-content">
+
+                    {% if application.rejected %}
+                        <button class="btn btn-danger btn-block" data-slug="{{ opportunity.slug }}">Rejected</button>
+
+                        <div class="multi-padder"></div>
+                        <p class="text-danger text-small text-center information">Application has been rejected by HEI or your company</p>
+
+                        <div class="line pull-in"></div>
+
+                        <div class="progress progress-striped">
+                            <div class="progress-bar progress-bar-danger" data-toggle="tooltip" data-original-title="100%" style="width: 100%"></div>
+                        </div>
+
+                        <div class="line pull-in"></div>
+
+                        <p>Rejected by {{ application.rejectedBy }}</p>
+
+                        <div class="line pull-in"></div>
+
+                        <span class="kpi-title">Reason</span>
+                        <p class="text-small text-danger">{{ application.rejectionReason }}</p>
+
+                    {% elseif application.submittedForReview == false %}
+
+                    {% elseif application.submittedForReview %}
+
+
+                           {% if application.approvedByHei == true and application.approvedByCompany == false %}
+
+
+
+                               <button class="btn btn-block btn-success accept-application-company" data-application="{{ application.id }}">Accept</button>
+
+                               <div class="multi-padder"></div>
+
+                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-company">Reject</a>
+
+
+
+                               <div class="line pull-in"></div>
+
+
+
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by HEI</h6>
+
+                               <div class="line pull-in"></div>
+
+                               <div class="progress progress-striped">
+                                   <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="75%" style="width: 75%"></div>
+                               </div>
+
+                           {% elseif application.approvedByHei == false and application.approvedByCompany == true %}
+
+
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by your Company</h6>
+
+                               <div class="line pull-in"></div>
+
+                               <div class="progress progress-striped">
+                                   <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="75%" style="width: 75%"></div>
+                               </div>
+                           {% elseif application.approvedByHei == false and application.approvedByCompany == false %}
+
+
+                               <button class="btn btn-block btn-success accept-application-company" data-application="{{ application.id }}">Accept</button>
+
+                               <div class="multi-padder"></div>
+
+                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-company">Reject</a>
+
+
+                               <div class="line pull-in"></div>
+
+                               <div class="progress progress-striped">
+                                   <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
+                               </div>
+
+                           {% elseif application.approvedByHei == true and application.approvedByCompany == true %}
+
+                               <p class="text-success text-small text-center information"> Application has been approved!</p>
+
+                               <div class="line pull-in"></div>
+
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by Company</h6>
+
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by Hei</h6>
+
+                               <div class="progress progress-striped">
+                                   <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="100%" style="width: 100%"></div>
+                               </div>
+
+                           {% else %}
+
+                           {% endif %}
+
+
+
+                    {% else %}
+                    {% endif %}
+
+
+                </div>
+            </div>
+
+
+            <div class="thumbnail">
+                <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if student.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ student.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" />
+                                    {% endif %}
+                                </span>
+                    <div class="pull-right text-success m-t-small">
+                        <i class="icon-circle" class="has-tooltip" data-toggle="tooltip" title="This user is currently in an internship"></i>
+                    </div>
+                    <div class="media-body">
+                        <div><a href="#" class="h5">{{ student }}</a></div>
+                        <small class="text-muted">{{ student.nationality }}</small>
+                    </div>
+                </div>
+                <div class="caption">
+
+                    <div class="line pull-in"></div>
+
+                    <table class="table table-striped m-b-none text-small">
+                        <tr>
+                            <td><small>University</small></td>
+                            <td><small>{{ student.enrollment.studyprogram.higherEducationalInstitution }}</small></td>
+                        </tr>
+                        <tr>
+                            <td><small>Study Program</small></td>
+                            <td><small>{{ student.enrollment.studyprogram }}</small></td>
+                        </tr>
+                    </table>
+
+                    <div class="line pull-in"></div>
+                    <p>
+                        <a rel="popover" data-content="
+                                    &lt;table class=&quot;table&quot;&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Skills&lt;/td&gt;
+        &lt;td&gt;
+            {% for skill in student.enrollment.studyProgram.skills %}
+                &lt;span class=&quot;label bg-success&quot;&gt;{{ skill.value }}&lt;/span&gt;
+            {% endfor %}
+        &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Language&lt;/small&gt;&lt;/td&gt;
+        &lt;td&gt;{{ student.language }}&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Other languages&lt;/td&gt;
+        &lt;td&gt;
+            {% for language in student.supportedLanguages %}
+                &lt;span class=&quot;label bg-success&quot;&gt;{{ language.valueAttr }}&lt;/span&gt;
+            {% endfor %}
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+                                    " data-html="true" data-student="{{ student.slug }}" data-placement="right" data-title="{{ student }}" class="btn btn-white btn-small">Details</a>
+
+                        <a class="btn btn-white btn-small"><i class="icon-envelope"></i> Send Message</a>
+
+                    </p>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div id="reject" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Reject this application</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="errors">
+                    </div>
+
+                    <form action="#" method="POST" class="reject">
+                        {{ form_widget(form) }}
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-small btn-primary reject" data-application={{ application.id }}>Reject this application</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+
+{% endblock %}

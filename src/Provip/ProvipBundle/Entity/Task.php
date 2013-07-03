@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Provip\ProvipBundle\Repository\TaskRepository")
  * @ORM\Table(name="tasks")
  */
 class Task
@@ -170,4 +170,5 @@ class Task
     {
         return $this->activities;
     }
+
 }

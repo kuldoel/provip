@@ -17,7 +17,7 @@
                             <li class="active"><a href="#home" data-toggle="tab">General</a></li>
                             <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
                             <li class=""><a href="#goals" data-toggle="tab">Goals</a></li>
-                            <li class=""><a href="#applications" data-toggle="tab">Applications <span class="label">{{ opportunity.applications | length  }}</span></a></li>
+                            <li class=""><a href="#applications" data-toggle="tab">Applications</a></li>
                             <li class=""><a href="#danger" data-toggle="tab"><span class="text-danger">Danger Zone</span></a></li>
                         </ul>
 
@@ -107,6 +107,40 @@
                         </div>
 
                         <div class="tab-pane" id="applications">
+
+                            <table class="table table-striped m-b-none text-small">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Mission Statement</th>
+                                    <th>HEI</th>
+                                    <th>StudyProgram</th>
+                                    <th>Skills</th>
+                                    <th>HEI Contact</th>
+                                    <th>Admin</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for app in opportunity.applications %}
+                                    {% if app.submittedForReview %}
+                                    <tr>
+                                        <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
+                                        <td>{{ app.student.missionStatement }}</td>
+                                        <td>{{ app.student.enrollment.studyProgram.higherEducationalInstitution }}</td>
+                                        <td>{{ app.student.enrollment.studyProgram }}</td>
+                                        <td>
+                                        {% for skill in app.student.enrollment.studyProgram.skills %}
+                                            {% if loop.index > 1 %} &mdash; {% endif %}
+                                            {{ skill.value }}
+                                        {% endfor %}
+                                        </td>
+                                        <td>{{ app.coach }} (<a href="mailto:{{ app.coach.email }}">{{ app.coach.email }}</a>)</td>
+                                        <td><a href="{{ path('provip_application_application_reviewascompany', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
 
                         </div>
 

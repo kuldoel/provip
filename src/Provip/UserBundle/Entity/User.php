@@ -4,9 +4,11 @@ namespace Provip\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Provip\ProvipBundle\Entity\Activity;
 use Provip\ProvipBundle\Entity\Company;
 use Provip\ProvipBundle\Entity\Enrollment;
 use Provip\ProvipBundle\Entity\HigherEducationalInstitution;
+use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Entity\StudyProgram;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -187,6 +189,13 @@ class User extends BaseUser
      */
     protected $studentEvents;
 
+    /**
+     * REDUNDANT LINK TO ACTIVITIES FOR PERFORMANCE
+     *
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Activity", mappedBy="student", cascade={"persist", "remove"})
+     */
+    protected $activities;
+
 
     /**
      * Notifications is a list of all notifications for this user
@@ -228,6 +237,7 @@ class User extends BaseUser
         $this->coaching = new \Doctrine\Common\Collections\ArrayCollection();
         $this->studentEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -803,6 +813,53 @@ class User extends BaseUser
     {
         return $this->adminOf;
     }
+
+    /**
+     * @param mixed $activities
+     */
+    public function setActivities($activities)
+    {
+        $this->activities = $activities;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivities()
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity)
+    {
+        $this->activities[] = $activity;
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity)
+    {
+        $this->activities->removeElement($activity);
+
+        return $this;
+    }
+
+    public function getApplicationForOpportunity(Opportunity $opportunity)
+    {
+        $applications = $this->applications;
+
+        foreach($applications as $app)
+        {
+            if($app->getOpportunity() == $opportunity)
+            {
+                return $app;
+            }
+        }
+
+        return false;
+    }
+
+
 
 
 

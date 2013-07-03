@@ -3,6 +3,7 @@
 namespace Provip\ApplicationBundle\Controller;
 
 use Provip\EventsBundle\Entity\Picture;
+use Provip\ProvipBundle\Entity\Application;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
 use Provip\UserBundle\Entity\User;
@@ -45,9 +46,13 @@ class MarketplaceController extends Controller
      */
     public function detailAction(Opportunity $opportunity)
     {
+
+        $application = $this->getUser()->getApplicationForOpportunity($opportunity);
+
+
         if($opportunity->getPublished())
         {
-            return $this->render('ProvipApplicationBundle:Marketplace:opportunity_detail.html.twig', array('opportunity' => $opportunity));
+            return $this->render('ProvipApplicationBundle:Marketplace:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'application' => $application));
         }
         else
         {

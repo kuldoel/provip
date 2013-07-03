@@ -69,8 +69,7 @@ class Application
 
     /**
      *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     protected $rejectionReason;
@@ -90,7 +89,6 @@ class Application
      *
      * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="coaching")
      * @ORM\JoinColumn(name="coach_id", referencedColumnName="id")
-     * @Assert\Valid
      **/
     protected $coach;
 
@@ -109,7 +107,7 @@ class Application
 
     /**
      *
-     * @ORM\OneToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumn(name="rejectedby_id", referencedColumnName="id")
      * @Assert\Valid
      */

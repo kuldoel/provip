@@ -569,7 +569,7 @@ ul li.list-group-item:nth-child(even) {
     background-color: #FFFF99 !important;
 }
 
-.list-group-item:first-child, table.table tbody tr, .goals article, .skills span  {
+.list-group-item:first-child, table.table tbody tr, .goals article, .skills span, .activities li  {
     transition-duration: 5s;
     -webkit-transition-duration: 5s; /* Safari */
 }
@@ -628,3 +628,10 @@ ul.thumbnails {
     margin-bottom: 7px;
 }
 
+.row.row-form {
+    margin-bottom: 10px;
+}
+
+.activities li {
+    margin: 6px 0px;
+}
