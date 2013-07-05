@@ -92,7 +92,9 @@
                 </section>
             </div>
         </li>
+        {% if is_granted('ROLE_STUDENT') %}
         <li><div class="m-t-small"><a class="btn btn-small btn-info new-activity-update"><i class="icon-plus"></i> POST</a></div></li>
+        {% endif %}
 
     </ul>
 

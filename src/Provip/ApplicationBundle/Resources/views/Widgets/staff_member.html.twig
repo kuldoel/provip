@@ -15,7 +15,7 @@
             <div><a href="#" class="h5">{{ user }}</a></div>
             <small class="text-muted">
                 {% if user.lastLogin %}
-                    <span class="moment">{{ user.lastLogin | date("Ymd H:m:s")  }}</span>
+                    <span class="moment">{{ user.lastLogin | date("Ymd H:i:s")  }}</span>
                 {% else %}
                     Did not log in yet
                 {% endif %}

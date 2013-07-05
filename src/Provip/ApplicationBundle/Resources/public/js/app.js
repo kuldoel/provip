@@ -736,6 +736,7 @@ Date.now = Date.now || function() { return +new Date; };
               })
               .done(function(data){
                   $('#new-activity-update').modal('hide');
+                  $('section.comment-list').prepend(data);
                   $('.errors').hide();
               })
               .always(function(){

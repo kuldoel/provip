@@ -51,9 +51,8 @@ class Event
      *
      *
      * @ORM\OneToOne(targetEntity="Picture")
-     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id", nullable=true)
      *
-     * @Assert\Valid
      */
     protected $picture;
 

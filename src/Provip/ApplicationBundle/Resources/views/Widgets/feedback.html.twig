@@ -3,14 +3,18 @@
     <section class="media-body panel text-small">
 
 
-                                    <span class="pull-left label bg-inverse" style="margin-right: 10px">
+                                    <span class="pull-left label
+                                    {% if fb.evaluationValue == 'Poor' %}bg-danger{% endif %}
+                                    {% if fb.evaluationValue == 'Fair' %}bg-warning{% endif %}
+                                    {% if fb.evaluationValue == 'Good' %}bg-success{% endif %}
+                                    " style="margin-right: 10px">
                                         {{ fb.evaluationValue }}
                                     </span>
 
         <a href="#">  <strong>{{ fb.author }}</strong></a> {{ fb.message }}
 
         <span class="text-muted m-l-small pull-right">
-                                        <i class="icon-time">{{ fb.created | date("d M Y H:m:s") }}</i>
+                                        <i class="icon-time">{{ fb.created | date("d M Y H:i:s") }}</i>
                                     </span>
     </section>
 </article>

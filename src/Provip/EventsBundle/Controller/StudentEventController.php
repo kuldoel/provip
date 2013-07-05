@@ -39,7 +39,7 @@ class StudentEventController extends Controller
                 $em->persist($activity);
                 $em->flush();
 
-                return new Response($this->renderView('ProvipApplicationBundle:Widgets:activityupdateevent_new.html.twig', array('activityUpdateEvent' => $activityUpdateEvent)), 204);
+                return new Response($this->renderView('ProvipApplicationBundle:Widgets:activityupdateevent_new.html.twig', array('e' => $activityUpdateEvent)), 200);
 
             }
             else
