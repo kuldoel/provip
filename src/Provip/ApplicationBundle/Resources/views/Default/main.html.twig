@@ -1,5 +1,78 @@
-<a href="{{ path('provip_application_student_dashboard') }}">I'm a student</a>
-<br>
-<a href="{{ path('provip_application_company_dashboard') }}">I'm a Company Staff Member</a>
-<br>
-<a href="{{ path('provip_application_hei_dashboard') }}">I'm a HEI Staff Member</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<head>
+    <meta charset="utf-8">
+    <title>Welcome to Pathway</title>
+    <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    {% stylesheets
+    'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
+    'bundles/provipapplication/css/style.css' filter='cssrewrite'
+    'bundles/provipapplication/css/splash/splash.css' filter='cssrewrite'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <!--[if lt IE 9]>
+    {% stylesheets 'bundles/provipapplication/css/ie.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% javascripts
+    '@ProvipApplicationBundle/Resources/public/js/respond.min.js'
+    '@ProvipApplicationBundle/Resources/public/js/html5.js'
+    '@ProvipApplicationBundle/Resources/public/js/excanvas.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <![endif]-->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+</head>
+<body>
+
+
+<div class="center-splash">
+    <div class="row">
+        <div class="col col-lg-8">
+            <h1>Pathway</h1>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam laoreet venenatis arcu eu vestibulum. Sed quis purus in dui faucibus rutrum. Sed facilisis sit amet nunc quis lobortis. Sed porttitor sem quam, sed sollicitudin risus fermentum ac. Maecenas iaculis bibendum dignissim. Curabitur elit justo, egestas a auctor in, condimentum ac mi. Mauris dui urna, porttitor ut fringilla et, faucibus adipiscing odio.</p>
+        </div>
+    </div>
+
+    <div class="nav-splash">
+        <a href="{{ path('provip_application_student_dashboard') }}" class="btn btn-info">For Students</a>
+        <a href="{{ path('provip_application_company_dashboard') }}" class="btn btn-info">For Companies</a>
+        <a href="{{ path('provip_application_hei_dashboard') }}" class="btn btn-info">For HEI's</a>
+    </div>
+
+</div>
+
+<div class="credits">
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <p class="text-center text-muted text-small">
+                Copyright 2013 Provip Consortium
+            </p>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+{% javascripts
+'@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+</body>
+</html>

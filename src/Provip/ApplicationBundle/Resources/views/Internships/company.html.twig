@@ -1,0 +1,115 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+{% block main %}
+
+
+<div class="padder clearfix" style="min-height: 15px">
+
+</div>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <h4><i class="icon-file"></i> Applications</h4>
+            </header>
+            <div class="pull-out">
+
+                <table class="table table-striped m-b-none text-small">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mission Statement</th>
+                        <th>HEI</th>
+                        <th>StudyProgram</th>
+                        <th>Opportunity</th>
+                        <th>Skills</th>
+                        <th>HEI Contact</th>
+                        <th>Admin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for app in applications %}
+                        {% if app.submittedForReview %}
+                            {% if app.approvedByHei and app.approvedByCompany %}
+                            {% else %}
+                            <tr>
+                                <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
+                                <td>{{ app.student.missionStatement }}</td>
+                                <td>{{ app.student.enrollment.studyProgram.higherEducationalInstitution }}</td>
+                                <td>{{ app.student.enrollment.studyProgram }}</td>
+                                <td>{{ app.opportunity }}</td>
+                                <td>
+                                    {% for skill in app.student.enrollment.studyProgram.skills %}
+                                        {% if loop.index > 1 %} &mdash; {% endif %}
+                                        {{ skill.value }}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ app.coach }} (<a href="mailto:{{ app.coach.email }}">{{ app.coach.email }}</a>)</td>
+                                <td><a href="{{ path('provip_application_application_reviewascompany', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
+                            </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </div>
+
+</div>
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h4><i class="icon-road"></i> Internships</h4>
+                </header>
+                <div class="pull-out">
+
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>HEI</th>
+                            <th>StudyProgram</th>
+                            <th>HEI Contact</th>
+                            <th>Internship</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Completed</th>
+                            <th>Admin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in internships %}
+
+                                <tr>
+                                    <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}">{{ app.student }}</a> (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
+                                    <td>{{ app.student.enrollment.studyProgram.higherEducationalInstitution }}</td>
+                                    <td>{{ app.student.enrollment.studyProgram }}</td>
+                                    <td>{{ app.coach }} (<a href="mailto:{{ app.coach.email }}">{{ app.coach.email }}</a>)</td>
+                                    <td>{{ app.opportunity }}</td>
+                                    <td>{{ app.startDate | date("d M Y") }}</td>
+                                    <td>{{ app.endDate | date("d M Y") }}</td>
+                                    <td></td>
+                                    <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-small">Progress</a></td>
+                                </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+{% endblock %}

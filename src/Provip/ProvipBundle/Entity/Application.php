@@ -120,6 +120,14 @@ class Application
      */
     protected $applicationEvents;
 
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="Internship", inversedBy="application")
+     * @ORM\JoinColumn(name="internship_id", referencedColumnName="id")
+     * @Assert\Valid
+     */
+    protected $internship;
+
 
     /**
      * Constructor
@@ -458,4 +466,24 @@ class Application
     {
         return $this->applicationEvents;
     }
+
+    /**
+     * @param mixed $internship
+     */
+    public function setInternship($internship)
+    {
+        $this->internship = $internship;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternship()
+    {
+        return $this->internship;
+    }
+
+
+
+
 }

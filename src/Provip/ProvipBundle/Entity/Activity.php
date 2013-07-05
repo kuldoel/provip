@@ -315,5 +315,10 @@ class Activity
         return $this->student;
     }
 
+    public function __toString()
+    {
+        return "(".$this->getDeadline()->format("d M Y") . ") " .$this->title;
+    }
+
 
 }

@@ -18,3 +18,45 @@
         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
     </ul>
 {% endblock %}
+
+
+{% block modal %}
+
+    <!-- .modal -->
+
+
+        <div id="new-activity-update" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                            <h4 class="modal-title" id="myModalLabel">Activity Status Update</h4>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="errors">
+
+                            </div>
+
+                            <form class="form-horizontal activity-update-form" method="POST">
+
+                            <div class="activity-update-form">
+
+                            </div>
+
+                            </form>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-small btn-primary new-activity-update">Create</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div>
+        </div>
+
+    <!-- / .modal -->
+{% endblock %}

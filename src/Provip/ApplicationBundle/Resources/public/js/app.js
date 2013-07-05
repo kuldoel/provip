@@ -102,6 +102,106 @@ Date.now = Date.now || function() { return +new Date; };
 
       })
 
+      $(document).on('click', 'button.feedback', function() {
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $activityUpdateEvent        = $(this).attr('data-activityupdateevent');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $btn2 = $('button.new-feedback');
+          $btn2.attr('data-activityupdateevent', $activityUpdateEvent);
+          $btn2.attr('data-append-to', $appendTo)
+
+          var jqxhr = $.get(Routing.generate('provip_events_studentevent_addfeedback',{ id: $activityUpdateEvent }), function() {
+          })
+          .done(function(data) {
+              $('#new-feedback').modal('show');
+              $('#new-feedback-form').html(data);
+          })
+          .always(function() {
+              $('.loader').hide();
+          });
+
+      })
+
+      $('button.new-feedback').click(function(e){
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $activityUpdateEvent        = $(this).attr('data-activityupdateevent');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $.post(Routing.generate('provip_events_studentevent_addfeedback',{ id: $activityUpdateEvent }),$('form.new-feedback').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#'+$appendTo).append(data);
+                  $('form.new-feedback').trigger("reset");
+                  $('.errors').hide();
+                  $('#new-feedback').modal('hide');
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+
+      $(document).on('click', 'button.feedback-hei', function() {
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $activityUpdateEvent        = $(this).attr('data-activityupdateevent');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $btn2 = $('button.submit-feedback-hei');
+          $btn2.attr('data-activityupdateevent', $activityUpdateEvent);
+          $btn2.attr('data-append-to', $appendTo)
+
+          var jqxhr = $.get(Routing.generate('provip_events_studentevent_addfeedbackhei',{ id: $activityUpdateEvent }), function() {
+          })
+              .done(function(data) {
+                  $('#new-feedback').modal('show');
+                  $('#new-feedback-form').html(data);
+              })
+              .always(function() {
+                  $('.loader').hide();
+              });
+
+      })
+
+      $('button.submit-feedback-hei').click(function(e){
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $activityUpdateEvent        = $(this).attr('data-activityupdateevent');
+          $appendTo    = $(this).attr('data-append-to');
+
+          $.post(Routing.generate('provip_events_studentevent_addfeedbackhei',{ id: $activityUpdateEvent }),$('form.new-feedback').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#'+$appendTo).append(data);
+                  $('form.new-feedback').trigger("reset");
+                  $('.errors').hide();
+                  $('#new-feedback').modal('hide');
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+
       $('button.new-activity').click(function(e){
 
           $('.loader').show();
@@ -567,7 +667,103 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+      $('body').on('click', '.accept-application-hei', function(e){
 
+          $('.loader').show();
+
+          $btn         = $(this);
+          $application = $(this).attr('data-application');
+
+          var jqxhr = $.get(Routing.generate('provip_application_application_acceptashei',{ application: $application  }), function() {
+              console.log("accepting")
+          })
+              .done(function(data) {
+                  console.log('accepted');
+                  $btn
+                      .removeClass('accept-application-hei')
+                      .addClass('active')
+                      .text('Accepted!');
+
+                  $('.reject-application-hei').remove();
+
+                  $('.progress-bar').css('width', data+'%')
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
+      $('button.reject-hei').click(function(e){
+
+          e.preventDefault();
+
+          $btn         = $(this);
+          $application = $(this).attr('data-application');
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_application_reviewashei', { application: $application}),$('form.reject').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#reject').modal('hide');
+                  $('.reject-application-hei')
+                      .addClass('active')
+                      .text('Rejected');
+
+                  $('.accept-application-hei').remove();
+
+                  $('.progress-bar').css('width', '100%').removeClass('progress-bar-success').addClass('progress-bar-danger');
+
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $('button.new-activity-update').click(function(e){
+
+          e.preventDefault();
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_events_studentevent_newstatus'),$('form.activity-update-form').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-activity-update').modal('hide');
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+
+
+      $('a.new-activity-update').click(function(e){
+
+          $('.loader').show();
+
+          console.log("loading form")
+
+
+          var jqxhr = $.get(Routing.generate('provip_events_studentevent_newstatus'), function() {
+
+          })
+              .done(function(data) {
+                  $('.activity-update-form').html(data);
+                  $('.selectpicker').selectpicker();
+                  $('#new-activity-update').modal('show');
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
 
     // select boxes bootstrap-select.min.js
     $('.selectpicker').selectpicker();

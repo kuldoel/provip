@@ -1,0 +1,95 @@
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
+
+{% block main %}
+
+
+<div class="padder clearfix" style="min-height: 15px">
+
+</div>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <h4><i class="icon-file"></i> Applications</h4>
+            </header>
+            <div class="pull-out">
+
+                <table class="table table-striped m-b-none text-small">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Internship</th>
+                        <th>Company</th>
+                        <th>Company Contact</th>
+                        <th>Admin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for app in applications %}
+                        {% if app.submittedForReview %}
+                            <tr>
+                                <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
+                                <td>{{ app.opportunity }}</td>
+                                <td>{{ app.opportunity.company }}</td>
+                                <td>{{ app.opportunity.mentor }} (<a href="mailto:{{ app.opportunity.mentor }}">{{ app.opportunity.mentor }}</a>)</td>
+                                <td><a href="{{ path('provip_application_application_reviewashei', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </div>
+
+</div>
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h4><i class="icon-road"></i> Internships</h4>
+                </header>
+                <div class="pull-out">
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Internship</th>
+                            <th>Company</th>
+                            <th>Company Contact</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Completed</th>
+                            <th>Admin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in internships %}
+
+                                <tr>
+                                    <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
+                                    <td>{{ app.opportunity }}</td>
+                                    <td>{{ app.opportunity.company }}</td>
+                                    <td>{{ app.opportunity.mentor }} (<a href="mailto:{{ app.opportunity.mentor }}">{{ app.opportunity.mentor }}</a>)</td>
+                                    <td>{{ app.startDate | date("d M Y") }}</td>
+                                    <td>{{ app.endDate | date("d M Y") }}</td>
+                                    <td></td>
+                                    <td><a href="{{ path('provip_application_internship_detailhei', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-small">Progress</a></td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+{% endblock %}

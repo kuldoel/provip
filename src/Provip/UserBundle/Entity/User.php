@@ -148,7 +148,7 @@ class User extends BaseUser
      * An Enrollment is default set to false and has to be approved by the HEI
      *
      *
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Enrollment", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\Enrollment", inversedBy="student" , cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="enrollment_id", referencedColumnName="id")
      * @Assert\Valid
      */
@@ -207,6 +207,15 @@ class User extends BaseUser
 
 
     /**
+     * Internships with application with the opportunity that a STUDENT applied for
+     *
+     * @ORM\OneToMany(targetEntity="Provip\ProvipBundle\Entity\Internship", mappedBy="student", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $internships;
+
+
+    /**
     * Optional Picture
     *
     *
@@ -238,6 +247,7 @@ class User extends BaseUser
         $this->studentEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
         $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->internships = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -858,6 +868,23 @@ class User extends BaseUser
 
         return false;
     }
+
+    /**
+     * @param mixed $internships
+     */
+    public function setInternships($internships)
+    {
+        $this->internships = $internships;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternships()
+    {
+        return $this->internships;
+    }
+
 
 
 

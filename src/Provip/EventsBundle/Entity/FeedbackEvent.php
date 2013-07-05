@@ -3,6 +3,7 @@
 namespace Provip\EventsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -22,12 +23,15 @@ class FeedbackEvent extends Event
 
     /**
      *
-     * @ORM\Column(type="integer", length=11)
-     * @Assert\NotNull()
-     * @Assert\Type(type="int")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $evaluationValue;
 
+
+    public function __construct(User $user)
+    {
+        $this->author = $user;
+    }
 
     /**
      * Set evaluationValue

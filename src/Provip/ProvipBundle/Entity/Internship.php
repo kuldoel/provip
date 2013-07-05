@@ -3,6 +3,7 @@
 namespace Provip\ProvipBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -39,11 +40,27 @@ class Internship
 
     /**
      *
-     * @ORM\OneToOne(targetEntity="Application")
-     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Application", mappedBy="internship")
      * @Assert\Valid
      */
     protected $application;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="internships")
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     * @Assert\Valid
+     **/
+    protected $student;
+
+
+
+    public function __construct(User $student, Application $application)
+    {
+        $this->student = $student;
+        $this->application = $application;
+        $this->publicId = $application->getStartDate()->format("dmY").$application->getEndDate()->format("dmY").$application->getId().$student->getSlug();
+    }
 
 
     /**
@@ -124,4 +141,22 @@ class Internship
     {
         return $this->application;
     }
+
+    /**
+     * @param mixed $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+
 }

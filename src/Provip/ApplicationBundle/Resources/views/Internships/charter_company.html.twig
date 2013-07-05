@@ -1,0 +1,340 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+
+
+        <div class="col col-lg-8">
+
+            <section class="comment-list block">
+
+                   {% for e in activityUpdateEvents %}
+
+                    <article id="comment-id-{{ loop.index }}" class="comment-item media arrow-left">
+                        <a class="pull-left thumb-small avatar"><img src="{{ asset('bundles/provipapplication/images/avatar.jpg') }}" class="img-circle"></a>
+                        <section class="media-body panel">
+                            <header class="panel-heading clearfix">
+                                <a href="#">{{ e.activity.student }}</a><label class="label bg-info m-l-mini">Student</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>{{ e.created | date("d M Y H:m:s") }}</span>
+                            </header>
+                            <div>{{ e.message }}</div>
+
+                            <div class="comment-action m-t-small">
+                                <button class="btn btn-white btn-mini feedback" data-append-to="feedback-{{ loop.index }}" data-activityupdateevent="{{ e.id }}"><i class="icon-mail-reply text-muted"></i>Give Feedback</button>
+                            </div>
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg">
+                                    <div class="media">
+
+
+                                        <span class="pull-right label bg-default">
+                                            Activity
+                                        </span>
+
+                                        <div class="media-body">
+                                            <div><a href="#" class="h5">{{ e.activity.title }}</a></div>
+                                            <small class="text-muted">{{ e.activity.state }}</small>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </section>
+                    </article>
+
+                   <div class="feedback" id="feedback-{{ loop.index }}">
+
+                       {% for fb in e.feedbackEvents %}
+                           <article class="comment-item comment-reply media arrow-left">
+                               <a class="pull-left thumb-small"><span class="btn btn-circle btn-white btn-mini"><i class="icon-user"></i></span></a>
+                               <section class="media-body panel text-small">
+
+
+                                    <span class="pull-left label bg-inverse" style="margin-right: 10px">
+                                        {{ fb.evaluationValue }}
+                                    </span>
+
+                                                             <a href="#">  <strong>{{ fb.author }}</strong></a> {{ fb.message }}
+
+                                                               <span class="text-muted m-l-small pull-right">
+                                        <i class="icon-time">{{ fb.created | date("d M Y H:m:s") }}</i>
+                                    </span>
+                               </section>
+                           </article>
+                       {% endfor %}
+
+                   </div>
+
+                    {% endfor %}
+
+            </section>
+
+        </div>
+
+        <div class="col col-lg-4">
+
+
+            <div class="panel">
+                <header class="panel-heading">
+                    Internship Progress <span class="pull-right label bg-info">{{ "now" | date("d M Y") }}</span>
+                </header>
+
+                <div class="panel-content">
+
+                    <p>Start: {{ application.startDate | date("d M Y") }}</p>
+                    <p>End: {{ application.endDate | date("d M Y") }}</p>
+
+
+                    <div class="line pull-in"></div>
+
+                </div>
+            </div>
+
+            <section class="panel">
+                <header class="panel-heading">
+                    <span class="label bg-info pull-right">{{ activities | length }}</span>
+                    Activities
+                </header>
+                <section class="panel-content">
+
+                    {% for activity in activities %}
+
+                        {% if loop.index > 1 %}
+                            <div class="line pull-in"></div>
+                        {% endif %}
+                    <article class="media">
+                        <div class="pull-left thumb-small">
+                          <span class="icon-stack">
+                            <i class="icon-circle text-warning icon-stack-base"></i>
+                            <i class="icon-star icon-light"></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                            <div class="pull-right media-mini text-center text-muted">
+                                <strong class="h4">{{ activity.deadline | date("d") }}</strong><br>
+                                <small class="label bg-light">{{ activity.deadline | date("M") }}</small>
+                            </div>
+                            <a href="#" class="h4 text-success">{{ activity.title }}</a>
+                            <small class="block">{{ activity.description }}</small>
+                            <strong class="text-small block">{{ activity.state }}</strong>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </section>
+            </section>
+
+            <div class="panel">
+                <header class="panel-heading">
+                    Project Goals from {{ opportunity.company }}
+                </header>
+
+                <div class="panel-content">
+                    <!-- .accordion -->
+                    <div class="accordion" id="accordion3">
+                        {% for goal in opportunity.projectGoals %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse-project-{{ loop.index }}">
+                                        <i class="icon-flag"></i> {{ goal.description }}
+                                        <span class="pull-right"><span class="label"add-new-activity>{{ goal.tasks | length }} tasks</span></span>
+                                    </a>
+                                </div>
+                                <div id="collapse-project-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        {% for task in goal.tasks %}
+                                            <article class="media">
+                                            <span class="pull-left thumb-small">
+
+                                            </span>
+                                                <div class="media-body">
+                                                    <div class="pull-right media-mini text-center text-muted">
+                                                        <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                    </div>
+
+                                                <span class="h4">
+                                                    {{ task.title }}
+                                                </span>
+
+                                                    <ul class="activities" id="list-project-{{ task.id }}-{{ loop.index }}">
+                                                        {% for activity in activities %}
+                                                            {% if activity.task.id == task.id %}
+                                                                <li id="activity-{{ activity.id }}">
+                                                                    <strong><span class="label label-success">You</span> {{ activity.title }}</strong>
+                                                                    <p class="text-muted text-small">
+                                                                        {{ activity.description }} <br>
+                                                                        {{ activity.deadline | date("d M Y") }} <br>
+                                                                        Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                        {{ activity.state }}
+                                                                    </p>
+
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- / .accordion -->
+                </div>
+            </div>
+
+            <div class="panel">
+                <header class="panel-heading">
+                    Learning Goals from {{ student.enrollment.studyProgram }}
+                </header>
+
+                <div class="panel-content">
+                    <!-- .accordion -->
+                    <div class="accordion" id="accordion2">
+                        {% for goal in student.enrollment.studyProgram.learningGoals %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse-learning-{{ loop.index }}">
+                                        <i class="icon-flag"></i> {{ goal.description }}
+                                        <span class="pull-right"><span class="label">{{ goal.tasks | length }} tasks</span></span>
+                                    </a>
+                                </div>
+                                <div id="collapse-learning-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        {% for task in goal.tasks %}
+                                            <article class="media">
+                                            <span class="pull-left thumb-small">
+
+                                            </span>
+                                                <div class="media-body">
+                                                    <div class="pull-right media-mini text-center text-muted">
+                                                        <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                    </div>
+
+                                                <span class="h4">
+                                                    {{ task.title }}
+                                                </span>
+
+                                                    <ul class="activities" id="list-learning-{{ task.id }}-{{ loop.index }}">
+                                                        {% for activity in activities %}
+                                                            {% if activity.task.id == task.id %}
+                                                                <li id="activity-{{ activity.id }}">
+                                                                    <strong><span class="label label-success">You</span> {{ activity.title }}</strong>
+                                                                    <p class="text-muted text-small">
+                                                                        {{ activity.description }} <br>
+                                                                        {{ activity.deadline | date("d M Y") }} <br>
+                                                                        Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                        {{ activity.state }}
+                                                                    </p>
+
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- / .accordion -->
+                </div>
+            </div>
+
+
+            <div class="thumbnail">
+                <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if opportunity.company.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ opportunity.company.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-company.png') }}" />
+                                    {% endif %}
+                                </span>
+
+                    <div class="media-body">
+                        <div><a href="#" class="h5">{{ opportunity.title }}</a></div>
+                        <small class="text-muted">{{ opportunity.company }}, {{ opportunity.company.country }} <br />
+                            <i class="icon-user"></i> {{ opportunity.nbrOfPositions }} &mdash; from {{ opportunity.startDate | date('M Y') }} until {{ opportunity.endDate | date('M Y') }}</small>
+                    </div>
+                </div>
+                <div class="caption">
+
+                    <div class="line pull-in"></div>
+
+                    <div class="fixed-height">
+
+                        <p>
+                            <small>
+                                {% if opportunity.description | length > 300 %}
+                                    {{ opportunity.description[:300] }}...
+
+                                {% else %}
+                                    {{ opportunity.description }}
+                                {% endif %}
+                            </small>
+                        </p>
+
+                    </div>
+
+
+                    <div class="line pull-in"></div>
+                    <p>
+
+                        <a class="btn btn-white btn-small" href="{{ path('provip_application_marketplace_detail', {'slug': opportunity.slug}) }}"><i class="icon-list"></i> Details</a>
+
+                    </p>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div id="new-feedback" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Feedback</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form action="#" method="POST" class="new-feedback">
+                        <div class="errors">
+
+                        </div>
+
+                        <article class="media">
+                            <div id="new-feedback-form">
+
+                            </div>
+                        </article>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-small btn-primary new-feedback">Submit</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

@@ -72,7 +72,17 @@
                         </tr>
                         </thead>
                         <tbody">
-
+                        {% for internship in internships %}
+                                <tr>
+                                    <td><a href="{{ path('provip_application_internship_detailstudent', {'publicId': internship.publicId}) }}">{{ internship.application.opportunity }}</a></td>
+                                    <td>{{ internship.application.opportunity.company }}</td>
+                                    <td>{{ internship.application.startDate | date("d M Y") }}</td>
+                                    <td>{{ internship.application.endDate | date("d M Y") }}</td>
+                                    <td>{{ internship.application.coach }} (<a href="mailto:{{ internship.application.coach.email }}">{{ internship.application.coach.email }}</a>)</td>
+                                    <td>{{ internship.application.opportunity.mentor }} (<a href="mailto:{{ internship.application.opportunity.mentor.email }}">{{ internship.application.opportunity.mentor.email }}</a>)</td>
+                                    <td>{{ internship.completed }}</td>
+                                </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

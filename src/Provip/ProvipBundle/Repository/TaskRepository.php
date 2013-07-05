@@ -19,7 +19,7 @@ class TaskRepository extends EntityRepository
 
         $dql = "SELECT a FROM ProvipProvipBundle:Activity a " .
             " WHERE a.student = ?1 AND ".
-            " a.application = ?2";
+            " a.application = ?2 ORDER BY a.deadline ASC";
 
         return $em->createQuery($dql)
             ->setParameters(array('1' => $user, '2' => $application))

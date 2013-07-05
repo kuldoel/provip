@@ -3,6 +3,8 @@
 namespace Provip\EventsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Provip\ProvipBundle\Entity\Activity;
+use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -13,8 +15,9 @@ class ActivityUpdateEvent extends Event
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Activity", inversedBy="activityUpdateEvents")
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Activity", inversedBy="activityUpdateEvents", cascade={"persist"})
      * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * @Assert\NotNull()
      * @Assert\Valid
      **/
     protected $activity;
@@ -26,11 +29,15 @@ class ActivityUpdateEvent extends Event
     protected $feedbackEvents;
 
 
+    protected $state;
+
+
     /**
      * Constructor
      */
     public function __construct()
     {
+
         $this->feedbackEvents = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -89,6 +96,31 @@ class ActivityUpdateEvent extends Event
     public function getFeedbackEvents()
     {
         return $this->feedbackEvents;
+    }
+
+    public function setActivityState($state)
+    {
+       $this->state = $state;
+
+        return $this;
+    }
+
+
+    public function getActivityState()
+    {
+        if($this->getActivity() instanceof Activity)
+        {
+            return $this->getActivity()->getState();
+        }
+        else
+        {
+            return "Not yet started";
+        }
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 
 }

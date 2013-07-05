@@ -26,16 +26,22 @@ class Event
 
     /**
      *
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type(type="string")
      */
     protected $message;
 
+
+    /**
+     *
+     * @ORM\Column(type="string", length=512, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $actionUrl;
+
     /**
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
      * @Assert\Type(type="string")
      */
     protected $privacy;
@@ -229,4 +235,22 @@ class Event
     {
         return $this->author;
     }
+
+    /**
+     * @param mixed $actionUrl
+     */
+    public function setActionUrl($actionUrl)
+    {
+        $this->actionUrl = $actionUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActionUrl()
+    {
+        return $this->actionUrl;
+    }
+
+
 }

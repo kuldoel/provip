@@ -1,4 +1,4 @@
-{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
 
 
 {% block main %}
@@ -164,7 +164,7 @@
                             <span class="kpi-title">Student's Mentor at school for this internship</span>
                             <p>{{ application.coach }} (<a href="mailto:{{ application.coach.email }}">{{ application.coach.email }}</a>)</p>
 
-                            <span class="kpi-title">Mentor for this internship for your company</span>
+                            <span class="kpi-title">Mentor for this internship at the company</span>
                             <p>{{ application.opportunity.mentor }} (<a href="mailto:{{ application.opportunity.mentor.email }}">{{ application.opportunity.mentor.email }}</a>)</p>
 
 
@@ -232,7 +232,7 @@
                         <button class="btn btn-danger btn-block" data-slug="{{ opportunity.slug }}">Rejected</button>
 
                         <div class="multi-padder"></div>
-                        <p class="text-danger text-small text-center information">Application has been rejected by HEI or your company</p>
+                        <p class="text-danger text-small text-center information">Application has been rejected by HEI or Company</p>
 
                         <div class="line pull-in"></div>
 
@@ -261,17 +261,9 @@
                            {% if application.approvedByHei == true and application.approvedByCompany == false %}
 
 
-
-                               <button class="btn btn-block btn-success accept-application-company" data-application="{{ application.id }}">Accept</button>
-
-                               <div class="multi-padder"></div>
-
-                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-company">Reject</a>
-
-
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by HEI</h6>
 
                                <div class="line pull-in"></div>
-
 
 
                                <h6 class="text-success"><i class="icon-check"></i> Approved by HEI</h6>
@@ -282,24 +274,41 @@
                                    <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="75%" style="width: 75%"></div>
                                </div>
 
+
+
                            {% elseif application.approvedByHei == false and application.approvedByCompany == true %}
 
 
-                               <h6 class="text-success"><i class="icon-check"></i> Approved by your Company</h6>
+                               <button class="btn btn-block btn-success accept-application-hei" data-application="{{ application.id }}">Accept</button>
+
+                               <div class="multi-padder"></div>
+
+                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-hei">Reject</a>
+
+
+
+                               <div class="line pull-in"></div>
+
+
+
+                               <h6 class="text-success"><i class="icon-check"></i> Approved by Company</h6>
 
                                <div class="line pull-in"></div>
 
                                <div class="progress progress-striped">
                                    <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="75%" style="width: 75%"></div>
                                </div>
+
+
+
                            {% elseif application.approvedByHei == false and application.approvedByCompany == false %}
 
 
-                               <button class="btn btn-block btn-success accept-application-company" data-application="{{ application.id }}">Accept</button>
+                               <button class="btn btn-block btn-success accept-application-hei" data-application="{{ application.id }}">Accept</button>
 
                                <div class="multi-padder"></div>
 
-                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-company">Reject</a>
+                               <a data-toggle="modal" href="#reject" class="btn btn-block btn-danger reject-application-hei">Reject</a>
 
 
                                <div class="line pull-in"></div>
@@ -423,7 +432,7 @@
                     <div class="errors">
                     </div>
 
-                    <form action="#" method="POST" class="reject">
+                    <form method="POST" class="reject">
                         {{ form_widget(form) }}
                     </form>
 
@@ -432,7 +441,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-small btn-primary reject" data-application={{ application.id }}>Reject this application</button>
+                    <button type="submit" class="btn btn-small btn-primary reject-hei" data-application={{ application.id }}>Reject this application</button>
                 </div>
             </div><!-- /.modal-content -->
         </div>

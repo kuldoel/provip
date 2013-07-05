@@ -5,6 +5,7 @@ namespace Provip\ApplicationBundle\Controller;
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Activity;
 use Provip\ProvipBundle\Entity\Application;
+use Provip\ProvipBundle\Entity\Internship;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Entity\Task;
 use Provip\ProvipBundle\Form\Type\ActivityNewType;
@@ -218,6 +219,7 @@ class ApplicationController extends Controller
         if($application->getApprovedByHei())
         {
             $status = '100';
+            $this->createInternship($application);
         }
 
 
@@ -232,6 +234,7 @@ class ApplicationController extends Controller
     public function acceptAsHeiAction(Application $application)
     {
 
+
         $em = $this->getDoctrine()->getManager();
 
         $application->setApprovedByHei(true);
@@ -241,7 +244,80 @@ class ApplicationController extends Controller
         $em->persist($application);
         $em->flush();
 
-        return new Response("", 200);
+        $status = '75';
+
+        if($application->getApprovedByCompany())
+        {
+            $status = '100';
+            $this->createInternship($application);
+        }
+
+
+        return new Response($status, 200);
 
     }
+
+
+    /**
+     * @Route("/hei/applications/{application}/review", options={"expose"=true})
+     */
+    public function reviewAsHei(Application $application, Request $request)
+    {
+
+        $form = $this->createForm(new ApplicationRejectType(), $application);
+
+        $opportunity = $application->getOpportunity();
+        $student = $application->getStudent();
+
+        if($student->getEnrollment()->getStudyProgram() != $this->getUser()->getAdminOf())
+        {
+            return new Response("Not Authorized", 403);
+        }
+
+        if ('POST' === $request->getMethod()) {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+
+                $application->setRejected(true);
+                $application->setSubmittedForReview(false);
+                $application->setRejectedBy($this->getUser()->getAdminOf()->getHigherEducationalInstitution());
+
+                $em->persist($application);
+                $em->flush();
+
+                return new Response('Rejected Complete', 200);
+
+            }
+            else
+            {
+                return new Response($this->renderView('ProvipApplicationBundle:Widgets:form_errors.html.twig', array('errors' => $form->getErrors())), 400);
+
+            }
+        }
+
+
+        $activities = $this->getDoctrine()->getRepository('ProvipProvipBundle:Task')->getActivitiesForUser($application->getStudent(), $application);
+
+
+        return $this->render('ProvipApplicationBundle:Application:charter_hei.html.twig', array('opportunity' => $opportunity, 'application' => $application, 'activities' => $activities, 'student' => $student, 'form' => $form->createView()));
+
+    }
+
+    private function createInternship(Application $application)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $internship = new Internship($application->getStudent(), $application);
+
+        $em->persist($internship);
+        $em->flush();
+
+        return $internship;
+
+    }
+
 }
