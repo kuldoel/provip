@@ -28,6 +28,8 @@
                     <tbody>
                     {% for app in applications %}
                         {% if app.submittedForReview %}
+                            {% if app.approvedByHei and app.approvedByCompany %}
+                            {% else %}
                             <tr>
                                 <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
                                 <td>{{ app.opportunity }}</td>
@@ -35,6 +37,7 @@
                                 <td>{{ app.opportunity.mentor }} (<a href="mailto:{{ app.opportunity.mentor }}">{{ app.opportunity.mentor }}</a>)</td>
                                 <td><a href="{{ path('provip_application_application_reviewashei', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
                             </tr>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                     </tbody>

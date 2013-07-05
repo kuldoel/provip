@@ -211,17 +211,20 @@ class ApplicationController extends Controller
         $application->setRejected(false);
         $application->setRejectionReason(NULL);
 
-        $em->persist($application);
-        $em->flush();
+
 
         $status = '75';
 
         if($application->getApprovedByHei())
         {
             $status = '100';
-            $this->createInternship($application);
+            $internship = $this->createInternship($application);
+            $application->setInternship($internship);
         }
 
+
+        $em->persist($application);
+        $em->flush();
 
         return new Response($status, 200);
 
@@ -241,17 +244,18 @@ class ApplicationController extends Controller
         $application->setRejected(false);
         $application->setRejectionReason(NULL);
 
-        $em->persist($application);
-        $em->flush();
 
         $status = '75';
 
         if($application->getApprovedByCompany())
         {
             $status = '100';
-            $this->createInternship($application);
+            $internship = $this->createInternship($application);
+            $application->setInternship($internship);
         }
 
+        $em->persist($application);
+        $em->flush();
 
         return new Response($status, 200);
 
