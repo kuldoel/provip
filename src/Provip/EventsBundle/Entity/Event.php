@@ -58,11 +58,10 @@ class Event
 
 
     /**
-     * Optional Picture
      *
      *
      * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      *
      * @Assert\Valid
      */

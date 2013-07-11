@@ -34,6 +34,7 @@ class StudentEventController extends Controller
 
                 $activity = $activityUpdateEvent->getActivity();
                 $activity->setState($activityUpdateEvent->getState());
+                $activityUpdateEvent->setAuthor($this->getUser());
 
                 $em->persist($activityUpdateEvent);
                 $em->persist($activity);
