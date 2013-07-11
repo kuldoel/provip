@@ -232,6 +232,15 @@ class User extends BaseUser
 
 
     /**
+     *
+     * @ORM\Column(type="text")
+     * @Assert\NotNull()
+     * @Assert\Type(type="string")
+     */
+    protected $responsibleFor;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -884,6 +893,24 @@ class User extends BaseUser
     {
         return $this->internships;
     }
+
+    /**
+     * @param mixed $responsibleFor
+     */
+    public function setResponsibleFor($responsibleFor)
+    {
+        $this->responsibleFor = $responsibleFor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponsibleFor()
+    {
+        return $this->responsibleFor;
+    }
+
+
 
 
 

@@ -14,6 +14,7 @@ class CompanyStaffProfileType extends AbstractType
         $builder
             ->add('phone', 'text', array('required' => false, 'label' => 'Phone Number'))
             ->add('jobDescription', 'textarea', array('required' => false, 'label' => 'Job description'))
+            ->add('responsibleFor', 'textarea', array('required' => false, 'label' => 'You can contact me for'))
             ->add('picture', new PictureType(), array('required' => false, 'label' => ''))
         ;
     }

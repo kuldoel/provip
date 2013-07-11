@@ -28,6 +28,14 @@ class StudyProgram
     protected $name;
 
     /**
+     *
+     * @ORM\Column(type="text")
+     * @Assert\NotNull()
+     * @Assert\Type(type="string")
+     */
+    protected $learningOutcomes;
+
+    /**
      * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="studyPrograms")
      * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
      * @Assert\Valid
@@ -267,6 +275,24 @@ class StudyProgram
     {
         return $this->admin;
     }
+
+    /**
+     * @param mixed $learningOutcomes
+     */
+    public function setLearningOutcomes($learningOutcomes)
+    {
+        $this->learningOutcomes = $learningOutcomes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLearningOutcomes()
+    {
+        return $this->learningOutcomes;
+    }
+
+
 
 
 
