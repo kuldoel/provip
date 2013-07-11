@@ -10,6 +10,7 @@ use Provip\ProvipBundle\Form\Type\CompanyProfileType;
 use Provip\ProvipBundle\Form\Type\DeliverableType;
 use Provip\ProvipBundle\Form\Type\HeiProfileType;
 use Provip\ProvipBundle\Form\Type\SkillType;
+use Provip\ProvipBundle\Form\Type\StudyProgramProfileType;
 use Provip\ProvipBundle\Form\Type\StudyProgramType;
 use Provip\UserBundle\Entity\User;
 use Provip\UserBundle\Form\Type\HeiStaffProfileType;
@@ -83,13 +84,36 @@ class HeiController extends Controller
         $learningGoal = new Deliverable();
         $skill        = new Skill();
 
-        $formGoal   = $this->createForm(new DeliverableType(), $learningGoal);
-        $formSkill  = $this->createForm(new SkillType(), $skill);
+        $formGoal           = $this->createForm(new DeliverableType(), $learningGoal);
+        $formSkill          = $this->createForm(new SkillType(), $skill);
+        $formStudyProgram   = $this->createForm(new StudyProgramProfileType(), $studyProgram);
 
 
         if ($request->isMethod('POST'))
         {
             $em = $this->getDoctrine()->getManager();
+
+            if($request->request->has('provip_provipbundle_studyprogramprofiletype'))
+            {
+                $formStudyProgram->handleRequest($request);
+
+                if ($formStudyProgram->isValid()) {
+
+                    $em->persist($studyProgram);
+
+                    $em->flush();
+
+                    return new Response("", 204);
+
+                }
+                else
+                {
+                    return new Response($this->renderView('ProvipApplicationBundle:Widgets:form_errors.html.twig', array(
+                            'errors' => $formSkill->getErrors())
+                    ), 400);
+
+                }
+            }
 
             if($request->request->has('provip_provipbundle_skilltype'))
             {
@@ -153,6 +177,7 @@ class HeiController extends Controller
         return $this->render('ProvipApplicationBundle:Hei:hei_settings.html.twig', array(
             'studyProgram' => $studyProgram,
             'formSkill' => $formSkill->createView(),
+            'formStudyProgram' => $formStudyProgram->createView(),
             'formGoal' => $formGoal->createView()));
     }
 
