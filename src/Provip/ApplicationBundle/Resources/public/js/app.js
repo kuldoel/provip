@@ -301,6 +301,25 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+
+      $('button.studyprogram-edit').click(function(e){
+
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_application_hei_info'),$('form.studyprogram-edit').serialize())
+              .fail(function(xhr, status, error){
+                  $error = '<div class="alert alert-danger">Something went wrong</div>';
+                  $('body').prepend($error)
+              })
+              .done(function(data){
+                  ('button.studyprogram-edit').removeClass('btn-success').text('Saved!');
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
       $('button.new-staff').click(function(e){
 
           e.preventDefault();
