@@ -103,7 +103,7 @@ class HeiController extends Controller
 
                     $em->flush();
 
-                    return new Response("", 204);
+                    return new Response("SAVED", 200);
 
                 }
                 else
