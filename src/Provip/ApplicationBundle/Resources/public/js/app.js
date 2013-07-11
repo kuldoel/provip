@@ -312,7 +312,7 @@ Date.now = Date.now || function() { return +new Date; };
                   $('body').prepend($error)
               })
               .done(function(data){
-                  ('button.studyprogram-edit').removeClass('btn-success').text('Saved!');
+                 $('button.studyprogram-edit').removeClass('btn-success').text('Saved!');
               })
               .always(function(){
                   $('.loader').hide();
