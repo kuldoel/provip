@@ -233,8 +233,7 @@ class User extends BaseUser
 
     /**
      *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     protected $responsibleFor;
