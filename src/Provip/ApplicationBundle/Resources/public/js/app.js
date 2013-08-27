@@ -394,6 +394,37 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+      $(document).on("click", "button.remove-skill", function(e){
+
+          e.preventDefault();
+
+          var skillWidget = $(this);
+
+          console.log(skillWidget);
+
+          confirm('Confirm delete', 'Are you sure you want to delete the skill "' + $.trim(skillWidget.text()) + '"?', 'No', 'Yes', function(confirmed){
+              if(! confirmed){
+                  return;
+              }
+
+              $('.loader').show();
+
+              $.ajax({
+                  url: Routing.generate('provip_application_hei_deleteskill',{ id: skillWidget.attr('data-id') }),
+                  type: 'DELETE',
+                  success: function(result) {
+                      skillWidget.fadeOut();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                      alert('Error: ' + jqXHR.responseText);
+                  },
+                  complete: function(jqXHR, textStatus) {
+                      $('.loader').hide();
+                  }
+              });
+          });
+      });
+
       $('button.new-learning-goal').click(function(e){
 
           e.preventDefault();
@@ -1067,6 +1098,36 @@ function setupBoxes() {
         }).get());
     boxes.height(maxHeight);
 }
+
+function confirm(heading, question, cancelButtonTxt, okButtonTxt, callback) {
+    var confirmModal =
+        $(
+            '<div class="modal fade">' +
+            '   <div class="modal-dialog">' +
+            '       <div class="modal-content">' +
+            '           <div class="modal-header">' +
+            '               <a class="close" data-dismiss="modal" >&times;</a>' +
+            '               <h3>' + heading +'</h3>' +
+            '           </div>' +
+            '           <div class="modal-body">' +
+            '               <p>' + question + '</p>' +
+            '           </div>' +
+            '           <div class="modal-footer">' +
+            '               <a href="#" class="confirm-button cancel btn" data-dismiss="modal">' + cancelButtonTxt + '</a>' +
+            '               <a href="#" class="confirm-button ok btn btn-primary">' + okButtonTxt + '</a>' +
+            '           </div>' +
+            '       </div>' +
+            '   </div>' +
+            '</div>'
+        );
+
+    confirmModal.find('.confirm-button').on('click', function(event) {
+        confirmModal.modal('hide');
+        callback( $(this).hasClass('ok') ? true : false );
+    });
+
+    $(confirmModal).modal('show');
+};
 
 $(document).ready(function(){
    $('a[rel="popover"]').popover();
