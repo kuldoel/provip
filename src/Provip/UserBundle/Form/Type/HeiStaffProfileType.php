@@ -15,6 +15,7 @@ class HeiStaffProfileType extends AbstractType
             ->add('phone', 'text', array('required' => false, 'label' => 'Phone Number'))
             ->add('jobDescription', 'textarea', array('required' => false, 'label' => 'Job description'))
             ->add('picture', new PictureType(), array('required' => false, 'label' => ''))
+            ->add('responsibleFor', 'textarea', array('required' => false, 'label' => 'You can contact me for'))
         ;
     }
 
