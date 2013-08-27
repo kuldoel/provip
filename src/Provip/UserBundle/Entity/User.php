@@ -2,12 +2,14 @@
 
 namespace Provip\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Provip\ProvipBundle\Entity\Activity;
 use Provip\ProvipBundle\Entity\Company;
 use Provip\ProvipBundle\Entity\Enrollment;
 use Provip\ProvipBundle\Entity\HigherEducationalInstitution;
+use Provip\ProvipBundle\Entity\Internship;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Entity\StudyProgram;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -909,12 +911,19 @@ class User extends BaseUser
         return $this->responsibleFor;
     }
 
+    public function getCurrentInternship()
+    {
+        if(! $this->internships || $this->internships->isEmpty()){
+            return null;
+        }
 
+        foreach($this->internships as $internship){
+            if(! $internship->getCompleted()){
+                return $internship;
+            }
+        }
 
-
-
-
-
-
+        return $this->internships->last();
+    }
 
 }
