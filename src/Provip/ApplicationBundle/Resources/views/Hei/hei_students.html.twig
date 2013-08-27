@@ -25,12 +25,18 @@
                    {% endif %}
                 </div>
                 <div class="media-body">
-                    <div><a href="#" class="h5">{{ e.student }}</a></div>
+                    <div>
+                        {% if e.student.getCurrentInternship %}
+                        <a href="{{ path('provip_application_internship_detailhei', {'publicId': e.student.getCurrentInternship.publicId}) }}" class="h5">{{ e.student }}</a>
+                        {% else %}
+                            <span class="h5">{{ e.student }}</span>
+                        {% endif %}
+                    </div>
                     <small class="text-muted">
                         {% if e.student.lastLogin %}
                         <span class="moment">{{ e.student.lastLogin | date("Ymd H:i:s")  }}</span>
                         {% else %}
-                            Did not log in yet
+                            Has not logged in yet
                         {% endif %}
                     </small>
                 </div>
