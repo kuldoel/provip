@@ -12,7 +12,7 @@ class StudyProgramProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('learningOutcomes', 'textarea', array('label' => 'Learning Outcomes'))
+            ->add('learningOutcomes', 'textarea', array('label' => 'Learning Outcomes', 'attr' => array('rows' => '12')))
 
         ;
     }
