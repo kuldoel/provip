@@ -17,6 +17,7 @@ use Provip\UserBundle\Form\Type\HeiStaffProfileType;
 use Provip\UserBundle\Form\Type\NewStaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -306,5 +307,32 @@ class HeiController extends Controller
         $em->flush();
 
         return new Response("complete", 200);
+    }
+
+    /**
+     * @Route("/hei/skill/{id}", options={"expose"=true})
+     */
+    public function deleteSkillAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $skill = $em->getRepository('ProvipProvipBundle:Skill')->find($id);
+
+        if(! $skill){
+            return new Response('Skill not found', 404);
+        }
+
+        $em->remove($skill);
+        $em->flush();
+
+        return new Response('', 200);
+    }
+
+    /**
+     * @Route("/hei/staff/{id}/profile", options={"expose"=true})
+     */
+    public function staffProfileAction(User $user)
+    {
+        return $this->render('ProvipApplicationBundle:Hei:profile.html.twig', array(
+            'user' => $user));
     }
 }
