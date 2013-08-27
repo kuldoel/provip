@@ -1,0 +1,93 @@
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
+
+{% block main %}
+<div class="padder clearfix">
+    <h4><i class="icon-user">User Profile</i></h4>
+</div>
+<div class="row">
+    <div class="col col-lg-6">
+        <section class="panel">
+            <form class="form-horizontal">
+
+                <div class="row">
+                    <div class="col col-lg-12">
+                        <div class="row">
+                            <label class="col col-lg-3 control-label"></label>
+                            <div class="col col-lg-9 media">
+                                <div class="bg-light text-center media-large thumb-large">
+                                    {% if user.picture %}
+                                        <img class="img-rounded" width="150" height="150" src="{{(user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <i class="icon-user inline icon-light icon-3x m-t-large m-b-large"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Email</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ user.email }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Name</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ user }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Institution</label>
+                            <div class="col col-lg-9">
+                                <a href="#" class="text link">
+                                    {% if user.adminOf %}
+                                        {{ user.adminOf.higherEducationalInstitution }}
+                                    {% elseif user.teachesAt %}
+                                        {{ user.teachesAt.higherEducationalInstitution }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Study Program</label>
+                            <div class="col col-lg-9">
+                                <a href="#" class="text link">
+                                    {% if user.adminOf %}
+                                        {{ user.adminOf }}
+                                    {% elseif user.teachesAt %}
+                                        {{ user.teachesAt }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Phone Number</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ user.phone }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Job Description</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ user.jobDescription }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col col-lg-3 control-label">Contact me for</label>
+                            <div class="col col-lg-9">
+                                <span class="text">{{ user.responsibleFor }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
