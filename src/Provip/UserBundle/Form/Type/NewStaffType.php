@@ -14,6 +14,7 @@ class NewStaffType extends AbstractType
             ->add('email', 'email', array('error_bubbling' => true))
             ->add('firstName', 'text', array('error_bubbling' => true))
             ->add('lastName', 'text', array('error_bubbling' => true))
+            ->add('responsibleFor', 'textarea', array('required' => false, 'label' => 'Contact for', 'attr' => array('placeholder' => 'This person can be contacted for...')))
         ;
     }
 
