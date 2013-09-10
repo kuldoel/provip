@@ -17,6 +17,13 @@ class StudentController extends Controller
      */
     public function dashboardAction()
     {
+        if($this->getUser()->getEnrollment()->getApproved() == false)
+        {
+            $this->get('session')->getFlashBag()->add('danger', 'Your enrollment is not yet approved');
+            return $this->redirect($this->generateUrl('provip_application_student_settings'));
+        }
+
+
         return $this->render('ProvipApplicationBundle:Student:index.html.twig');
     }
 

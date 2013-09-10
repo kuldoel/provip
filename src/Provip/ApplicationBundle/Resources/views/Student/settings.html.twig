@@ -3,7 +3,7 @@
 
 {% block main %}
 <div class="padder clearfix">
-    <h4><i class="icon-cog">Account Settings</i></h4>
+    <h4><i class="icon-cog"></i> Account Settings</h4>
 </div>
 <div class="row">
     <div class="col col-lg-6">
@@ -59,7 +59,18 @@
                         <div class="row">
                             <label class="col col-lg-3 control-label">Study Program</label>
                             <div class="col col-lg-9">
-                                <span class="text">{{ app.user.enrollment.studyprogram}} ({% if app.user.enrollment.approved %}<span class="text-success link" data-toggle="tooltip" data-placement="right" title="Your application has been approved">Application Approved</span> {% else %}<span data-toggle="tooltip" data-placement="right" class="text-warning link" title="An administrator of your school will review your application">Application Pending</span>{% endif %})</span>
+                                <span class="text">
+                                    {{ app.user.enrollment.studyprogram}}
+                                    (
+                                    {% if app.user.enrollment.approved %}
+                                        <span class="text-success link" data-toggle="tooltip" data-placement="right" title="Your application has been approved">Application Approved</span>
+                                    {% elseif app.user.enrollment.denied %}
+                                        <span data-toggle="tooltip" data-placement="right" class="text-danger link" title="Your enrollment has been denied by the School Administration">Enrollment Denied</span>
+                                    {% else %}
+                                        <span data-toggle="tooltip" data-placement="right" class="text-warning link" title="An administrator of your school will review your application">Application Pending</span>
+                                    {% endif %}
+                                    )
+                                </span>
                                 <div class="line line-dashed m-t-large"></div>
                             </div>
                         </div>

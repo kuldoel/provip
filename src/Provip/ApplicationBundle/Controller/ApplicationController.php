@@ -32,6 +32,12 @@ class ApplicationController extends Controller
     public function applyAction(Opportunity $opportunity, Request $request)
     {
 
+        if($this->getUser()->getEnrollment()->getApproved() == false)
+        {
+            $this->get('session')->getFlashBag()->add('danger', 'Your enrollment is not yet approved');
+            return $this->redirect($this->generateUrl('provip_application_student_settings'));
+        }
+
         $application = $this->getUser()->getApplicationForOpportunity($opportunity);
 
         if(!$application instanceof Application)

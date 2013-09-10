@@ -17,7 +17,6 @@ class ActivityUpdateEvent extends Event
     /**
      * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Activity", inversedBy="activityUpdateEvents", cascade={"persist"})
      * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
-     * @Assert\NotNull()
      * @Assert\Valid
      **/
     protected $activity;

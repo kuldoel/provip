@@ -35,6 +35,12 @@ class MarketplaceController extends Controller
      */
     public function studentMarketplaceAction()
     {
+        if($this->getUser()->getEnrollment()->getApproved() == false)
+        {
+            $this->get('session')->getFlashBag()->add('danger', 'Your enrollment is not yet approved');
+            return $this->redirect($this->generateUrl('provip_application_student_settings'));
+        }
+
         $opportunities = $this->getDoctrine()->getRepository('ProvipProvipBundle:Opportunity')->findBy(array('published' => 1));
 
         return $this->render('ProvipApplicationBundle:Marketplace:student.html.twig', array('opportunities' => $opportunities));

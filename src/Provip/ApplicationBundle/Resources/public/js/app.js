@@ -594,6 +594,33 @@ Date.now = Date.now || function() { return +new Date; };
       });
 
 
+      $('.deny').click(function(){
+
+          var btn = $(this);
+
+          $('.loader').show();
+
+          var enrollment = $(this).attr('data-enrollment');
+
+          var jqxhr = $.get(Routing.generate('provip_application_hei_deny',{ id: enrollment }), function() {
+              console.log("denying...")
+          })
+              .done(function(data) {
+                  console.log(data);
+                  if(data == "complete")
+                  {
+                      btn
+                          .removeClass('btn-success')
+                          .addClass('btn-disabled')
+                          .text('Denied')
+                  }
+              })
+              .always(function() { $('.loader').hide(); });
+
+
+      });
+
+
 
       $("form.complete-opportunity :input").focus(function() {
           if($('button.complete-opportunity').hasClass('disabled'))

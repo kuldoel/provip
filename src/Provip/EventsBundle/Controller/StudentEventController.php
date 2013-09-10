@@ -5,6 +5,7 @@ namespace Provip\EventsBundle\Controller;
 
 use Provip\EventsBundle\Entity\ActivityUpdateEvent;
 use Provip\EventsBundle\Entity\FeedbackEvent;
+use Provip\EventsBundle\Entity\Notification;
 use Provip\EventsBundle\Form\Type\ActivityUpdateEventType;
 use Provip\EventsBundle\Form\Type\FeedbackEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,11 +34,53 @@ class StudentEventController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $activity = $activityUpdateEvent->getActivity();
-                $activity->setState($activityUpdateEvent->getState());
+
+                if($activity) {
+
+                    $activity = $activityUpdateEvent->getActivity();
+                    $activity->setState($activityUpdateEvent->getState());
+                    $em->persist($activity);
+
+                    $currentInternship = $this->getUser()->getCurrentInternship();
+
+                    if($activityUpdateEvent->getPrivacy() == 'privacy.company.only') {
+                        $notification = new Notification(
+                            $currentInternship->getApplication()->getOpportunity->getMentor(),
+                            $activityUpdateEvent,
+                            'has posted an activity update'
+                        );
+                        $em->persist($notification);
+                    }
+                    elseif($activityUpdateEvent->getPrivacy() == 'privacy.hei.only') {
+                        $notification = new Notification(
+                            $currentInternship->getApplication()->getCoach(),
+                            $activityUpdateEvent,
+                            'has posted an activity update'
+                        );
+                        $em->persist($notification);
+                    }
+                    else {
+                        $notification = new Notification(
+                            $currentInternship->getApplication()->getOpportunity->getMentor(),
+                            $activityUpdateEvent,
+                            'has posted an activity update'
+                        );
+                        $notification2 = new Notification(
+                            $currentInternship->getApplication()->getCoach(),
+                            $activityUpdateEvent,
+                            'has posted an activity update'
+                        );
+
+                        $em->persist($notification);
+                        $em->persist($notification2);
+                    }
+
+                }
+
                 $activityUpdateEvent->setAuthor($this->getUser());
 
                 $em->persist($activityUpdateEvent);
-                $em->persist($activity);
+
                 $em->flush();
 
                 return new Response($this->renderView('ProvipApplicationBundle:Widgets:activityupdateevent_new.html.twig', array('e' => $activityUpdateEvent)), 200);

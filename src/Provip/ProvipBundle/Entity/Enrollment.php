@@ -27,6 +27,14 @@ class Enrollment
      */
     protected $approved = false;
 
+    /**
+     * Default denied is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $denied = false;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="enrollments")
@@ -118,6 +126,24 @@ class Enrollment
     {
         return $this->student;
     }
+
+    /**
+     * @param mixed $denied
+     */
+    public function setDenied($denied)
+    {
+        $this->denied = $denied;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDenied()
+    {
+        return $this->denied;
+    }
+
+    
 
 
 }

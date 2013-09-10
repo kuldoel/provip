@@ -8,40 +8,44 @@
     </header>
     <ul id="staff-list" class="list-group list-group-flush m-t-n">
         {% for e in enrollments %}
-        <li class="list-group-item">
-            <div class="media">
-                <span class="pull-left thumb-small">
-                    {% if e.student.picture %}
-                        <img src="{{(e.student.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ e.student }}" class="img-rounded">
-                    {% else %}
-                        <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ e.student }}" class="img-rounded">
-                    {% endif %}
+            {% if e.denied %}
+            {% else %}
+                <li class="list-group-item">
+                    <div class="media">
+                        <span class="pull-left thumb-small">
+                            {% if e.student.picture %}
+                                <img src="{{(e.student.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ e.student }}" class="img-rounded">
+                            {% else %}
+                                <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ e.student }}" class="img-rounded">
+                            {% endif %}
 
-                </span>
-                <div class="pull-right">
-                   {% if e.approved %}
-                   {% else %}
-                       <button data-enrollment="{{ e.id }}" class="btn btn-success btn-small approve">Approve Enrollment</button>
-                   {% endif %}
-                </div>
-                <div class="media-body">
-                    <div>
-                        {% if e.student.getCurrentInternship %}
-                        <a href="{{ path('provip_application_internship_detailhei', {'publicId': e.student.getCurrentInternship.publicId}) }}" class="h5">{{ e.student }}</a>
-                        {% else %}
-                            <span class="h5">{{ e.student }}</span>
-                        {% endif %}
+                        </span>
+                        <div class="pull-right">
+                           {% if e.approved %}
+                           {% else %}
+                               <button data-enrollment="{{ e.id }}" class="btn btn-success btn-small approve">Approve Enrollment</button>
+                               <button data-enrollment="{{ e.id }}" class="btn btn-danger btn-small deny">Deny Enrollment</button>
+                           {% endif %}
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                {% if e.student.getCurrentInternship %}
+                                <a href="{{ path('provip_application_internship_detailhei', {'publicId': e.student.getCurrentInternship.publicId}) }}" class="h5">{{ e.student }}</a>
+                                {% else %}
+                                    <span class="h5">{{ e.student }}</span>
+                                {% endif %}
+                            </div>
+                            <small class="text-muted">
+                                {% if e.student.lastLogin %}
+                                <span class="moment">{{ e.student.lastLogin | date("Ymd H:i:s")  }}</span>
+                                {% else %}
+                                    Has not logged in yet
+                                {% endif %}
+                            </small>
+                        </div>
                     </div>
-                    <small class="text-muted">
-                        {% if e.student.lastLogin %}
-                        <span class="moment">{{ e.student.lastLogin | date("Ymd H:i:s")  }}</span>
-                        {% else %}
-                            Has not logged in yet
-                        {% endif %}
-                    </small>
-                </div>
-            </div>
-        </li>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 </section>

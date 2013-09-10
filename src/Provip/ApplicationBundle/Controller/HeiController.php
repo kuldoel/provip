@@ -287,7 +287,6 @@ class HeiController extends Controller
     public function studentsAction(Request $request)
     {
         $enrollments = $this->getUser()->getAdminOf()->getEnrollments();
-
         return $this->render('ProvipApplicationBundle:Hei:hei_students.html.twig', array(
                 'enrollments' => $enrollments)
         );
@@ -301,6 +300,21 @@ class HeiController extends Controller
     {
 
         $enrollment->setApproved(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($enrollment);
+        $em->flush();
+
+        return new Response("complete", 200);
+    }
+
+    /**
+     * @Route("/hei/enrollments/{id}/deny", options={"expose"=true})
+     */
+    public function denyAction(Enrollment $enrollment)
+    {
+
+        $enrollment->setDenied(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);

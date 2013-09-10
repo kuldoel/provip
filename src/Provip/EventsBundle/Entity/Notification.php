@@ -50,6 +50,13 @@ class Notification
     protected $event;
 
 
+    public function Notification($user, $event, $action) {
+        $this->user = $user;
+        $this->event = $event;
+        $this->action = $action;
+    }
+
+
 
     /**
      * Get id
