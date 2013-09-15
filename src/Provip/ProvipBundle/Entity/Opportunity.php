@@ -103,6 +103,26 @@ class Opportunity
      */
     protected $slug;
 
+    /**
+     *
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $howCommunication;
+
+    /**
+     *
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $toolsCommunication;
+
+    /**
+     *
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $scheduleCommunication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Company", inversedBy="opportunities")
@@ -523,6 +543,57 @@ class Opportunity
     {
         return $this->title;
     }
+
+    /**
+     * @param mixed $howCommunication
+     */
+    public function setHowCommunication($howCommunication)
+    {
+        $this->howCommunication = $howCommunication;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHowCommunication()
+    {
+        return $this->howCommunication;
+    }
+
+    /**
+     * @param mixed $scheduleCommunication
+     */
+    public function setScheduleCommunication($scheduleCommunication)
+    {
+        $this->scheduleCommunication = $scheduleCommunication;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScheduleCommunication()
+    {
+        return $this->scheduleCommunication;
+    }
+
+    /**
+     * @param mixed $toolsCommunication
+     */
+    public function setToolsCommunication($toolsCommunication)
+    {
+        $this->toolsCommunication = $toolsCommunication;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToolsCommunication()
+    {
+        return $this->toolsCommunication;
+    }
+
+
+
 
 
 

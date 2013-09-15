@@ -2,6 +2,8 @@
 
 namespace Provip\ProvipBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
+use Provip\ProvipBundle\Entity\StudyProgram;
 use Provip\ProvipBundle\Form\Type\TaskType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,14 +11,31 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DeliverableType extends AbstractType
 {
+
+    private $studyProgram;
+
+    public function __construct(StudyProgram $sp) {
+        $this->studyProgram = $sp;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $studyProgram = $this->studyProgram;
+
         $builder
-            ->add('description', 'text', array(
-                'label' => 'Goal',
-                'attr' => array('placeholder' => 'Workplace interaction, Building a website, ...'),
-                'error_bubbling' => true,
-            ))
+            ->add('enrollment', 'entity', array(
+                    'class' => 'ProvipProvipBundle:Enrollment',
+                    'query_builder' => function(EntityRepository $er) use ($studyProgram) {
+                        return $er->createQueryBuilder('e')
+                            ->where('e.studyProgram = :studyProgram')
+                            ->orderBy('e.id', 'ASC')
+                            ->setParameter('studyProgram', $studyProgram);
+                    },
+                    'label' => 'Student',
+                    'attr' => array('class' => 'selectpicker'),
+                    'error_bubbling' => true,
+                ))
             ->add('tasks', 'collection' , array(
                 'type' =>  new TaskType(),
                 'allow_add' => true,

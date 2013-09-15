@@ -20,14 +20,6 @@ class Deliverable
     protected $id;
 
     /**
-     *
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
-     * @Assert\Type(type="string")
-     */
-    protected $description;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Opportunity", inversedBy="projectGoals")
      * @ORM\JoinColumn(name="opportunity_id", referencedColumnName="id")
      * @Assert\Valid
@@ -36,11 +28,11 @@ class Deliverable
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="learningGoals")
-     * @ORM\JoinColumn(name="studyprogram_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Enrollment", inversedBy="deliverables")
+     * @ORM\JoinColumn(name="enrollment_id", referencedColumnName="id")
      * @Assert\Valid
      **/
-    protected $studyProgram;
+    protected $enrollment;
 
 
     /**
@@ -49,12 +41,19 @@ class Deliverable
      */
     protected $tasks;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type(type="string")
+     */
+    protected $description;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->description = 'Description';
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -66,29 +65,6 @@ class Deliverable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Deliverable
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -171,25 +147,38 @@ class Deliverable
     }
 
     /**
-     * @param mixed $studyProgram
+     * @param mixed $enrollment
      */
-    public function setStudyProgram($studyProgram)
+    public function setEnrollment($enrollment)
     {
-        $this->studyProgram = $studyProgram;
+        $this->enrollment = $enrollment;
     }
 
     /**
      * @return mixed
      */
-    public function getStudyProgram()
+    public function getEnrollment()
     {
-        return $this->studyProgram;
+        return $this->enrollment;
     }
 
-    public function __toString()
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
     {
         return $this->description;
     }
+
+
 
 
 }

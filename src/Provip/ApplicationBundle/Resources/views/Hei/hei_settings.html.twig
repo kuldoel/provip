@@ -29,7 +29,19 @@
                     </div>
                     <div class="col col-lg-9">
                         <form class="studyprogram-edit" action="#" method="POST">
-                            {{ form_widget(formStudyProgram) }}
+                            {{ form_widget(formStudyProgram.learningOutcomes) }}
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <label>Internship Milestones</label>
+                    </div>
+                    <div class="col col-lg-9">
+                        <form class="studyprogram-edit" action="#" method="POST">
+                            {{ form_widget(formStudyProgram.internshipMilestones) }}
+                            {{ form_rest(formStudyProgram) }}
                         </form>
                         <button class="btn btn-success btn-small block studyprogram-edit" type="button">Save Changes</button>
                     </div>
@@ -51,12 +63,14 @@
                         </div>
                         <form class="new-skill" action="#" method="POST">
                             <div class="row">
-                                <div class="col col-lg-8">
+                                <div class="col col-lg-3">
                                     {{  form_widget(formSkill) }}
                                 </div>
-                                <div class="col col-lg-4">
-                                    <label>Click to add</label>
-                                    <a class="btn btn-success new-skill btn-small block">Add</a>
+                            </div>
+                            <div class="row">
+                                <div class="col col-lg-2">
+                                    <br>
+                                    <a class="btn btn-success new-skill btn-small">Add</a>
                                 </div>
                             </div>
                         </form>
@@ -67,22 +81,23 @@
 
                 <div class="row">
                     <div class="col col-lg-3">
-                        <label>Milestones</label>
+                        <label>Student Internship Tasks</label><br>
+                        <a href="#new-goal" class="btn btn-info btn-small" data-toggle="modal"><i class="icon-plus"></i> CREATE INTERNSHIP TASK</a>
                     </div>
                     <div class="col col-lg-9">
-                        <ul class="goals">
-                            {% for learningGoal in studyProgram.learningGoals %}
-                                <li>
-                                    {{ learningGoal.description }}
-                                    <ul>
-                                        {% for task in learningGoal.tasks %}
-                                            <li>{{ task.title }}</li>
+                        {% for enrollment in app.user.AdminOf.getEnrollments %}
+                            {% if enrollment.approved %}
+                                <h2>{{ enrollment.student.fullName }}</h2>
+                                <hr>
+                                <ul style="margin-left: 0px; list-style-type: none">
+                                    {% for deliverable in enrollment.deliverables %}
+                                        {% for task in deliverable.tasks %}
+                                            <li><button class="btn btn-white btn-small remove-task" data-id="{{ task.id }}">{{ task.deadline | date("d-m-Y")}} - {{ task.title}} <i class="icon-remove-sign text-danger"></i></button></li>
                                         {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <a href="#new-goal" class="btn btn-info btn-small" data-toggle="modal"><i class="icon-plus"> MILESTONE</i></a>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -100,7 +115,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-                        <h4 class="modal-title" id="myModalLabel">Add a new Milestone</h4>
+                        <h4 class="modal-title" id="myModalLabel">Create Internship Task</h4>
                     </div>
 
                     <div class="modal-body">
@@ -111,7 +126,9 @@
 
                         <article class="media">
 
-                            {{ form_row(formGoal.description) }}
+                            {{ form_label(formGoal.enrollment) }}
+                            <br>
+                            {{ form_widget(formGoal.enrollment) }}
 
                         </article>
 

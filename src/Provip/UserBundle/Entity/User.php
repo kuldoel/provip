@@ -803,6 +803,14 @@ class User extends BaseUser
     }
 
     /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    /**
      * @param mixed $teachesAt
      */
     public function setTeachesAt($teachesAt)

@@ -48,6 +48,11 @@ class Enrollment
      */
     protected $student;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="enrollment", cascade={"persist", "remove"})
+     */
+    protected $deliverables;
+
 
     function __construct(StudyProgram $studyProgram)
     {
@@ -143,7 +148,26 @@ class Enrollment
         return $this->denied;
     }
 
-    
+    /**
+     * @param mixed $deliverables
+     */
+    public function setDeliverables($deliverables)
+    {
+        $this->deliverables = $deliverables;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeliverables()
+    {
+        return $this->deliverables;
+    }
+
+    function __toString()
+    {
+       return $this->getStudent()->getFullName();
+    }
 
 
 }

@@ -74,6 +74,21 @@ class OpportunityEditType extends AbstractType
                 'multiple' => true,
                 'error_bubbling' => true,
             ))
+            ->add('howCommunication', 'text', array(
+                    'label' => 'How we communicate with Interns',
+                    'error_bubbling' => true,
+                    'attr' => array('placeholder' => '...')
+            ))
+            ->add('toolsCommunication', 'text', array(
+                    'label' => 'Tools',
+                    'error_bubbling' => true,
+                    'attr' => array('placeholder' => '...')
+            ))
+            ->add('scheduleCommunication', 'text', array(
+                    'label' => 'Schedule',
+                    'error_bubbling' => true,
+                    'attr' => array('placeholder' => '...')
+            ))
         ;
     }
 

@@ -34,6 +34,14 @@ class StudyProgram
      */
     protected $learningOutcomes;
 
+
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $internshipMilestones;
+
     /**
      * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="studyPrograms")
      * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
@@ -53,11 +61,6 @@ class StudyProgram
      */
     protected $enrollments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Deliverable", mappedBy="studyProgram")
-     * @Assert\Valid
-     */
-    protected $learningGoals;
 
     /**
      * @ORM\OneToMany(targetEntity="Provip\UserBundle\Entity\User", mappedBy="teachesAt")
@@ -78,7 +81,6 @@ class StudyProgram
     {
         $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->enrollments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->learningGoals = new \Doctrine\Common\Collections\ArrayCollection();
         $this->staff = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -171,38 +173,6 @@ class StudyProgram
         return $this->enrollments;
     }
 
-    /**
-     * Add learningGoals
-     *
-     * @param \Provip\ProvipBundle\Entity\Deliverable $learningGoals
-     * @return HigherEducationalInstitution
-     */
-    public function addLearningGoal(\Provip\ProvipBundle\Entity\Deliverable $learningGoal)
-    {
-        $this->learningGoals[] = $learningGoal;
-    
-        return $this;
-    }
-
-    /**
-     * Remove learningGoals
-     *
-     * @param \Provip\ProvipBundle\Entity\Deliverable $learningGoals
-     */
-    public function removeLearningGoal(\Provip\ProvipBundle\Entity\Deliverable $learningGoal)
-    {
-        $this->learningGoals->removeElement($learningGoal);
-    }
-
-    /**
-     * Get learningGoals
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getLearningGoals()
-    {
-        return $this->learningGoals;
-    }
 
     /**
      * Add staff
@@ -290,6 +260,24 @@ class StudyProgram
     {
         return $this->learningOutcomes;
     }
+
+    /**
+     * @param mixed $internshipMilestones
+     */
+    public function setInternshipMilestones($internshipMilestones)
+    {
+        $this->internshipMilestones = $internshipMilestones;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternshipMilestones()
+    {
+        return $this->internshipMilestones;
+    }
+
+
 
 
 

@@ -1,8 +1,8 @@
 <li class="{{ status }}">
-    {{ learninggoal.description }}
+    {{ learninggoal.enrollment.student.fullName }}
     <ul>
         {% for task in learninggoal.tasks %}
-        <li>{{ task.title }}</li>
+        <li><strong>{{ task.deadline | date("d-m-Y") }}{{ task.title }}</li>
         {% endfor %}
     </ul>
 </li>

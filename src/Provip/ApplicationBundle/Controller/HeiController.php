@@ -85,7 +85,7 @@ class HeiController extends Controller
         $learningGoal = new Deliverable();
         $skill        = new Skill();
 
-        $formGoal           = $this->createForm(new DeliverableType(), $learningGoal);
+        $formGoal           = $this->createForm(new DeliverableType($this->getUser()->getAdminOf()), $learningGoal);
         $formSkill          = $this->createForm(new SkillType(), $skill);
         $formStudyProgram   = $this->createForm(new StudyProgramProfileType(), $studyProgram);
 
@@ -147,8 +147,6 @@ class HeiController extends Controller
                 $formGoal->handleRequest($request);
 
                 if ($formGoal->isValid()) {
-
-                    $learningGoal->setStudyProgram($studyProgram);
 
                     foreach($learningGoal->getTasks() as $task)
                     {
@@ -336,6 +334,25 @@ class HeiController extends Controller
         }
 
         $em->remove($skill);
+        $em->flush();
+
+        return new Response('', 200);
+    }
+
+
+    /**
+     * @Route("/hei/task/{id}", options={"expose"=true})
+     */
+    public function deleteTaskAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $task = $em->getRepository('ProvipProvipBundle:Task')->find($id);
+
+        if(! $task){
+            return new Response('Task not found', 404);
+        }
+
+        $em->remove($task);
         $em->flush();
 
         return new Response('', 200);

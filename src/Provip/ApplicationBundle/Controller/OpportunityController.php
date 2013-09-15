@@ -6,6 +6,7 @@ use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Deliverable;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
+use Provip\ProvipBundle\Form\Type\DeliverableCompanyType;
 use Provip\ProvipBundle\Form\Type\DeliverableType;
 use Provip\ProvipBundle\Form\Type\OpportunityEditType;
 use Provip\ProvipBundle\Form\Type\OpportunityNewType;
@@ -71,7 +72,7 @@ class OpportunityController extends Controller
         }
 
         $form = $this->createForm(new OpportunityEditType($this->getUser()->getCompany()), $opportunity);
-        $form2 = $this->createForm(new DeliverableType(), $deliverable);
+        $form2 = $this->createForm(new DeliverableCompanyType(), $deliverable);
 
         if ('POST' === $request->getMethod()) {
 

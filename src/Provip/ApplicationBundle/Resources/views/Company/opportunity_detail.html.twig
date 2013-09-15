@@ -16,6 +16,7 @@
                         <ul class="nav nav-tabs pull-right">
                             <li class="active"><a href="#home" data-toggle="tab">General</a></li>
                             <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
+                            <li class=""><a href="#communicationprotocol" data-toggle="tab">Communication Protocol</a></li>
                             <li class=""><a href="#goals" data-toggle="tab">Goals</a></li>
                             <li class=""><a href="#applications" data-toggle="tab">Applications</a></li>
                             <li class=""><a href="#danger" data-toggle="tab"><span class="text-danger">Danger Zone</span></a></li>
@@ -47,7 +48,7 @@
                             {{ form_row(form.skills) }}
                             {{ form_row(form.selectionProcedure) }}
                             {{ form_row(form.communicationProtocol) }}
-                            {{ form_rest(form) }}
+
 
                             <div class="padder clearfix" style="min-height: 15px">
 
@@ -58,6 +59,27 @@
                                 <div class="col col-lg-9 col-offset-3">
 
                                         <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="communicationprotocol">
+                            {{ form_row(form.howCommunication) }}
+                            {{ form_row(form.toolsCommunication) }}
+                            {{ form_row(form.scheduleCommunication) }}
+                            {{ form_rest(form) }}
+
+                            <div class="padder clearfix" style="min-height: 15px">
+
+                            </div>
+
+
+                            <div  class="row">
+                                <div class="col col-lg-9 col-offset-3">
+
+                                    <button type="button" class="btn btn-success complete-opportunity" data-slug="{{ opportunity.slug }}"><i class="icon-check"></i> Save changes</button>
 
 
                                 </div>
@@ -246,6 +268,34 @@
             </div>
     </div>
     </form>
+
+
+
+        <div id="edit-goal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel">Project Goal</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <form class="goal-form">
+
+                        </form>
+
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+        </div>
 
 
 

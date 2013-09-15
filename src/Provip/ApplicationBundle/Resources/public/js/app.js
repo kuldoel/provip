@@ -425,6 +425,37 @@ Date.now = Date.now || function() { return +new Date; };
           });
       });
 
+      $(document).on("click", "button.remove-task", function(e){
+
+          e.preventDefault();
+
+          var skillWidget = $(this);
+
+          console.log(skillWidget);
+
+          confirm('Confirm delete', 'Are you sure you want to delete the task "' + $.trim(skillWidget.text()) + '"?', 'No', 'Yes', function(confirmed){
+              if(! confirmed){
+                  return;
+              }
+
+              $('.loader').show();
+
+              $.ajax({
+                  url: Routing.generate('provip_application_hei_deletetask',{ id: skillWidget.attr('data-id') }),
+                  type: 'DELETE',
+                  success: function(result) {
+                      skillWidget.fadeOut();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                      alert('Error: ' + jqXHR.responseText);
+                  },
+                  complete: function(jqXHR, textStatus) {
+                      $('.loader').hide();
+                  }
+              });
+          });
+      });
+
       $('button.new-learning-goal').click(function(e){
 
           e.preventDefault();
