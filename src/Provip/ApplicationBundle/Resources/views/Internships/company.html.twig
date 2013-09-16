@@ -45,7 +45,14 @@
                                         {{ skill.value }}
                                     {% endfor %}
                                 </td>
-                                <td>{{ app.coach }} (<a href="mailto:{{ app.coach.email }}">{{ app.coach.email }}</a>)</td>
+                                <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{app.coach }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ app.coach.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ app.coach.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ app.coach.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ app.coach.responsibleFor }}" data-toggle="popover">{{app.coach  }}</a></td>
                                 <td><a href="{{ path('provip_application_application_reviewascompany', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
                             </tr>
                             {% endif %}
@@ -93,12 +100,19 @@
                                     <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}">{{ app.student }}</a> (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
                                     <td>{{ app.student.enrollment.studyProgram.higherEducationalInstitution }}</td>
                                     <td>{{ app.student.enrollment.studyProgram }}</td>
-                                    <td>{{ app.coach }} (<a href="mailto:{{ app.coach.email }}">{{ app.coach.email }}</a>)</td>
+                                    <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{app.coach }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ app.coach.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ app.coach.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ app.coach.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ app.coach.responsibleFor }}" data-toggle="popover">{{app.coach  }}</a></td>
                                     <td>{{ app.opportunity }}</td>
                                     <td>{{ app.startDate | date("d M Y") }}</td>
                                     <td>{{ app.endDate | date("d M Y") }}</td>
                                     <td></td>
-                                    <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-small">Progress</a></td>
+                                    <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-mini">Progress</a></td>
                                 </tr>
 
                         {% endfor %}

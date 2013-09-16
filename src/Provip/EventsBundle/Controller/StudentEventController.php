@@ -41,40 +41,6 @@ class StudentEventController extends Controller
                     $activity->setState($activityUpdateEvent->getState());
                     $em->persist($activity);
 
-                    $currentInternship = $this->getUser()->getCurrentInternship();
-
-                    if($activityUpdateEvent->getPrivacy() == 'privacy.company.only') {
-                        $notification = new Notification(
-                            $currentInternship->getApplication()->getOpportunity->getMentor(),
-                            $activityUpdateEvent,
-                            'has posted an activity update'
-                        );
-                        $em->persist($notification);
-                    }
-                    elseif($activityUpdateEvent->getPrivacy() == 'privacy.hei.only') {
-                        $notification = new Notification(
-                            $currentInternship->getApplication()->getCoach(),
-                            $activityUpdateEvent,
-                            'has posted an activity update'
-                        );
-                        $em->persist($notification);
-                    }
-                    else {
-                        $notification = new Notification(
-                            $currentInternship->getApplication()->getOpportunity->getMentor(),
-                            $activityUpdateEvent,
-                            'has posted an activity update'
-                        );
-                        $notification2 = new Notification(
-                            $currentInternship->getApplication()->getCoach(),
-                            $activityUpdateEvent,
-                            'has posted an activity update'
-                        );
-
-                        $em->persist($notification);
-                        $em->persist($notification2);
-                    }
-
                 }
 
                 $activityUpdateEvent->setAuthor($this->getUser());

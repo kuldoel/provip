@@ -34,8 +34,15 @@
                                 <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
                                 <td>{{ app.opportunity }}</td>
                                 <td>{{ app.opportunity.company }}</td>
-                                <td>{{ app.opportunity.mentor }} (<a href="mailto:{{ app.opportunity.mentor }}">{{ app.opportunity.mentor }}</a>)</td>
-                                <td><a href="{{ path('provip_application_application_reviewashei', {'application': app.id }) }}" class="btn btn-info btn-small">Review Details</a></td>
+                                <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ app.opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ app.opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ app.opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ app.opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ app.opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ app.opportunity.mentor }}</a></td>
+                                <td><a href="{{ path('provip_application_application_reviewashei', {'application': app.id }) }}" class="btn btn-info btn-mini">Review Details</a></td>
                             </tr>
                             {% endif %}
                         {% endif %}
@@ -80,11 +87,18 @@
                                     <td>{{ app.student }} (<a href="mailto:{{ app.student.email }}">{{ app.student.email }}</a>)</td>
                                     <td>{{ app.opportunity }}</td>
                                     <td>{{ app.opportunity.company }}</td>
-                                    <td><a href="{{ path('provip_application_hei_staffprofile', {'id': app.opportunity.mentor.id}) }}">{{ app.opportunity.mentor }}</a> (<a href="mailto:{{ app.opportunity.mentor.email }}">{{ app.opportunity.mentor.email }}</a>)</td>
+                                    <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ app.opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ app.opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ app.opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ app.opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ app.opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ app.opportunity.mentor }}</a></td>
                                     <td>{{ app.startDate | date("d M Y") }}</td>
                                     <td>{{ app.endDate | date("d M Y") }}</td>
                                     <td></td>
-                                    <td><a href="{{ path('provip_application_internship_detailhei', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-small">Progress</a></td>
+                                    <td><a href="{{ path('provip_application_internship_detailhei', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-mini">Progress</a></td>
                                 </tr>
                         {% endfor %}
                         </tbody>

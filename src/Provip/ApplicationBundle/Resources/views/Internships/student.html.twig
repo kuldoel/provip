@@ -20,6 +20,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Company</th>
+                        <th>Company Mentor</th>
                         <th>Status</th>
                     </tr>
                     </thead>
@@ -29,6 +30,14 @@
                             <tr>
                                 <td><a href="{{ path('provip_application_application_apply', {'slug': app.opportunity.slug}) }}">{{ app.opportunity }}</a></td>
                                 <td>{{ app.opportunity.company }}</td>
+                                <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ app.opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ app.opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ app.opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ app.opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ app.opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ app.opportunity.mentor }}</a></td>
                                 <td>
                                     {% if app.rejected %}
                                         <a href="{{ path('provip_application_application_apply', {'slug': app.opportunity.slug}) }}" class="btn btn-danger btn-mini">Rejected</a>
@@ -78,8 +87,22 @@
                                     <td>{{ internship.application.opportunity.company }}</td>
                                     <td>{{ internship.application.startDate | date("d M Y") }}</td>
                                     <td>{{ internship.application.endDate | date("d M Y") }}</td>
-                                    <td>{{ internship.application.coach }} (<a href="mailto:{{ internship.application.coach.email }}">{{ internship.application.coach.email }}</a>)</td>
-                                    <td>{{ internship.application.opportunity.mentor }} (<a href="mailto:{{ internship.application.opportunity.mentor.email }}">{{ internship.application.opportunity.mentor.email }}</a>)</td>
+                                    <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{internship.application.coach }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ internship.application.coach.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ internship.application.coach.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ internship.application.coach.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ internship.application.coach.responsibleFor }}" data-toggle="popover">{{internship.application.coach  }}</a></td>
+                                    <td><a class="btn btn-alt btn-white btn-mini" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ internship.application.opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ internship.application.opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ internship.application.opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ internship.application.opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ internship.application.opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ internship.application.opportunity.mentor }}</a></td>
                                     <td>{{ internship.completed }}</td>
                                 </tr>
                         {% endfor %}

@@ -38,10 +38,10 @@
                     <span class="kpi-title">How to contact?</span>
                     <p class="text-small">{{ opportunity.communicationProtocol }}</p>
 
-                    <span class="kpi-title">Internship Goals</span>
+                    <span class="kpi-title">Company Internship Goals</span>
                     <ul class="text-small">
                         {% for goal in opportunity.projectGoals %}
-                            <li>{{ goal.description }}
+                            <li><strong>{{ goal.description }}</strong>
                                 <ul class="text-small">
                                     {% for task in goal.tasks  %}
                                         <li>{{ task.title }}</li>
@@ -52,8 +52,20 @@
                     </ul>
 
                     <span class="kpi-title">Contact person for this internship</span>
-                    <p class="text-small">{{ opportunity.mentor }} (<a href="mailto:{{ opportunity.mentor.email }}">{{ opportunity.mentor.email }}</a>)</p>
+                    <p class="text-small">
+                        <a class="btn btn-alt btn-white btn-small" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ opportunity.mentor }}</a>
 
+
+
+
+                    </p>
                 </div>
             </div>
         </div>
@@ -113,7 +125,9 @@
 
                     <span class="kpi-title">Primary Language</span>
                     <p class="text-small">
-                        {{ opportunity.company.language.valueAttr }}
+                        {% if opportunity.company.language %}
+                            {{ opportunity.company.language.valueAttr }}
+                        {% endif %}
                     </p>
 
                     <span class="kpi-title">Other languages</span>

@@ -48,8 +48,9 @@ class ApplicationType extends AbstractType
 
                         return $er->createQueryBuilder('u')
                             ->where('u.teachesAt = ?1')
+                            ->orWhere('u.adminOf = ?2')
                             ->orderBy('u.firstName', 'ASC')
-                            ->setParameters(array('1' => $student->getEnrollment()->getStudyProgram()))
+                            ->setParameters(array('1' => $student->getEnrollment()->getStudyProgram(), '2' => $student->getEnrollment()->getStudyProgram()))
                             ;
                     },)
             )

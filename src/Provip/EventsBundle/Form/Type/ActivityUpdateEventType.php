@@ -26,6 +26,7 @@ class ActivityUpdateEventType extends AbstractType
                     'error_bubbling' => true,
                     'attr' => array('class' => 'selectpicker', 'data-style' => 'btn-info'),
                     'class' => 'ProvipProvipBundle:Activity',
+                    'empty_value' => 'Select Activity',
                     'query_builder' => function(EntityRepository $er) {
 
                         $student = $this->student;
@@ -44,6 +45,8 @@ class ActivityUpdateEventType extends AbstractType
             ->add('message', 'textarea', array(
                 'label' => 'Message',
                 'error_bubbling' => true,
+                'attr' => array(
+                    'placeholder' => 'Your message...')
             ))
             ->add('privacy', 'choice', array(
                 'choices' => array(

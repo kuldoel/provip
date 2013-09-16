@@ -279,6 +279,22 @@ class HeiController extends Controller
 
     }
 
+
+    /**
+     * @Route("/hei/students/search/{q}", defaults={"q" = ""}, options={"expose"=true})
+     */
+    public function searchStudentAction($q)
+    {
+
+        $studyProgram = $this->getUser()->getAdminOf();
+
+        $staff = $this->getDoctrine()->getRepository('ProvipUserBundle:User')->getStudentByPartial($q, $studyProgram);
+
+        return $this->render('ProvipApplicationBundle:Widgets:hei_student_search.html.twig',array('staff' => $staff, 'status' => ''));
+
+
+    }
+
     /**
      * @Route("/hei/students")
      */

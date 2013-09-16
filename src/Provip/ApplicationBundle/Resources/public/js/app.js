@@ -71,7 +71,17 @@ Date.now = Date.now || function() { return +new Date; };
 
          });
 
-     })
+     });
+
+      $(document).on('click', '.activity-form-update .btn', function() {
+
+          $btn  = $(this);
+
+          $('.toggle').toggle();
+
+          $btn.hide();
+
+      });
 
       $(document).on('click', '.add-new-activity', function() {
 
@@ -262,7 +272,11 @@ Date.now = Date.now || function() { return +new Date; };
                   $('.information')
                       .removeClass('text-danger')
                       .addClass('text-muted')
-                      .text('Your application has been submitted and will now be reviewed by your school and the internship company.')
+                      .text('Your application has been submitted and will now be reviewed by your school and the internship company.');
+
+                  $('.icon-plus.icon-large').hide();
+                  $('.icon-remove-circle').hide();
+
               })
               .always(function(){
                   $('.loader').hide();
@@ -598,7 +612,7 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
-      $('.approve').click(function(){
+      $('body').on('click', '.approve', function(e){
 
           var btn = $(this);
 
@@ -625,7 +639,7 @@ Date.now = Date.now || function() { return +new Date; };
       });
 
 
-      $('.deny').click(function(){
+      $('body').on('click', '.deny', function(e){
 
           var btn = $(this);
 
@@ -740,6 +754,21 @@ Date.now = Date.now || function() { return +new Date; };
           $('.loader').show();
 
           $.get(Routing.generate('provip_application_hei_search',{ q: $(this).val() }))
+              .fail(function(xhr, status, error){
+                  alert(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#staff-list').html(data);
+                  $('.loader').hide();
+              })
+      });
+
+
+      $('.student-search').keyup(function() {
+
+          $('.loader').show();
+
+          $.get(Routing.generate('provip_application_hei_searchstudent',{ q: $(this).val() }))
               .fail(function(xhr, status, error){
                   alert(xhr.responseText);
               })

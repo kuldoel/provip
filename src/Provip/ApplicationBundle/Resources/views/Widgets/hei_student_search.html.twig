@@ -1,0 +1,31 @@
+{% for user in staff %}
+<li class="list-group-item {{ status }}">
+    <div class="media">
+                <span class="pull-left thumb-small">
+                    {% if user.picture %}
+                        <img src="{{(user.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ user }}" class="img-rounded">
+                    {% else %}
+                        <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ user }}" class="img-rounded">
+                    {% endif %}
+
+                </span>
+        <div class="pull-right">
+            {% if user.enrollment.approved %}
+            {% else %}
+                <button data-enrollment="{{ user.enrollment.id }}" class="btn btn-success btn-small approve">Approve Enrollment</button>
+                <button data-enrollment="{{ user.enrollment.id }}" class="btn btn-danger btn-small deny">Deny Enrollment</button>
+            {% endif %}
+        </div>
+        <div class="media-body">
+            <div><a href="#" class="h5">{{ user }}</a></div>
+            <small class="text-muted">
+                {% if user.lastLogin %}
+                    <span class="moment">{{ user.lastLogin | date("Ymd H:i:s")  }}</span>
+                {% else %}
+                    Did not log in yet
+                {% endif %}
+            </small>
+        </div>
+    </div>
+</li>
+{% endfor %}

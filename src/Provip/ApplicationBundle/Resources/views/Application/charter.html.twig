@@ -17,60 +17,52 @@
 
                     <div class="panel">
                         <header class="panel-heading">
-                            Milestones from {{ app.user.enrollment.studyProgram }}
+                           Internship tasks for {{ app.user}}
                         </header>
 
                         <div class="panel-content">
                             <!-- .accordion -->
                             <div class="accordion" id="accordion2">
-                                {% for goal in app.user.enrollment.studyProgram.learningGoals %}
-                                    <div class="accordion-group">
-                                        <div class="accordion-heading">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse-learning-{{ loop.index }}">
-                                                <i class="icon-flag"></i> {{ goal.description }}
-                                                <span class="pull-right"><span class="label">{{ goal.tasks | length }} tasks</span></span>
-                                            </a>
-                                        </div>
-                                        <div id="collapse-learning-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
-                                            <div class="accordion-inner">
-                                                {% for task in goal.tasks %}
-                                                    <article class="media">
-                                            <span class="pull-left thumb-small">
-                                                <a class="add-new-activity" data-append-to="list-learning-{{ task.id }}-{{ loop.index }}" href="#" data-application="{{ application.id }}" data-task="{{ task.id }}" data-toggle-tooltip title="Add an activity to this task" data-placement="right">
-                                                    <i class="icon-plus icon-large"></i>
-                                                </a>
-                                            </span>
-                                                        <div class="media-body">
-                                                            <div class="pull-right media-mini text-center text-muted">
-                                                                <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
-                                                            </div>
+                                {% for goal in app.user.enrollment.deliverables %}
+                                    {% for task in goal.tasks %}
+                                        <article class="media">
+
+                                            <div class="media-body">
+                                                <div class="pull-right media-mini text-center text-muted">
+                                                    <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                </div>
 
                                                 <span class="h4">
                                                     {{ task.title }}
                                                 </span>
 
-                                                            <ul class="activities" id="list-learning-{{ task.id }}-{{ loop.index }}">
-                                                                {% for activity in activities %}
-                                                                    {% if activity.task.id == task.id %}
-                                                                        <li id="activity-{{ activity.id }}">
-                                                                            <strong><span class="label label-success">You</span> {{ activity.title }}</strong> <a data-element="activity-{{ activity.id }}" data-activity="{{ activity.id }}" class="delete-activity"><span class="text-danger"><i class="icon-remove-circle"></i></span></a>
-                                                                            <p class="text-muted text-small">
-                                                                                {{ activity.description }} <br>
-                                                                                {{ activity.deadline | date("d M Y") }} <br>
-                                                                                Occurs {{ activity.nbrOfOccurrences }} times <br>
-                                                                                {{ activity.state }}
-                                                                            </p>
+                                                <ul style="list-style-type: none" class="activities" id="list-learning-{{ task.id }}-{{ loop.index }}">
+                                                    {% for activity in activities %}
+                                                        {% if activity.task.id == task.id %}
+                                                            <li id="activity-{{ activity.id }}">
+                                                                <strong>{{ activity.title }}</strong> <a data-element="activity-{{ activity.id }}" data-activity="{{ activity.id }}" class="delete-activity"><span class="text-danger"><i class="icon-remove-circle"></i></span></a>
+                                                                <p class="text-muted text-small">
+                                                                    {{ activity.description }} <br>
+                                                                    {{ activity.deadline | date("d M Y") }} <br>
+                                                                    Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                    {{ activity.state }}
+                                                                </p>
 
-                                                                        </li>
-                                                                    {% endif %}
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </div>
-                                                    </article>
-                                                {% endfor %}
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <li>
+                                                        <span class="thumb-small">
+                                                <a class="add-new-activity" data-append-to="list-learning-{{ task.id }}-{{ loop.index }}" href="#" data-application="{{ application.id }}" data-task="{{ task.id }}" data-toggle-tooltip title="Add an activity to this task" data-placement="right">
+                                                    <i class="icon-plus icon-large"></i>
+                                                </a>
+                                            </span>
+                                                    </li>
+                                                </ul>
+
                                             </div>
-                                        </div>
-                                    </div>
+                                        </article>
+                                    {% endfor %}
                                 {% endfor %}
                             </div>
                             <!-- / .accordion -->
@@ -92,53 +84,44 @@
                             <!-- .accordion -->
                             <div class="accordion" id="accordion3">
                                 {% for goal in opportunity.projectGoals %}
-                                    <div class="accordion-group">
-                                        <div class="accordion-heading">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse-project-{{ loop.index }}">
-                                                <i class="icon-flag"></i> {{ goal.description }}
-                                                <span class="pull-right"><span class="label"add-new-activity>{{ goal.tasks | length }} tasks</span></span>
-                                            </a>
-                                        </div>
-                                        <div id="collapse-project-{{ loop.index }}" class="accordion-body collapse" style="height: 0px;">
-                                            <div class="accordion-inner">
-                                                {% for task in goal.tasks %}
-                                                    <article class="media">
-                                            <span class="pull-left thumb-small">
-                                                <a class="add-new-activity" href="#" data-append-to="list-project-{{ task.id }}-{{ loop.index }}" data-application="{{ application.id }}" data-task="{{ task.id }}" data-toggle-tooltip title="Add an activity to this task" data-placement="right">
-                                                    <i class="icon-plus icon-large"></i>
-                                                </a>
-                                            </span>
-                                                        <div class="media-body">
-                                                            <div class="pull-right media-mini text-center text-muted">
-                                                                <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
-                                                            </div>
+                                    {% for task in goal.tasks %}
+                                        <article class="media">
+
+                                            <div class="media-body">
+                                                <div class="pull-right media-mini text-center text-muted">
+                                                    <strong class="h4">{{ task.deadline | date("d M Y") }}</strong><br>
+                                                </div>
 
                                                 <span class="h4">
                                                     {{ task.title }}
                                                 </span>
 
-                                                            <ul class="activities" id="list-project-{{ task.id }}-{{ loop.index }}">
-                                                                {% for activity in activities %}
-                                                                    {% if activity.task.id == task.id %}
-                                                                        <li id="activity-{{ activity.id }}">
-                                                                            <strong><span class="label label-success">You</span> {{ activity.title }}</strong> <a data-element="activity-{{ activity.id }}" data-activity="{{ activity.id }}" class="delete-activity"><span class="text-danger"><i class="icon-remove-circle"></i></span></a>
-                                                                            <p class="text-muted text-small">
-                                                                                {{ activity.description }} <br>
-                                                                                {{ activity.deadline | date("d M Y") }} <br>
-                                                                                Occurs {{ activity.nbrOfOccurrences }} times <br>
-                                                                                {{ activity.state }}
-                                                                            </p>
+                                                <ul style="list-style-type: none"  id="list-project-{{ task.id }}-{{ loop.index }}">
+                                                    {% for activity in activities %}
+                                                        {% if activity.task.id == task.id %}
+                                                            <li id="activity-{{ activity.id }}">
+                                                                <strong>{{ activity.title }}</strong> <a data-element="activity-{{ activity.id }}" data-activity="{{ activity.id }}" class="delete-activity"><span class="text-danger"><i class="icon-remove-circle"></i></span></a>
+                                                                <p class="text-muted text-small">
+                                                                    {{ activity.description }} <br>
+                                                                    {{ activity.deadline | date("d M Y") }} <br>
+                                                                    Occurs {{ activity.nbrOfOccurrences }} times <br>
+                                                                    {{ activity.state }}
+                                                                </p>
 
-                                                                        </li>
-                                                                    {% endif %}
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </div>
-                                                    </article>
-                                                {% endfor %}
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <li>
+                                                        <span class="thumb-small">
+                                                <a class="add-new-activity" href="#" data-append-to="list-project-{{ task.id }}-{{ loop.index }}" data-application="{{ application.id }}" data-task="{{ task.id }}" data-toggle-tooltip title="Add an activity to this task" data-placement="right">
+                                                    <i class="icon-plus icon-large"></i>
+                                                </a>
+                                            </span>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </article>
+                                    {% endfor %}
                                 {% endfor %}
                             </div>
                             <!-- / .accordion -->
@@ -263,6 +246,10 @@
                            <div class="progress progress-striped">
                                <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="100%" style="width: 100%"></div>
                            </div>
+
+                           <div class="line pull-in"></div>
+
+                           <a href="{{ path('provip_application_internship_detailstudent', {'publicId': application.internship.publicId}) }}" class="btn btn-block btn-small btn-alt btn-primary">View Internship Progress</a>
                        {% endif  %}
                     {% else %}
                     {% endif %}
@@ -282,7 +269,7 @@
                                 </span>
 
                     <div class="media-body">
-                        <div><a href="#" class="h5">{{ opportunity.title }}</a></div>
+                        <div><a href="#" class="h4"><strong>{{ opportunity.title }}</strong></a></div>
                         <small class="text-muted">{{ opportunity.company }}, {{ opportunity.company.country }} <br />
                             <i class="icon-user"></i> {{ opportunity.nbrOfPositions }} &mdash; from {{ opportunity.startDate | date('M Y') }} until {{ opportunity.endDate | date('M Y') }}</small>
                     </div>

@@ -43,6 +43,22 @@ class UserRepository extends EntityRepository
 
     }
 
+    public function getStudentByPartial($q, StudyProgram $studyProgram)
+    {
+
+        $em = $this->getEntityManager();
+
+        $dql = "SELECT u FROM ProvipUserBundle:User u " .
+            " JOIN u.enrollment en ".
+            " WHERE en.studyProgram = ?1" .
+            " AND (u.firstName LIKE ?2 OR u.lastName LIKE ?3)";
+
+        return $em->createQuery($dql)
+            ->setParameters(array('1' => $studyProgram, '2' => $q.'%', '3' => $q.'%'))
+            ->getResult();
+
+    }
+
     public function findByRole($role) {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('u')
@@ -112,14 +128,11 @@ class UserRepository extends EntityRepository
     public function getActivityUpdatesEventsForInternship(Internship $internship, User $user)
     {
         $qb = $this->_em->createQueryBuilder();
-        $qb->select(array('au', 'a', 'ap'))
+        $qb->select(array('au'))
             ->from('ProvipEventsBundle:ActivityUpdateEvent', 'au')
-            ->join('au.activity', 'a')
-            ->join('a.application', 'ap')
-            ->where('ap.internship = ?1')
-            ->andWhere('a.student = ?2')
+            ->where('au.author = ?1')
             ->addOrderBy('au.created', 'desc')
-            ->setParameters(array('1' => $internship, '2' => $user))
+            ->setParameters(array('1' => $user))
         ;
         return $qb->getQuery()->getResult();
     }
@@ -130,15 +143,12 @@ class UserRepository extends EntityRepository
         $privacy = array('privacy.internship', 'privacy.company.only');
 
         $qb = $this->_em->createQueryBuilder();
-        $qb->select(array('au', 'a', 'ap'))
+        $qb->select(array('au'))
             ->from('ProvipEventsBundle:ActivityUpdateEvent', 'au')
-            ->join('au.activity', 'a')
-            ->join('a.application', 'ap')
             ->where('au.privacy IN (:settings)')
-            ->andwhere('ap.internship = ?1')
-            ->andWhere('a.student = ?2')
+            ->andWhere('au.author = ?1')
             ->addOrderBy('au.created', 'desc')
-            ->setParameters(array('settings' => $privacy, '1' => $internship, '2' => $user))
+            ->setParameters(array('settings' => $privacy, '1' => $user))
         ;
         return $qb->getQuery()->getResult();
 
@@ -150,15 +160,12 @@ class UserRepository extends EntityRepository
         $privacy = array('privacy.internship', 'privacy.hei.only');
 
         $qb = $this->_em->createQueryBuilder();
-        $qb->select(array('au', 'a', 'ap'))
+        $qb->select(array('au'))
             ->from('ProvipEventsBundle:ActivityUpdateEvent', 'au')
-            ->join('au.activity', 'a')
-            ->join('a.application', 'ap')
             ->where('au.privacy IN (:settings)')
-            ->andwhere('ap.internship = ?1')
-            ->andWhere('a.student = ?2')
+            ->andWhere('au.author = ?1')
             ->addOrderBy('au.created', 'desc')
-            ->setParameters(array('settings' => $privacy, '1' => $internship, '2' => $user))
+            ->setParameters(array('settings' => $privacy, '1' => $user))
         ;
         return $qb->getQuery()->getResult();
 

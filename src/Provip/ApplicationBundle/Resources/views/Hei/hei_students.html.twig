@@ -3,8 +3,15 @@
 
 {% block main %}
 <section class="panel">
-    <header class="panel-heading bg-default">
-        Students
+    <header class="panel-heading bg bg-default">
+        <div class="row">
+            <div class="col col-lg-10">
+                <input type="text" class="input-small block student-search" placeholder="Search for Students">
+            </div>
+            <div class="col col-lg-2">
+
+            </div>
+        </div>
     </header>
     <ul id="staff-list" class="list-group list-group-flush m-t-n">
         {% for e in enrollments %}
