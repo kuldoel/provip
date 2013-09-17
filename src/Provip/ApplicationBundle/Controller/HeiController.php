@@ -320,7 +320,7 @@ class HeiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);
 
-        $event = new StudentEvent($this->getUser(), 'has denied the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
+        $event = new StudentEvent($this->getUser(), 'has approved the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
 
         $recipients = $event->getRecipients();
 
@@ -346,7 +346,7 @@ class HeiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);
 
-        $event = new StudentEvent($this->getUser(), 'has approved the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
+        $event = new StudentEvent($this->getUser(), 'has denied the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
 
         $recipients = $event->getRecipients();
 
