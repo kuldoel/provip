@@ -120,7 +120,17 @@
 
                     <div class="line pull-in"></div>
 
+
+                    {% if application.internship.completed == false %}
+
                     <a href="{{ path('provip_application_application_reviewashei', {'application': application.id }) }}" class="btn btn-block btn-small btn-alt btn-primary">View Internship Charter</a>
+
+                    {% else %}
+
+                        <a href="{{ path('provip_application_internship_evaluationhei', {'publicId': application.internship.publicId }) }}" class="btn btn-block btn-primary btn-white view-evaluation" data-public-id="{{ application.internship.publicId }}">View Evaluation</a>
+
+                    {% endif %}
+
 
                 </div>
             </div>

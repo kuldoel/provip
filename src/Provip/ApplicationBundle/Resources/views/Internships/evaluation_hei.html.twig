@@ -1,0 +1,170 @@
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
+
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+
+        <div class="col col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h4><i class="icon-file-alt"></i> Evaluation for {{ application.student }}</h4>
+                </header>
+
+                <div>
+
+                    <table class="table table-striped m-b-none text-small">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td>{{ application.student }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Internship</strong></td>
+                            <td>{{ opportunity.title }} at {{ opportunity.company.name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Period</strong></td>
+                            <td>{{ application.startDate | date("d M Y") }} - {{ application.endDate | date("d M Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HEI Contact</strong></td>
+                            <td>{{ application.coach }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Company Contact</strong></td>
+                            <td>{{ opportunity.mentor }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="line pull-in"></div>
+
+
+                    <table class="table table-striped m-b-none text-small datatable">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Activity</th>
+                                <th>Deadline</th>
+                                <th>State</th>
+                                <th>Feedback</th>
+                                <th>By</th>
+                                <th>Additional Info</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for deliverable in application.student.enrollment.deliverables %}
+                            {% for task in deliverable.tasks %}
+                                {% for activity in task.activities %}
+                                    <tr>
+                                        <td>{{ activity.task.title }}</td>
+                                        <td>{{ activity.title }}</td>
+                                        <td>{{ activity.deadline | date("d-m-Y") }}</td>
+                                        <td>{{ activity.state }}</td>
+                                        <td>
+                                           {% for update in activity.activityUpdateEvents %}
+                                                {% for fb in update.feedbackEvents %}
+                                                    {{ fb.evaluationValue }}<br>
+                                                {% endfor %}
+                                           {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for update in activity.activityUpdateEvents %}
+                                                {% for fb in update.feedbackEvents %}
+                                                   {{ fb.author }} on {{ fb.created | date("d-m-Y") }}<br>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ activity.fbInfo }}</td>
+                                        <td>{% if activity.comments %}<span class="text-danger">{{ activity.comments }}</span> {% endif %}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                        {% for goal in opportunity.projectGoals %}
+                            {% for task in goal.tasks %}
+                                {% for activity in task.activities %}
+                                    <tr>
+                                        <td>{{ activity.task.title }}</td>
+                                        <td>{{ activity.title }}</td>
+                                        <td>{{ activity.deadline | date("d-m-Y") }}</td>
+                                        <td>{{ activity.state }}</td>
+                                        <td>
+                                            {% for update in activity.activityUpdateEvents %}
+                                                {% for fb in update.feedbackEvents %}
+                                                    {{ fb.evaluationValue }}<br>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for update in activity.activityUpdateEvents %}
+                                                {% for fb in update.feedbackEvents %}
+                                                    {{ fb.author }} on {{ fb.created | date("d-m-Y") }}<br>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ activity.fbInfo }}</td>
+                                        <td>{% if activity.comments %}<span class="text-danger">{{ activity.comments }}</span> {% endif %}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+
+
+
+
+                    </table>
+
+
+
+                </div>
+
+            </section>
+
+            <section class="panel">
+                <header class="panel-heading">
+                    <h4><i class="icon-file-alt"></i>Internship comments</h4>
+                </header>
+
+                <div>
+
+                    <table class="table text-small table-striped">
+                        <tr>
+                            <td>From HEI</td>
+                            <td>
+                                <div class="feedback">
+                                    <form class="internship-feedback-hei" method="POST">
+                                        {{ form_widget(form) }}
+                                        <br>
+                                        <button data-internship-publicid="{{ application.internship.publicId }}" class="btn btn-success btn-alt btn-small internship-feedback-hei">Save</button>
+                                    </form>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>From Company</td>
+                            <td>{{ application.internship.commentsByCompany }}</td>
+                        </tr>
+                        <tr>
+                            <td>From Student</td>
+                            <td>
+                                {{ application.internship.commentsByStudent }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+{% endblock %}

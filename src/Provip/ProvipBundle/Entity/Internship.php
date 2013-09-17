@@ -53,6 +53,27 @@ class Internship
      **/
     protected $student;
 
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $commentsByStudent;
+
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $commentsByHei;
+
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $commentsByCompany;
+
 
 
     public function __construct(User $student, Application $application)
@@ -157,6 +178,56 @@ class Internship
     {
         return $this->student;
     }
+
+    /**
+     * @param mixed $commentsByCompany
+     */
+    public function setCommentsByCompany($commentsByCompany)
+    {
+        $this->commentsByCompany = $commentsByCompany;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentsByCompany()
+    {
+        return $this->commentsByCompany;
+    }
+
+    /**
+     * @param mixed $commentsByHei
+     */
+    public function setCommentsByHei($commentsByHei)
+    {
+        $this->commentsByHei = $commentsByHei;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentsByHei()
+    {
+        return $this->commentsByHei;
+    }
+
+    /**
+     * @param mixed $commentsByStudent
+     */
+    public function setCommentsByStudent($commentsByStudent)
+    {
+        $this->commentsByStudent = $commentsByStudent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentsByStudent()
+    {
+        return $this->commentsByStudent;
+    }
+
+
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace Provip\ApplicationBundle\Controller;
 
+use Provip\EventsBundle\Entity\Notification;
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Deliverable;
 use Provip\ProvipBundle\Entity\Enrollment;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Provip\EventsBundle\Entity\StudentEvent;
 
 class HeiController extends Controller
 {
@@ -317,6 +319,17 @@ class HeiController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);
+
+        $event = new StudentEvent($this->getUser(), 'has denied the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
+
+        $recipients = $event->getRecipients();
+
+        foreach($recipients as $r) {
+
+            $notification = new Notification($r,$event, $enrollment->getStudent()->getEmail());
+            $em->persist($notification);
+        }
+
         $em->flush();
 
         return new Response("complete", 200);
@@ -332,6 +345,19 @@ class HeiController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);
+
+        $event = new StudentEvent($this->getUser(), 'has approved the enrollment for ' . $enrollment->getStudent()->__toString(), $enrollment->getId(), 'privacy.hei.only', $enrollment->getStudent());
+
+        $recipients = $event->getRecipients();
+
+        foreach($recipients as $r) {
+
+            $notification = new Notification($r,$event, $enrollment->getStudent()->getEmail());
+            $em->persist($notification);
+        }
+
+
+
         $em->flush();
 
         return new Response("complete", 200);

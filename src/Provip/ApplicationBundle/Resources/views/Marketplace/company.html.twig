@@ -22,7 +22,7 @@
                                     {% endif %}
                                 </span>
                                 <div class="pull-right text-success m-t-small">
-                                    <i class="icon-circle" class="has-tooltip" data-toggle="tooltip" title="This user is currently in an internship"></i>
+
                                 </div>
                                 <div class="media-body">
                                     <div><a href="#" class="h5">{{ student }}</a></div>
@@ -42,6 +42,10 @@
                                         <td><small>Study Program</small></td>
                                         <td><small>{{ student.enrollment.studyprogram }}</small></td>
                                     </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td> {{ student.email }}</td>
+                                    </tr>
                                 </table>
 
                                 <div class="line pull-in"></div>
@@ -52,6 +56,7 @@
         &lt;td&gt;Skills&lt;/td&gt;
         &lt;td&gt;
             {% for skill in student.enrollment.studyProgram.skills %}
+
                 &lt;span class=&quot;label bg-success&quot;&gt;{{ skill.value }}&lt;/span&gt;
             {% endfor %}
         &lt;/td&gt;
@@ -71,7 +76,6 @@
 &lt;/table&gt;
                                     " data-html="true" data-student="{{ student.slug }}" data-placement="right" data-title="{{ student }}" class="btn btn-white btn-small">Details</a>
 
-                                    <a class="btn btn-white btn-small"><i class="icon-envelope"></i> Send Message</a>
 
                                 </p>
 

@@ -2,7 +2,11 @@
 
 namespace Provip\ApplicationBundle\Controller;
 
+use Provip\EventsBundle\Entity\ActivityUpdateEvent;
+use Provip\EventsBundle\Entity\ApplicationEvent;
+use Provip\EventsBundle\Entity\Notification;
 use Provip\EventsBundle\Entity\Picture;
+use Provip\ProvipBundle\Entity\Internship;
 use Provip\UserBundle\Entity\User;
 use Provip\UserBundle\Form\Type\StudentProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -81,6 +85,44 @@ class StudentController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', 'Your profile picture was succesfully deleted.');
         return $this->redirect($this->generateUrl('provip_application_student_settings'));
+
+    }
+
+
+    /**
+     * @Route("/student/internships/mark-complete/{publicId}", options={"expose"=true})
+     */
+    public function markCompleteAction(Internship $internship)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $internship->setCompleted(true);
+        $em->persist($internship);
+
+        $event = new ApplicationEvent($this->getUser(), ' marked his internship as completed', $internship->getPublicId(), 'privacy.internship', $internship->getApplication());
+
+        foreach($event->getRecipients() as $r) {
+           $notification = new Notification($r, $event, $internship->getPublicId());
+            $em->persist($notification);
+        }
+
+        $em->flush();
+
+        return new Response('Succesfully marked this internship as complete', 200);
+
+    }
+
+
+    /**
+     * @Route("/student/internships/update/{id}/remove", options={"expose"=true})
+     */
+    public function removeUpdateAction(ActivityUpdateEvent $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($event);
+        $em->flush();
+
+        return new Response('Update Removed', 200);
 
     }
 }

@@ -22,7 +22,7 @@ class ActivityUpdateEvent extends Event
     protected $activity;
 
     /**
-     * @ORM\OneToMany(targetEntity="FeedbackEvent", mappedBy="activityUpdateEvent")
+     * @ORM\OneToMany(targetEntity="FeedbackEvent", mappedBy="activityUpdateEvent", cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $feedbackEvents;
@@ -120,6 +120,62 @@ class ActivityUpdateEvent extends Event
     public function getState()
     {
         return $this->state;
+    }
+
+    public function getLastFeedBackEvent() {
+
+        $feedbackEvents = $this->getFeedbackEvents();
+        var_dump($feedbackEvents);
+
+
+    }
+
+    public function getRecipients()
+    {
+        $recipients = new \Doctrine\Common\Collections\ArrayCollection();
+        $recipients[] = $this->getAuthor();
+
+        $studyProgram = $this->getAuthor()->getEnrollment()->getStudyProgram();
+
+        if($this->getPrivacy() == 'privacy.hei.only' || $this->getPrivacy() == 'privacy.internship') {
+            foreach($studyProgram->getEnrollments() as $enrollment)
+            {
+                if(!$recipients->contains($enrollment->getStudent()))
+                {
+                    $recipients[] = $enrollment->getStudent();
+                }
+            }
+
+            foreach($studyProgram->getStaff() as $staffMember)
+            {
+                if(!$recipients->contains($staffMember))
+                {
+                    $recipients[] = $staffMember;
+                }
+            }
+
+            if(!$recipients->contains($studyProgram->getAdmin()))
+            {
+                $recipients[] = $studyProgram->getAdmin();
+            }
+        }
+
+        if($this->getPrivacy() == 'privacy.company.only' || $this->getPrivacy() == 'privacy.internship') {
+            $currentInternship = $this->getAuthor()->getCurrentInternship();
+
+            if($currentInternship) {
+                $company = $currentInternship->getApplication()->getOpportunity()->getCompany();
+
+                foreach($company->getStaff() as $staffMember) {
+                    if(!$recipients->contains($staffMember))
+                    {
+                        $recipients[] = $staffMember;
+                    }
+                }
+            }
+        }
+
+        return $recipients;
     }
 
 }

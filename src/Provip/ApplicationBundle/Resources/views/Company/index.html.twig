@@ -1,1 +1,70 @@
 {% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+
+
+        <div class="col col-lg-8">
+
+            <section class="comment-list block">
+
+                {% for notification in app.user.notifications %}
+
+                    <article id="comment-id-{{ loop.index }}" class="comment-item media arrow-left">
+                        <a class="pull-left thumb-small avatar">
+                            {% if notification.event.author.picture %}
+                                <img src="{{(notification.event.author.picture.getWebPath) | imagine_filter('thumbnail')  }}" alt="{{ notification.event.author }}" class="img-circle" />
+                            {% else %}
+                                <img src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" alt="{{ notification.event.author }}" class="img-circle" />
+                            {% endif %}
+                        </a>
+                        <section class="media-body panel">
+                            <header class="panel-heading clearfix">
+                                <a href="#">{{ notification.event.author }}</a><span class="text-muted m-l-small pull-right"><i class="icon-time"></i>{{ notification.event.created | date("d M Y H:i:s") }}</span>
+                            </header>
+                            <div>{{ notification.event.message }}</div>
+                            {% if notification.event.activity %}
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg">
+                                        <div class="media">
+
+
+                                            <span class="pull-right label bg-default">
+                                                Activity
+                                            </span>
+
+                                            <div class="media-body">
+                                                <div>
+                                                    <a href="#" class="text-small">{{ notification.event.activity.title }}</a><br>
+                                                    <small>{{ notification.event.activity.student }} for task <strong>{{ notification.event.activity.task.title }}</strong> in internship <a style="text-decoration: underline; font-weight: bolder" href="{{ path('provip_application_internship_detailcompany', {'publicId': notification.event.activity.application.internship.publicId}) }}">{{ notification.event.activity.application.opportunity.title }}</a></small>
+                                                </div>
+                                                <small class="text-muted">{{ notification.event.activity.state }}</small>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            {% endif %}
+                        </section>
+                    </article>
+                {% endfor %}
+
+            </section>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+{% endblock %}

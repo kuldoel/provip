@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Provip\EventsBundle\Entity\ApplicationEvent;
+use Provip\EventsBundle\Entity\Notification;
 
 class ApplicationController extends Controller
 {
@@ -77,6 +79,15 @@ class ApplicationController extends Controller
                 $application->setRejected(false);
 
                 $em->persist($application);
+
+                $event = new ApplicationEvent($this->getUser(), ' has applied for an internship', $application->getId(), 'privacy.internship', $application);
+
+                foreach($event->getRecipients() as $r) {
+                    $notification = new Notification($r, $event, $application->getId());
+                    $em->persist($notification);
+                }
+
+
                 $em->flush();
 
                 return new Response("", 204);
@@ -177,6 +188,13 @@ class ApplicationController extends Controller
                 $application->setSubmittedForReview(false);
                 $application->setRejectedBy($application->getOpportunity()->getCompany());
 
+                $event = new ApplicationEvent($this->getUser(), ' has rejected the internship application', $application->getId(), 'privacy.internship', $application);
+
+                foreach($event->getRecipients() as $r) {
+                    $notification = new Notification($r, $event, $application->getId());
+                    $em->persist($notification);
+                }
+
                 $em->persist($application);
                 $em->flush();
 
@@ -229,6 +247,13 @@ class ApplicationController extends Controller
         }
 
 
+        $event = new ApplicationEvent($this->getUser(), ' has accepted the internship application', $application->getId(), 'privacy.internship', $application);
+
+        foreach($event->getRecipients() as $r) {
+            $notification = new Notification($r, $event, $application->getId());
+            $em->persist($notification);
+        }
+
         $em->persist($application);
         $em->flush();
 
@@ -258,6 +283,13 @@ class ApplicationController extends Controller
             $status = '100';
             $internship = $this->createInternship($application);
             $application->setInternship($internship);
+        }
+
+        $event = new ApplicationEvent($this->getUser(), ' has accepted the internship application', $application->getId(), 'privacy.internship', $application);
+
+        foreach($event->getRecipients() as $r) {
+            $notification = new Notification($r, $event, $application->getId());
+            $em->persist($notification);
         }
 
         $em->persist($application);
@@ -296,6 +328,13 @@ class ApplicationController extends Controller
                 $application->setSubmittedForReview(false);
                 $application->setRejectedBy($this->getUser()->getAdminOf()->getHigherEducationalInstitution());
 
+                $event = new ApplicationEvent($this->getUser(), ' has rejected the internship application', $application->getId(), 'privacy.internship', $application);
+
+                foreach($event->getRecipients() as $r) {
+                    $notification = new Notification($r, $event, $application->getId());
+                    $em->persist($notification);
+                }
+
                 $em->persist($application);
                 $em->flush();
 
@@ -308,6 +347,8 @@ class ApplicationController extends Controller
 
             }
         }
+
+
 
 
         $activities = $this->getDoctrine()->getRepository('ProvipProvipBundle:Task')->getActivitiesForUser($application->getStudent(), $application);

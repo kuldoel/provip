@@ -19,6 +19,11 @@ class StudentEvent extends Event
      **/
     protected $student;
 
+    public function __construct($author, $message, $actionUrl, $privacy, $student) {
+        parent:: __construct($author, $message, $actionUrl, $privacy);
+        $this->student = $student;
+    }
+
 
     /**
      * Set student
@@ -42,6 +47,32 @@ class StudentEvent extends Event
     {
         return $this->student;
     }
+
+
+    public function getRecipients()
+    {
+        $recipients = new \Doctrine\Common\Collections\ArrayCollection();
+        $recipients[] = $this->getStudent();
+
+        $studyProgram = $this->getStudent()->getEnrollment()->getStudyProgram();
+
+        foreach($studyProgram->getStaff() as $staffMember)
+        {
+            if(!$recipients->contains($staffMember))
+            {
+                $recipients[] = $staffMember;
+            }
+        }
+
+        if(!$recipients->contains($studyProgram->getAdmin()))
+        {
+            $recipients[] = $studyProgram->getAdmin();
+        }
+
+
+        return $recipients;
+    }
+
 
 
 }

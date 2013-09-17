@@ -44,4 +44,48 @@ class ApplicationEvent extends Event
         return $this->application;
     }
 
+    public function __construct($author, $message, $actionUrl, $privacy, $application) {
+        parent::__construct($author, $message, $actionUrl, $privacy);
+        $this->application = $application;
+    }
+
+
+    public function getRecipients()
+    {
+        $recipients = new \Doctrine\Common\Collections\ArrayCollection();
+        $recipients[] = $this->getAuthor();
+
+        $studyProgram = $this->getApplication()->getStudent()->getEnrollment()->getStudyProgram();
+
+        foreach($studyProgram->getStaff() as $staffMember)
+        {
+            if(!$recipients->contains($staffMember))
+            {
+                $recipients[] = $staffMember;
+            }
+        }
+
+        if(!$recipients->contains($studyProgram->getAdmin()))
+        {
+            $recipients[] = $studyProgram->getAdmin();
+        }
+
+
+        $company = $this->getApplication()->getOpportunity()->getCompany();
+
+        foreach($company->getStaff() as $staffMember) {
+            if(!$recipients->contains($staffMember))
+            {
+                $recipients[] = $staffMember;
+            }
+        }
+
+        if(!$recipients->contains($this->getApplication()->getStudent())) {
+            $recipients[] = $this->getApplication()->getStudent();
+        }
+
+        return $recipients;
+    }
+
+
 }

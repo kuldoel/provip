@@ -29,6 +29,13 @@ class Activity
 
     /**
      *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $fbInfo;
+
+    /**
+     *
      * @ORM\Column(type="text")
      * @Assert\NotNull()
      * @Assert\Type(type="string")
@@ -42,6 +49,13 @@ class Activity
      * @Assert\DateTime()
      */
     protected $deadline;
+
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    protected $comments;
 
     /**
      *
@@ -319,6 +333,46 @@ class Activity
     {
         return "(".$this->getDeadline()->format("d M Y") . ") " .$this->title;
     }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function getLastActivityUpdateEvent() {
+        return $this->getActivityUpdateEvents()->last();
+    }
+
+    /**
+     * @param mixed $fbInfo
+     */
+    public function setFbInfo($fbInfo)
+    {
+        $this->fbInfo = $fbInfo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFbInfo()
+    {
+        return $this->fbInfo;
+    }
+
+
+
+
 
 
 }

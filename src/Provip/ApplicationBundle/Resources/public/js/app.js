@@ -439,6 +439,37 @@ Date.now = Date.now || function() { return +new Date; };
           });
       });
 
+
+      $(document).on("click", ".mark-complete", function(e){
+
+
+          var $btn = $(this);
+
+          confirm('Confirm internship completion', 'By marking this internship as complete your internship evaluation will be based on the current state of your internship. Are you sure you want to mark this internship as complete?', 'No', 'Yes', function(confirmed){
+              if(! confirmed){
+                  return;
+              }
+
+              $('.loader').show();
+
+              $.ajax({
+                  url: Routing.generate('provip_application_student_markcomplete',{ publicId: $btn.attr('data-public-id') }),
+                  type: 'POST',
+                  success: function(result) {
+                      $btn.fadeOut();
+                      $('.view-charter').fadeOut();
+                      $('.view-evaluation').fadeIn();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                      alert('Error: ' + jqXHR.responseText);
+                  },
+                  complete: function(jqXHR, textStatus) {
+                      $('.loader').hide();
+                  }
+              });
+          });
+      });
+
       $(document).on("click", "button.remove-task", function(e){
 
           e.preventDefault();
@@ -459,6 +490,39 @@ Date.now = Date.now || function() { return +new Date; };
                   type: 'DELETE',
                   success: function(result) {
                       skillWidget.fadeOut();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                      alert('Error: ' + jqXHR.responseText);
+                  },
+                  complete: function(jqXHR, textStatus) {
+                      $('.loader').hide();
+                  }
+              });
+          });
+      });
+
+
+      $(document).on("click", "a.remove-update", function(e){
+
+          e.preventDefault();
+
+          var skillWidget = $(this);
+          var commentId = $(this).attr('data-comment-id');
+
+          console.log(skillWidget);
+
+          confirm('Confirm delete', 'Remove this update?', 'No', 'Yes', function(confirmed){
+              if(! confirmed){
+                  return;
+              }
+
+              $('.loader').show();
+
+              $.ajax({
+                  url: Routing.generate('provip_application_student_removeupdate',{ id: skillWidget.attr('data-activityupdateid') }),
+                  type: 'DELETE',
+                  success: function(result) {
+                      $('#comment-id-'+commentId).fadeOut();
                   },
                   error: function(jqXHR, textStatus, errorThrown){
                       alert('Error: ' + jqXHR.responseText);
@@ -903,6 +967,91 @@ Date.now = Date.now || function() { return +new Date; };
 
       });
 
+
+      $('button.company-activity-update').click(function(e){
+
+          e.preventDefault();
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_events_studentevent_newcompanystatus'),$('form.company-update-form').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-company-update').modal('hide');
+                  $('section.comment-list').prepend(data);
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+
+      $('a.new-company-update').click(function(e){
+
+          $('.loader').show();
+
+          console.log("loading form")
+
+
+          var jqxhr = $.get(Routing.generate('provip_events_studentevent_newcompanystatus'), function() {
+
+          })
+              .done(function(data) {
+                  $('.company-update-form').html(data);
+                  $('.selectpicker').selectpicker();
+                  $('#new-company-update').modal('show');
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
+
+
+      $('button.hei-activity-update').click(function(e){
+
+          e.preventDefault();
+          $('.loader').show();
+
+          $.post(Routing.generate('provip_events_studentevent_newheistatus'),$('form.hei-update-form').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('#new-hei-update').modal('hide');
+                  $('section.comment-list').prepend(data);
+                  $('.errors').hide();
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+
+      $('a.new-hei-update').click(function(e){
+
+          $('.loader').show();
+
+          console.log("loading form")
+
+
+          var jqxhr = $.get(Routing.generate('provip_events_studentevent_newheistatus'), function() {
+
+          })
+              .done(function(data) {
+                  $('.hei-update-form').html(data);
+                  $('.selectpicker').selectpicker();
+                  $('#new-hei-update').modal('show');
+              })
+              .always(function() { $('.loader').hide(); });
+
+      });
+
     // select boxes bootstrap-select.min.js
     $('.selectpicker').selectpicker();
 
@@ -1122,8 +1271,75 @@ Date.now = Date.now || function() { return +new Date; };
 	});
 
 
+      $('button.internship-feedback-student').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $internship      = $(this).attr('data-internship-publicid');
+
+          $.post(Routing.generate('provip_application_internship_evaluationstudent',{ publicId: $internship }),$('form.internship-feedback-student').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('.feedback').text(data);
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
+
+      $('button.internship-feedback-hei').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $internship      = $(this).attr('data-internship-publicid');
+
+          $.post(Routing.generate('provip_application_internship_evaluationhei',{ publicId: $internship }),$('form.internship-feedback-hei').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('.feedback').text(data);
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
 
 
+      $('button.internship-feedback-company').click(function(e){
+
+          e.preventDefault();
+
+          $('.loader').show();
+
+          $btn  = $(this);
+          $internship      = $(this).attr('data-internship-publicid');
+
+          $.post(Routing.generate('provip_application_internship_evaluationcompany',{ publicId: $internship }),$('form.internship-feedback-company').serialize())
+              .fail(function(xhr, status, error){
+                  $('.errors').show();
+                  $('.errors').html(xhr.responseText);
+              })
+              .done(function(data){
+                  $('.feedback').text(data);
+              })
+              .always(function(){
+                  $('.loader').hide();
+              })
+
+      });
 
   });
 }(window.jQuery);

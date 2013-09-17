@@ -7,11 +7,13 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\UserEvent;
 use FOS\UserBundle\FOSUserEvents;
+use Provip\EventsBundle\Entity\Notification;
 use Provip\UserBundle\Form\StudentRegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Provip\EventsBundle\Entity\StudentEvent;
 
 class ProvipRegistrationController extends Controller
 {
@@ -53,6 +55,20 @@ class ProvipRegistrationController extends Controller
                 }
 
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                $event = new StudentEvent($user, ' has registered as a student.', $user->getEmail(), 'privacy.hei.only', $user);
+
+                $recipients = $event->getRecipients();
+
+                foreach($recipients as $r) {
+
+                    $notification = new Notification($r,$event, $user->getEmail());
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($notification);
+                }
+
+                $em->flush();
 
                 return $response;
             }

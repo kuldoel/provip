@@ -38,19 +38,27 @@ class Notification
     /**
      * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="notifications")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @Assert\Valid
      */
     protected $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="Event")
+     * @ORM\ManyToOne(targetEntity="Event", cascade={"persist"})
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-     * @Assert\Valid
      */
     protected $event;
 
+    /**
+     * Default alert is false
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    protected $alert = false;
 
-    public function Notification($user, $event, $action) {
+
+
+
+    public function __construct($user, $event, $action) {
         $this->user = $user;
         $this->event = $event;
         $this->action = $action;
@@ -159,4 +167,22 @@ class Notification
     {
         return $this->event;
     }
+
+    /**
+     * @param mixed $alert
+     */
+    public function setAlert($alert)
+    {
+        $this->alert = $alert;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlert()
+    {
+        return $this->alert;
+    }
+
+
 }

@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"activityupdate" = "ActivityUpdateEvent", "application" = "ApplicationEvent", "feedback" = "FeedbackEvent", "student" = "StudentEvent", "simpleevent" = "Event"})
+ * @ORM\DiscriminatorMap({"activityupdate" = "ActivityUpdateEvent", "application" = "ApplicationEvent", "feedback" = "FeedbackEvent", "student" = "StudentEvent", "simpleevent" = "Event", "broadcasthei" = "BroadcastHei", "broadcastcompany" = "BroadcastCompany"})
  *
  */
 class Event
@@ -56,7 +56,6 @@ class Event
      */
     protected $picture;
 
-
     /**
      *
      *
@@ -84,6 +83,12 @@ class Event
     protected $updated;
 
 
+    public function __construct($author, $message, $actionUrl, $privacy) {
+        $this->author = $author;
+        $this->message = $message;
+        $this->actionUrl = $actionUrl;
+        $this->privacy = $privacy;
+    }
 
 
     /**
@@ -248,6 +253,15 @@ class Event
     public function getActionUrl()
     {
         return $this->actionUrl;
+    }
+
+
+    public function getRecipients() {
+
+    }
+
+    public function getActivity() {
+
     }
 
 

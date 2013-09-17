@@ -81,4 +81,58 @@ class FeedbackEvent extends Event
     }
 
 
+    public function getRecipients()
+    {
+        $recipients = new \Doctrine\Common\Collections\ArrayCollection();
+        $recipients[] = $this->getActivityUpdateEvent()->getAuthor();
+
+        $studyProgram = $this->getActivityUpdateEvent()->getAuthor()->getStudyProgram();
+
+        if($this->getPrivacy() == 'privacy.hei.only' || $this->getPrivacy() == 'privacy.internship') {
+            foreach($studyProgram->getEnrollments() as $enrollment)
+            {
+                if(!$recipients->contains($enrollment->getStudent()))
+                {
+                    $recipients[] = $enrollment->getStudent();
+                }
+            }
+
+            foreach($studyProgram->getStaff() as $staffMember)
+            {
+                if(!$recipients->contains($staffMember))
+                {
+                    $recipients[] = $staffMember;
+                }
+            }
+
+            if(!$recipients->contains($studyProgram->getAdmin()))
+            {
+                $recipients[] = $studyProgram->getAdmin();
+            }
+        }
+
+        if($this->getPrivacy() == 'privacy.company.only' || $this->getPrivacy() == 'privacy.internship') {
+            $currentInternship =$this->getActivityUpdateEvent()->getAuthor()->getCurrentInternship();
+
+            if($currentInternship) {
+                $company = $currentInternship->getApplication()->getOpportunity()->getCompany();
+
+                foreach($company->getStaff() as $staffMember) {
+                    if(!$recipients->contains($staffMember))
+                    {
+                        $recipients[] = $staffMember;
+                    }
+                }
+            }
+        }
+
+        return $recipients;
+    }
+
+    public function getActivity() {
+        return $this->getActivityUpdateEvent()->getActivity();
+    }
+
+
+
 }

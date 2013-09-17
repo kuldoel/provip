@@ -89,8 +89,8 @@
                             <th>Internship</th>
                             <th>Start</th>
                             <th>End</th>
-                            <th>Completed</th>
-                            <th>Admin</th>
+                            <th>Progress</th>
+                            <th>Evaluation</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -111,8 +111,8 @@
                                     <td>{{ app.opportunity }}</td>
                                     <td>{{ app.startDate | date("d M Y") }}</td>
                                     <td>{{ app.endDate | date("d M Y") }}</td>
-                                    <td></td>
                                     <td><a href="{{ path('provip_application_internship_detailcompany', {'publicId': app.internship.publicId}) }}" class="btn btn-white btn-mini">Progress</a></td>
+                                    <td>{% if app.internship.completed %}<a href="{{ path('provip_application_internship_evaluationcompany', {'publicId': app.internship.publicId}) }}" class="btn btn-primary btn-mini">Evaluation</a>{% else %}Not ready for evaluation{% endif %}</td>
                                 </tr>
 
                         {% endfor %}

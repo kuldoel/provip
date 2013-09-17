@@ -203,6 +203,7 @@ class User extends BaseUser
      * Notifications is a list of all notifications for this user
      *
      * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\Notification", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "DESC"})
      * @Assert\Valid
      */
     protected $notifications;

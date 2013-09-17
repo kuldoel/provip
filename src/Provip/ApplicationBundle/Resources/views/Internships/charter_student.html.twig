@@ -26,7 +26,7 @@
                         </a>
                         <section class="media-body panel">
                             <header class="panel-heading clearfix">
-                                <a href="#">{{ e.author }}</a><label class="label bg-info m-l-mini">You</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>{{ e.created | date("d M Y H:i:s") }}</span>
+                                <a href="#">{{ e.author }}</a><label class="label bg-info m-l-mini">You</label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>{{ e.created | date("d M Y H:i:s") }} <a data-comment-id={{ loop.index }} data-activityupdateid="{{ e.id }}" href="#" class="remove-update"><span class="icon-remove-circle"></span></a></span>
                             </header>
                             <div>{{ e.message }}</div>
                             {% if e.activity %}
@@ -108,7 +108,25 @@
 
                     <div class="line pull-in"></div>
 
-                    <a href="{{ path('provip_application_application_apply', {'slug': application.opportunity.slug}) }}" class="btn btn-block btn-small btn-alt btn-primary">View Internship Charter</a>
+                    <a href="{{ path('provip_application_application_apply', {'slug': application.opportunity.slug}) }}" class="btn btn-block btn-small btn-alt btn-white view-charter">View Internship Charter</a>
+
+                    {% if application.internship.completed == false %}
+
+                        <div class="line pull-in"></div>
+
+                        <a href="#" class="btn btn-block btn-small btn-alt btn-white mark-complete" data-public-id="{{ application.internship.publicId }}">Mark Internship as Complete</a>
+
+                        <a style="display: none" href="{{ path('provip_application_internship_evaluationstudent', {'publicId': application.internship.publicId }) }}" class="btn btn-block btn-primary btn-white view-evaluation" data-public-id="{{ application.internship.publicId }}">View Evaluation</a>
+
+                    {% else %}
+
+                        <a href="{{ path('provip_application_internship_evaluationstudent', {'publicId': application.internship.publicId }) }}" class="btn btn-block btn-primary btn-white view-evaluation" data-public-id="{{ application.internship.publicId }}">View Evaluation</a>
+
+                    {% endif %}
+
+
+
+
 
                 </div>
             </div>
