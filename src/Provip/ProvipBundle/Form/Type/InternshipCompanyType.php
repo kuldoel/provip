@@ -15,7 +15,16 @@ class InternshipCompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commentsByCompany', 'text', array('label' => 'Give some additional general feedback'))
+            ->add(
+                'commentsByCompany',
+                'textarea',
+                array(
+                    'label' => 'Give some additional general feedback',
+                    'attr' => array(
+                        'rows' => 10
+                    )
+                )
+            )
 
         ;
     }

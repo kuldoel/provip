@@ -8,21 +8,14 @@ framework:
     profiler: { only_exceptions: false }
 
 web_profiler:
-    toolbar: true
+    toolbar: false
     intercept_redirects: false
 
 monolog:
     handlers:
-        main:
-            type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
+        test:
+            type:  test
             level: debug
-        firephp:
-            type:  firephp
-            level: info
-        chromephp:
-            type:  chromephp
-            level: info
 
 assetic:
     use_controller: true

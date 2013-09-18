@@ -15,7 +15,14 @@ class InternshipHeiType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commentsByHei')
+            ->add('commentsByHei', 'textarea',
+                array(
+                    'label' => 'Give some additional general feedback',
+                    'attr' => array(
+                        'rows' => 10
+                    )
+                )
+            )
 
         ;
     }

@@ -17,10 +17,9 @@
 
 {% block user_menu %}
     <ul class="dropdown-menu">
-        <li><a href="#"><span class="badge bg-danger pull-right">3</span>Notifications</a></li>
         <li><a href="{{ path('provip_application_company_settings') }}">Settings</a></li>
         <li class="divider"></li>
-        <li><a href="docs.html">Help</a></li>
+        <li><a href="{{ path('provip_application_default_companydocumentation') }}">Help</a></li>
         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
     </ul>
 {% endblock %}

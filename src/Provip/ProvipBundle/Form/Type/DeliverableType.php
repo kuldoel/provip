@@ -33,7 +33,6 @@ class DeliverableType extends AbstractType
                             ->setParameter('studyProgram', $studyProgram);
                     },
                     'label' => 'Student',
-                    'attr' => array('class' => 'selectpicker'),
                     'error_bubbling' => true,
                 ))
             ->add('tasks', 'collection' , array(

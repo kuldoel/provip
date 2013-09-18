@@ -540,6 +540,9 @@ Date.now = Date.now || function() { return +new Date; };
 
           $('.loader').show();
 
+
+          $enrollmentId = $('select#provip_provipbundle_deliverabletype_enrollment').val();
+
           $.post(Routing.generate('provip_application_hei_info'),$('form.new-goal').serialize())
               .fail(function(xhr, status, error){
                   $('.errors').show();
@@ -548,8 +551,7 @@ Date.now = Date.now || function() { return +new Date; };
               .done(function(data){
 
                   $('#new-goal').modal('hide');
-                  $('ul.goals').prepend(data);
-                  setTimeout(function() {$('ul.goals .new').removeClass('new')}, 0);
+                  $('ul#enrollment-'+$enrollmentId).prepend(data);
                   $('form.new-goal').trigger("reset");
                   $('.errors').hide();
               })

@@ -54,4 +54,25 @@ class DefaultController extends Controller
         }
     }
 
+    /**
+     * @Route("/student/documentation")
+     */
+    public function studentDocumentation() {
+        return $this->render('ProvipApplicationBundle:Documentation:student.html.twig');
+    }
+
+    /**
+     * @Route("/hei/documentation")
+     */
+    public function heiDocumentation() {
+        return $this->render('ProvipApplicationBundle:Documentation:hei.html.twig');
+    }
+
+    /**
+     * @Route("/company/documentation")
+     */
+    public function companyDocumentation() {
+        return $this->render('ProvipApplicationBundle:Documentation:company.html.twig');
+    }
+
 }

@@ -15,7 +15,14 @@ class InternshipStudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commentsByStudent', 'text', array('label' => 'Please provide some feedback'))
+            ->add('commentsByStudent', 'textarea',
+                array(
+                    'label' => 'Give some additional general feedback',
+                    'attr' => array(
+                        'rows' => 10
+                    )
+                )
+            )
         ;
     }
     
