@@ -2,6 +2,7 @@
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ApacheRequest;
 
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
@@ -20,6 +21,6 @@ $kernel->loadClassCache();
 $kernel = new AppCache($kernel);
 Request::enableHttpMethodParameterOverride();
 $request = Request::createFromGlobals();
-$response = $kernel->handle($request);
+$response = $kernel->handle(ApacheRequest::createFromGlobals());
 $response->send();
 $kernel->terminate($request, $response);

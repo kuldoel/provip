@@ -8,37 +8,361 @@ DirectoryIndex app.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Determine the RewriteBase automatically and set it as environment variable.
-    # If you are using Apache aliases to do mass virtual hosting or installed the
-    # project in a subdirectory, the base path will be prepended to allow proper
-    # resolution of the app.php file and to redirect to the correct URI. It will
-    # work in environments without path prefix as well, providing a safe, one-size
-    # fits all solution. But as you do not need it in this case, you can comment
-    # the following 2 lines to eliminate the overhead.
-    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
-    RewriteRule ^(.*) - [E=BASE:%1]
-
-    # Redirect to URI without front controller to prevent duplicate content
-    # (with and without `/app.php`). Only do this redirect on the initial
-    # rewrite by Apache and not on subsequent cycles. Otherwise we would get an
-    # endless redirect loop (request -> rewrite to front controller ->
-    # redirect -> request -> ...).
-    # So in case you get a "too many redirects" error or you always get redirected
-    # to the startpage because your Apache does not expose the REDIRECT_STATUS
-    # environment variable, you have 2 choices:
-    # - disable this feature by commenting the following 2 lines or
-    # - use Apache >= 2.3.9 and replace all L flags by END flags and remove the
-    #   following RewriteCond (best solution)
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
-
-    # If the requested filename exists, simply serve it.
-    # We only want to let Apache serve files and not directories.
+    # skip "real" requests
     RewriteCond %{REQUEST_FILENAME} -f
-    RewriteRule .? - [L]
+    RewriteRule .* - [QSA,L]
 
-    # Rewrite all other queries to the front controller.
-    RewriteRule .? %{ENV:BASE}/app.php [L]
+    # provip_application_admin_index
+    RewriteCond %{REQUEST_URI} ^/admin$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_admin_index,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\AdminController\:\:indexAction]
+
+    # provip_application_admin_create
+    RewriteCond %{REQUEST_URI} ^/admin/studyprogrammes/create$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_admin_create,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\AdminController\:\:createAction]
+
+    # provip_application_application_apply
+    RewriteCond %{REQUEST_URI} ^/student/marketplace/([^/]++)/apply$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_apply,E=_ROUTING_param_slug:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:applyAction]
+
+    # provip_application_application_addactivitytotaskforapplication
+    RewriteCond %{REQUEST_URI} ^/student/marketplace/add\-activity\-to\-task/([^/]++)/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_addactivitytotaskforapplication,E=_ROUTING_param_task:%1,E=_ROUTING_param_application:%2,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:addActivityToTaskForApplication]
+
+    # provip_application_application_removeactivity
+    RewriteCond %{REQUEST_URI} ^/student/application/remove/activity/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_removeactivity,E=_ROUTING_param_activity:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:removeActivity]
+
+    # provip_application_application_reviewascompany
+    RewriteCond %{REQUEST_URI} ^/company/applications/([^/]++)/review$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_reviewascompany,E=_ROUTING_param_application:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:reviewAsCompanyAction]
+
+    # provip_application_application_acceptascompany
+    RewriteCond %{REQUEST_URI} ^/company/applications/([^/]++)/accept$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_acceptascompany,E=_ROUTING_param_application:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:acceptAsCompanyAction]
+
+    # provip_application_application_acceptashei
+    RewriteCond %{REQUEST_URI} ^/hei/applications/([^/]++)/accept$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_acceptashei,E=_ROUTING_param_application:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:acceptAsHeiAction]
+
+    # provip_application_application_reviewashei
+    RewriteCond %{REQUEST_URI} ^/hei/applications/([^/]++)/review$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_application_reviewashei,E=_ROUTING_param_application:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\ApplicationController\:\:reviewAsHei]
+
+    # provip_application_company_dashboard
+    RewriteCond %{REQUEST_URI} ^/company$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_dashboard,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:dashboardAction]
+
+    # provip_application_company_settings
+    RewriteCond %{REQUEST_URI} ^/company/account\-settings$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_settings,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:settingsAction]
+
+    # provip_application_company_info
+    RewriteCond %{REQUEST_URI} ^/company/company\-settings$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_info,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:infoAction]
+
+    # provip_application_company_deletepicture
+    RewriteCond %{REQUEST_URI} ^/company/account\-settings/delete\-picture$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_deletepicture,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:deletePictureAction]
+
+    # provip_application_company_deletecompanypicture
+    RewriteCond %{REQUEST_URI} ^/company/company\-settings/delete\-picture$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_deletecompanypicture,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:deleteCompanyPictureAction]
+
+    # provip_application_company_staff
+    RewriteCond %{REQUEST_URI} ^/company/staff$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_staff,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:staffAction]
+
+    # provip_application_company_search
+    RewriteCond %{REQUEST_URI} ^/company/staff/search(?:/([^/]++))?$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_company_search,E=_ROUTING_param_q:%1,E=_ROUTING_default_q:,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\CompanyController\:\:searchAction]
+
+    # provip_application_default_index
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_default_index,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\DefaultController\:\:indexAction]
+
+    # fos_user_profile_show
+    RewriteCond %{REQUEST_URI} ^/profile$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_profile_show,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\DefaultController\:\:profileRouting]
+
+    # provip_application_default_studentdocumentation
+    RewriteCond %{REQUEST_URI} ^/student/documentation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_default_studentdocumentation,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\DefaultController\:\:studentDocumentation]
+
+    # provip_application_default_heidocumentation
+    RewriteCond %{REQUEST_URI} ^/hei/documentation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_default_heidocumentation,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\DefaultController\:\:heiDocumentation]
+
+    # provip_application_default_companydocumentation
+    RewriteCond %{REQUEST_URI} ^/company/documentation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_default_companydocumentation,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\DefaultController\:\:companyDocumentation]
+
+    # provip_application_hei_dashboard
+    RewriteCond %{REQUEST_URI} ^/hei$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_dashboard,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:dashboardAction]
+
+    # provip_application_hei_settings
+    RewriteCond %{REQUEST_URI} ^/hei/account\-settings$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_settings,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:settingsAction]
+
+    # provip_application_hei_info
+    RewriteCond %{REQUEST_URI} ^/hei/hei\-settings$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_info,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:infoAction]
+
+    # provip_application_hei_deletepicture
+    RewriteCond %{REQUEST_URI} ^/hei/account\-settings/delete\-picture$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_deletepicture,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:deletePictureAction]
+
+    # provip_application_hei_staff
+    RewriteCond %{REQUEST_URI} ^/hei/staff$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_staff,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:staffAction]
+
+    # provip_application_hei_search
+    RewriteCond %{REQUEST_URI} ^/hei/staff/search(?:/([^/]++))?$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_search,E=_ROUTING_param_q:%1,E=_ROUTING_default_q:,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:searchAction]
+
+    # provip_application_hei_searchstudent
+    RewriteCond %{REQUEST_URI} ^/hei/students/search(?:/([^/]++))?$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_searchstudent,E=_ROUTING_param_q:%1,E=_ROUTING_default_q:,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:searchStudentAction]
+
+    # provip_application_hei_students
+    RewriteCond %{REQUEST_URI} ^/hei/students$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_students,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:studentsAction]
+
+    # provip_application_hei_approve
+    RewriteCond %{REQUEST_URI} ^/hei/enrollments/([^/]++)/toggle$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_approve,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:approveAction]
+
+    # provip_application_hei_deny
+    RewriteCond %{REQUEST_URI} ^/hei/enrollments/([^/]++)/deny$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_deny,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:denyAction]
+
+    # provip_application_hei_deleteskill
+    RewriteCond %{REQUEST_URI} ^/hei/skill/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_deleteskill,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:deleteSkillAction]
+
+    # provip_application_hei_deletetask
+    RewriteCond %{REQUEST_URI} ^/hei/task/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_deletetask,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:deleteTaskAction]
+
+    # provip_application_hei_staffprofile
+    RewriteCond %{REQUEST_URI} ^/hei/staff/([^/]++)/profile$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_staffprofile,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:staffProfileAction]
+
+    # provip_application_internship_studentinternships
+    RewriteCond %{REQUEST_URI} ^/student/internships$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_studentinternships,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:studentInternshipsAction]
+
+    # provip_application_internship_heiinternships
+    RewriteCond %{REQUEST_URI} ^/hei/internships$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_heiinternships,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:heiInternshipsAction]
+
+    # provip_application_internship_companyinternships
+    RewriteCond %{REQUEST_URI} ^/company/internships$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_companyinternships,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:companyInternshipsAction]
+
+    # provip_application_internship_detailstudent
+    RewriteCond %{REQUEST_URI} ^/student/internships/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_detailstudent,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:detailStudentAction]
+
+    # provip_application_internship_evaluationstudent
+    RewriteCond %{REQUEST_URI} ^/student/internships/([^/]++)/evaluation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_evaluationstudent,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:evaluationStudentAction]
+
+    # provip_application_internship_evaluationhei
+    RewriteCond %{REQUEST_URI} ^/hei/internships/([^/]++)/evaluation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_evaluationhei,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:evaluationHeiAction]
+
+    # provip_application_internship_evaluationcompany
+    RewriteCond %{REQUEST_URI} ^/company/internships/([^/]++)/evaluation$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_evaluationcompany,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:evaluationCompanyAction]
+
+    # provip_application_internship_detailcompany
+    RewriteCond %{REQUEST_URI} ^/company/internships/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_detailcompany,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:detailCompanyAction]
+
+    # provip_application_internship_detailhei
+    RewriteCond %{REQUEST_URI} ^/hei/internships/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_internship_detailhei,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\InternshipController\:\:detailHeiAction]
+
+    # provip_application_marketplace_companymarketplace
+    RewriteCond %{REQUEST_URI} ^/company/marketplace$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_marketplace_companymarketplace,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\MarketplaceController\:\:companyMarketplaceAction]
+
+    # provip_application_marketplace_studentmarketplace
+    RewriteCond %{REQUEST_URI} ^/student/marketplace$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_marketplace_studentmarketplace,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\MarketplaceController\:\:studentMarketplaceAction]
+
+    # provip_application_marketplace_detail
+    RewriteCond %{REQUEST_URI} ^/student/marketplace/internship/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_marketplace_detail,E=_ROUTING_param_slug:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\MarketplaceController\:\:detailAction]
+
+    # provip_application_opportunity_index
+    RewriteCond %{REQUEST_URI} ^/company/opportunities$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_index,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:indexAction]
+
+    # provip_application_opportunity_detail
+    RewriteCond %{REQUEST_URI} ^/company/opportunities/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_detail,E=_ROUTING_param_slug:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:detailAction]
+
+    # provip_application_opportunity_editgoal
+    RewriteCond %{REQUEST_URI} ^/company/opportunities/([^/]++)/goals/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_editgoal,E=_ROUTING_param_slug:%1,E=_ROUTING_param_deliverable_id:%2,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:editGoalAction]
+
+    # provip_application_opportunity_deletegoal
+    RewriteCond %{REQUEST_URI} ^/company/opportunities/([^/]++)/goals/([^/]++)/delete$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_deletegoal,E=_ROUTING_param_slug:%1,E=_ROUTING_param_deliverable_id:%2,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:deleteGoalAction]
+
+    # provip_application_opportunity_toggle
+    RewriteCond %{REQUEST_URI} ^/company/opportunities/([^/]++)/toggle$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_toggle,E=_ROUTING_param_slug:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:toggleAction]
+
+    # provip_application_opportunity_delete
+    RewriteCond %{REQUEST_URI} ^/company/opportunities/delete/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_opportunity_delete,E=_ROUTING_param_slug:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\OpportunityController\:\:deleteAction]
+
+    # provip_application_student_dashboard
+    RewriteCond %{REQUEST_URI} ^/student$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_student_dashboard,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\StudentController\:\:dashboardAction]
+
+    # provip_application_student_settings
+    RewriteCond %{REQUEST_URI} ^/student/account\-settings$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_student_settings,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\StudentController\:\:settingsAction]
+
+    # provip_application_student_deletepicture
+    RewriteCond %{REQUEST_URI} ^/student/account\-settings/delete\-picture$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_student_deletepicture,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\StudentController\:\:deletePictureAction]
+
+    # provip_application_student_markcomplete
+    RewriteCond %{REQUEST_URI} ^/student/internships/mark\-complete/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_student_markcomplete,E=_ROUTING_param_publicId:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\StudentController\:\:markCompleteAction]
+
+    # provip_application_student_removeupdate
+    RewriteCond %{REQUEST_URI} ^/student/internships/update/([^/]++)/remove$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_student_removeupdate,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\StudentController\:\:removeUpdateAction]
+
+    # provip_events_studentevent_newstatus
+    RewriteCond %{REQUEST_URI} ^/student/status/new$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_events_studentevent_newstatus,E=_ROUTING_default__controller:Provip\\EventsBundle\\Controller\\StudentEventController\:\:newStatusAction]
+
+    # provip_events_studentevent_newcompanystatus
+    RewriteCond %{REQUEST_URI} ^/company/status/new$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_events_studentevent_newcompanystatus,E=_ROUTING_default__controller:Provip\\EventsBundle\\Controller\\StudentEventController\:\:newCompanyStatusAction]
+
+    # provip_events_studentevent_newheistatus
+    RewriteCond %{REQUEST_URI} ^/hei/status/new$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_events_studentevent_newheistatus,E=_ROUTING_default__controller:Provip\\EventsBundle\\Controller\\StudentEventController\:\:newHeiStatusAction]
+
+    # provip_events_studentevent_addfeedback
+    RewriteCond %{REQUEST_URI} ^/company/feedback/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_events_studentevent_addfeedback,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\EventsBundle\\Controller\\StudentEventController\:\:addFeedbackAction]
+
+    # provip_events_studentevent_addfeedbackhei
+    RewriteCond %{REQUEST_URI} ^/hei/feedback/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_events_studentevent_addfeedbackhei,E=_ROUTING_param_id:%1,E=_ROUTING_default__controller:Provip\\EventsBundle\\Controller\\StudentEventController\:\:addFeedbackHeiAction]
+
+    # provip_user_provipregistration_registerasstudent
+    RewriteCond %{REQUEST_URI} ^/register_student$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_user_provipregistration_registerasstudent,E=_ROUTING_default__controller:Provip\\UserBundle\\Controller\\ProvipRegistrationController\:\:registerAsStudentAction]
+
+    # provip_user_provipregistration_registerascompany
+    RewriteCond %{REQUEST_URI} ^/register_company$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_user_provipregistration_registerascompany,E=_ROUTING_default__controller:Provip\\UserBundle\\Controller\\ProvipRegistrationController\:\:registerAsCompanyAction]
+
+    # fos_user_security_login
+    RewriteCond %{REQUEST_URI} ^/login$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_security_login,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\SecurityController\:\:loginAction]
+
+    # fos_user_security_check
+    RewriteCond %{REQUEST_URI} ^/login_check$
+    RewriteCond %{REQUEST_METHOD} !^(POST)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_POST:1]
+    RewriteCond %{REQUEST_URI} ^/login_check$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_security_check,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\SecurityController\:\:checkAction]
+
+    # fos_user_security_logout
+    RewriteCond %{REQUEST_URI} ^/logout$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_security_logout,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\SecurityController\:\:logoutAction]
+
+    # fos_user_registration_register
+    RewriteCond %{REQUEST_URI} ^/register$
+    RewriteRule .* $0/ [QSA,L,R=301]
+    RewriteCond %{REQUEST_URI} ^/register/$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_registration_register,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\RegistrationController\:\:registerAction]
+
+    # fos_user_registration_check_email
+    RewriteCond %{REQUEST_URI} ^/register/check\-email$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/register/check\-email$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_registration_check_email,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\RegistrationController\:\:checkEmailAction]
+
+    # fos_user_registration_confirm
+    RewriteCond %{REQUEST_URI} ^/register/confirm/([^/]++)$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/register/confirm/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_registration_confirm,E=_ROUTING_param_token:%1,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\RegistrationController\:\:confirmAction]
+
+    # fos_user_registration_confirmed
+    RewriteCond %{REQUEST_URI} ^/register/confirmed$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/register/confirmed$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_registration_confirmed,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\RegistrationController\:\:confirmedAction]
+
+    # fos_user_change_password
+    RewriteCond %{REQUEST_URI} ^/profile/change\-password$
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_POST:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/profile/change\-password$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_change_password,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\ChangePasswordController\:\:changePasswordAction]
+
+    # fos_user_resetting_request
+    RewriteCond %{REQUEST_URI} ^/resetting/request$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/resetting/request$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_resetting_request,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\ResettingController\:\:requestAction]
+
+    # fos_user_resetting_send_email
+    RewriteCond %{REQUEST_URI} ^/resetting/send\-email$
+    RewriteCond %{REQUEST_METHOD} !^(POST)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_POST:1]
+    RewriteCond %{REQUEST_URI} ^/resetting/send\-email$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_resetting_send_email,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\ResettingController\:\:sendEmailAction]
+
+    # fos_user_resetting_check_email
+    RewriteCond %{REQUEST_URI} ^/resetting/check\-email$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/resetting/check\-email$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_resetting_check_email,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\ResettingController\:\:checkEmailAction]
+
+    # fos_user_resetting_reset
+    RewriteCond %{REQUEST_URI} ^/resetting/reset/([^/]++)$
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_POST:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/resetting/reset/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_user_resetting_reset,E=_ROUTING_param_token:%1,E=_ROUTING_default__controller:FOS\\UserBundle\\Controller\\ResettingController\:\:resetAction]
+
+    # _imagine_thumbnail
+    RewriteCond %{REQUEST_URI} ^/media/cache/thumbnail/(.+)$
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$ [NC]
+    RewriteRule .* - [S=1,E=_ROUTING_allow_GET:1,E=_ROUTING_allow_HEAD:1]
+    RewriteCond %{REQUEST_URI} ^/media/cache/thumbnail/(.+)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:_imagine_thumbnail,E=_ROUTING_param_path:%1,E=_ROUTING_default__controller:liip_imagine.controller\:filterAction,E=_ROUTING_default_filter:thumbnail]
+
+    # fos_js_routing_js
+    RewriteCond %{REQUEST_URI} ^/js/routing(?:\.(js|json))?$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:fos_js_routing_js,E=_ROUTING_param__format:%1,E=_ROUTING_default__controller:fos_js_routing.controller\:indexAction,E=_ROUTING_default__format:js]
+
+    # 405 Method Not Allowed
+    RewriteCond %{ENV:_ROUTING__allow_POST} =1 [OR]
+    RewriteCond %{ENV:_ROUTING__allow_GET} =1 [OR]
+    RewriteCond %{ENV:_ROUTING__allow_HEAD} =1
+    RewriteRule .* app.php [QSA,L]
+
+
 </IfModule>
 
 <IfModule !mod_rewrite.c>
