@@ -1,0 +1,31 @@
+{% extends "ProvipApplicationBundle::base_admin.html.twig" %}
+{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+
+{% block main %}
+
+    <section class="main padder">
+    <div class="clearfix">
+      <h4></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    Create new Study Programme
+                </header>
+                <div>
+                    <form action="{{ path('provip_application_admin_create') }}" method="POST">
+
+                        {{ form_widget(form) }}
+
+                        <button type="submit" class="btn btn-primary btn-alt">Save</button>
+
+                    </form>
+                </div>
+            </section>
+        </div>
+
+    </div>
+    </section>
+
+{% endblock %}

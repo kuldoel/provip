@@ -1,0 +1,14 @@
+{% extends "ProvipApplicationBundle::base.html.twig" %}
+
+{% block nav %}
+<ul class="nav" data-spy="affix" data-offset-top="50">
+    <li><a href="{{ path('provip_application_admin_index') }}"><i class="icon-dashboard icon-xlarge"></i>Dashboard</a></li>
+</ul>
+{% endblock %}
+
+{% block user_menu %}
+    <ul class="dropdown-menu">
+        <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+    </ul>
+{% endblock %}
+

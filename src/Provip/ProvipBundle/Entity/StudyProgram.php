@@ -43,7 +43,7 @@ class StudyProgram
     protected $internshipMilestones;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="studyPrograms")
+     * @ORM\ManyToOne(targetEntity="HigherEducationalInstitution", inversedBy="studyPrograms", cascade={"persist"})
      * @ORM\JoinColumn(name="hei_id", referencedColumnName="id")
      * @Assert\Valid
      **/
@@ -69,7 +69,7 @@ class StudyProgram
     protected $staff;
 
     /**
-     * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User", mappedBy="adminOf")
+     * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User", mappedBy="adminOf", cascade={"persist"})
      */
     protected $admin;
 

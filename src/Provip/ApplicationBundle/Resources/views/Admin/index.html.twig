@@ -1,0 +1,48 @@
+{% extends "ProvipApplicationBundle::base_admin.html.twig" %}
+
+
+{% block main %}
+
+    <section class="main padder">
+    <div class="clearfix">
+      <h4></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="{{ path('provip_application_admin_create') }}" class="btn btn-small btn-alt btn-success pull-right">Add new</a>
+                    Study Programmes
+                </header>
+                <div>
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>HEI</th>
+                            <th>Administrator</th>
+                            <th>Email</th>
+                            <th>Enrollments</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for sp in studyProgrammes %}
+                                <tr>
+                                    <td>{{ sp.name }}</td>
+                                    <td>{{ sp.higherEducationalInstitution.name }}</td>
+                                    <td>{{ sp.admin }}</td>
+                                    <td><a href="mailto:{{ sp.admin.email }}" class="btn btn-mini btn-alt btn-white">{{ sp.admin.email }}</a></td>
+                                    <td>{{ sp.enrollments | length }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+    </section>
+
+{% endblock %}

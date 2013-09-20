@@ -3,12 +3,12 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_STUDENT:               [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_COMPANY_STAFF:         [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_COMPANY_STAFF_ADMIN:   [ROLE_COMPANY_STAFF, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_HEI_STAFF:             [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_HEI_STAFF_ADMIN:       [ROLE_HEI_STAFF, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_ADMIN:                 [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_STUDENT:               [ROLE_USER]
+        ROLE_COMPANY_STAFF:         [ROLE_USER]
+        ROLE_COMPANY_STAFF_ADMIN:   [ROLE_COMPANY_STAFF]
+        ROLE_HEI_STAFF:             [ROLE_USER]
+        ROLE_HEI_STAFF_ADMIN:       [ROLE_HEI_STAFF]
+        ROLE_SUPER_ADMIN:           [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:
