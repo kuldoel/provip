@@ -28,7 +28,7 @@
                         <label>Learning Outcomes</label>
                     </div>
                     <div class="col col-lg-9">
-                        <form class="studyprogram-edit" action="#" method="POST">
+                        <form class="learning-outcomes-doc" class="studyprogram-edit" action="#" method="POST">
                             {{ form_widget(formStudyProgram.learningOutcomes) }}
                         </form>
                     </div>
@@ -184,4 +184,23 @@
             </div>
         </div>
     </form>
+
+
+  <ul id="tlyPageGuide" data-tourtitle="Important information on this page">
+
+    <li class="tlypageguide_bottom" data-tourtarget=".learning-outcomes-doc">
+      <div>
+  The main goal of internationalization is to develop intercultural competencies: to enable students to tolerate and embrace differences without feeling threatened in their own identity. An international work placement provides an excellent opportunity to work on these skills in a professional environment. However, their acquisition does not happen merely because a student is exposed to another cultural environment, especially when the exposure is mainly virtual. Throughout the whole internship explicit attention to the development of intercultural skills is necessary. Students need to be stimulated to reflect upon this on a regular basis.
+      <br><br>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>You are a study program administrator.</p>
+    <p>Complete all the information for your study program which will help students to apply for an internship.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
+
 {% endblock %}

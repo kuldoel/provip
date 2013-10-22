@@ -10,7 +10,11 @@
     <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    {% stylesheets 'bundles/provipapplication/css/*' filter='cssrewrite' %}
+    {% stylesheets
+    'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
+    'bundles/provipapplication/css/style.css' filter='cssrewrite'
+    'bundles/provipapplication/css/*' filter='cssrewrite'
+    %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 

@@ -4,13 +4,13 @@
 {% block nav %}
 <ul class="nav" data-spy="affix" data-offset-top="50">
     <li><a href="{{ path('provip_application_hei_dashboard') }}"><i class="icon-dashboard icon-xlarge"></i>Dashboard</a></li>
-    <li><a href="{{ path('provip_application_internship_heiinternships') }}"><i class="icon-road icon-xlarge"></i>Internships</a></li>
+    <li><a class="first_element_to_target" href="{{ path('provip_application_internship_heiinternships') }}"><i class="icon-road icon-xlarge"></i>Internships</a></li>
     {% if is_granted('ROLE_HEI_STAFF_ADMIN') %}
-    <li><a href="{{ path('provip_application_hei_info') }}"><i class="icon-bookmark icon-xlarge"></i>Study Program</a></li>
-    <li><a href="{{ path('provip_application_hei_staff') }}"><i class="icon-group icon-xlarge"></i>Staff</a></li>
-    <li><a href="{{ path('provip_application_hei_students') }}"><i class="icon-book icon-xlarge"></i>Students</a></li>
+    <li><a class="second_element_to_target" href="{{ path('provip_application_hei_info') }}"><i class="icon-bookmark icon-xlarge"></i>Study Program</a></li>
+    <li><a class="third_element_to_target" href="{{ path('provip_application_hei_staff') }}"><i class="icon-group icon-xlarge"></i>Staff</a></li>
+    <li><a class="fourth_element_to_target" href="{{ path('provip_application_hei_students') }}"><i class="icon-book icon-xlarge"></i>Students</a></li>
     {% endif %}
-    <li><a href="{{ path('provip_application_hei_settings') }}"><i class="icon-cog icon-xlarge"></i>Settings</a></li>
+    <li><a class="fifth_element_to_target" href="{{ path('provip_application_hei_settings') }}"><i class="icon-cog icon-xlarge"></i>Settings</a></li>
 </ul>
 {% endblock %}
 

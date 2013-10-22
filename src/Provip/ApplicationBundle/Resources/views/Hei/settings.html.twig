@@ -92,7 +92,7 @@
 
                         <div class="row">
                             <label class="col col-lg-3 control-label">You can contact me for</label>
-                            <div class="col col-lg-9">
+                            <div class="col col-lg-9 contact-me-for-doc">
                                 {{ form_widget(form.responsibleFor) }}
                                 {{ form_errors(form.responsibleFor) }}
                             </div>
@@ -112,4 +112,21 @@
         </section>
     </div>
 </div>
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_right" data-tourtarget=".contact-me-for-doc">
+      <div>
+        The student needs to be supported, monitored and assessed during all the phases of his or her internship. A mentor will have to ensure that the trainee receives challenging but achievable tasks that are authentic and of real value to the enterprise. Performing good quality tasks facilitate the learning process. The mentor stimulates reflection and provides feedback on a regular basis.
+      </div>
+    </li>
+
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>This is your settings page.</p>
+    <p>You can complete your profile to tell students about yourself and your role in your HEI.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
 {% endblock %}

@@ -6,10 +6,12 @@
     <title>{{ app.user }} - Pathway</title>
     <meta name="description" content="Provip is an international internship marketplace bringing students and companies together">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="{{ asset('bundles/provipapplication/images/favicon.ico') }}" />
 
     {% stylesheets
-        'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
-        'bundles/provipapplication/css/*' filter='cssrewrite'
+    'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
+    'bundles/provipapplication/css/style.css' filter='cssrewrite'
+    'bundles/provipapplication/css/*' filter='cssrewrite'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -58,11 +60,11 @@
     <ul class="nav navbar-nav hidden-sm">
 
         {% if is_granted('ROLE_STUDENT') %}
-            <li><div class="m-t-small"><a class="btn btn-small btn-info new-activity-update"><i class="icon-plus"></i> POST</a></div></li>
+            <li class="post-button-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-activity-update"><i class="icon-plus"></i> POST</a></div></li>
         {% elseif is_granted('ROLE_COMPANY_STAFF') %}
-            <li><div class="m-t-small"><a class="btn btn-small btn-info new-company-update"><i class="icon-plus"></i> POST</a></div></li>
+            <li class="post-button-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-company-update"><i class="icon-plus"></i> POST</a></div></li>
         {% elseif is_granted('ROLE_HEI_STAFF') %}
-            <li><div class="m-t-small"><a class="btn btn-small btn-info new-hei-update"><i class="icon-plus"></i> POST</a></div></li>
+            <li class="post-button-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-hei-update"><i class="icon-plus"></i> POST</a></div></li>
         {% else %}
         {% endif %}
 
@@ -106,7 +108,8 @@
         </p>
     </div>
 </footer>
-<!-- / footer -->
+
+
 
 {% javascripts
 '@ProvipApplicationBundle/Resources/public/js/jquery.min.js'
@@ -129,6 +132,8 @@
 <script type="text/javascript">
   $(document).ready(function() { tl.pg.init({}); });
 </script>
+
+
 
 </body>
 </html>

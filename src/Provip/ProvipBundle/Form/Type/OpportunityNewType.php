@@ -29,14 +29,14 @@ class OpportunityNewType extends AbstractType
             ->add('startDate','date',array(
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date', 'data-date-format' => 'dd-mm-yyyy'),
+                'attr' => array('class' => 'date', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Dates can be changed depending on the student\'s schedule'),
                 'label' => 'Start of the internship',
                 'error_bubbling' => true,
             ))
             ->add('endDate','date',array(
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date', 'data-date-format' => 'dd-mm-yyyy'),
+                'attr' => array('class' => 'date', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Dates can be changed depending on the student\'s schedule'),
                 'label' => 'End of the internship',
                 'error_bubbling' => true,
             ))
