@@ -31,7 +31,7 @@
 <body>
 <!-- header -->
 <header id="header" class="navbar navbar-sm bg bg-black">
-    <a href="docs.html" class="btn btn-link pull-right"><i class="icon-question icon-xlarge text-default"></i></a>
+    <a href="#" class="btn btn-link pull-right"><i class="icon-question icon-xlarge text-default"></i></a>
     <a class="navbar-brand" href="#">Pathway</a>
 </header>
 
@@ -55,8 +55,6 @@
     <div class="text-center padder clearfix">
         <p>
             <small>&copy; Pathway 2013, bringing Students and Companies together for powerful internships</small><br><br>
-            <a href="#" class="btn btn-mini btn-circle btn-white"><i class="icon-twitter"></i></a>
-            <a href="#" class="btn btn-mini btn-circle btn-white"><i class="icon-facebook"></i></a>
         </p>
     </div>
 </footer>
@@ -65,11 +63,14 @@
 '@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
 '@ProvipApplicationBundle/Resources/public/js/app.js'
 '@ProvipApplicationBundle/Resources/public/js/app.data.js'
+'@ProvipApplicationBundle/Resources/public/js/pageguide.min.js'
 %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 <!-- / footer -->
-
+<script type="text/javascript">
+  $(document).ready(function() { tl.pg.init({}); });
+</script>
 </body>
 </html>
 

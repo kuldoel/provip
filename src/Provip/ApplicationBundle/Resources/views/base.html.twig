@@ -121,9 +121,14 @@
 '@ProvipApplicationBundle/Resources/public/js/combodate.js'
 '@ProvipApplicationBundle/Resources/public/js/bootstrap-select.min.js'
 '@ProvipApplicationBundle/Resources/public/js/bootstrap-datepicker.js'
+'@ProvipApplicationBundle/Resources/public/js/pageguide.min.js'
 %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+<script type="text/javascript">
+  $(document).ready(function() { tl.pg.init({}); });
+</script>
 
 </body>
 </html>
