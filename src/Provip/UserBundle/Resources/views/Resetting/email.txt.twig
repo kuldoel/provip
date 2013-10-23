@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block subject %}
+{% autoescape false %}
+You have been invited as a staff member to Pathway, a Provip Portal.
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Hi,
+
+You have been invited to become a staff member on Pathway.
+
+You can choose a password by visiting {{ confirmationUrl }}
+
+Kind Regards,
+
+Pathway, a Provip portal.
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

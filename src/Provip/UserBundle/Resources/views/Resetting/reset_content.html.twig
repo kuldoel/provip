@@ -1,0 +1,23 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<section id="content">
+  <div class="row">
+    <div class="col col-lg-4 col-offset-4 m-t-large">
+      <section class="panel">
+        <header class="panel-heading text-center">
+          Hi, select a password.
+        </header>
+
+        <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="padder">
+          {{ form_widget(form) }}
+          <div>
+            <input class="btn btn-alt btn-primary" type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+          </div>
+        </form>
+
+
+      </section>
+    </div>
+  </div>
+</section>
+
