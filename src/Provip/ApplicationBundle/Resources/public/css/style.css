@@ -645,3 +645,8 @@ ul.thumbnails {
 .activity-update-form .btn-group.bootstrap-select {
     width: 100% !important;
 }
+
+
+textarea {
+    height: auto !important;
+}

@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col col-lg-12">
         <section class="panel">
-            <header class="panel-heading">
+            <header class="panel-heading applications-table-doc">
                 <h4><i class="icon-file"></i> Applications</h4>
             </header>
             <div class="pull-out">
@@ -74,7 +74,7 @@
     <div class="row">
         <div class="col col-lg-12">
             <section class="panel">
-                <header class="panel-heading">
+                <header class="panel-heading internships-table-doc">
                     <h4><i class="icon-road"></i> Internships</h4>
                 </header>
                 <div class="pull-out">
@@ -125,5 +125,31 @@
         </div>
 
     </div>
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_bottom" data-tourtarget=".applications-table-doc">
+      <div>
+        <h4>Applications</h4>
+        <p>Applications are internships that are not yet approved. You can open the internship charter by clicking the review details button.
+        </p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".internships-table-doc">
+      <div>
+        <h4>Internships</h4>
+        <p>The Internships table lists all the current and completed internship. Click on the Progress button to see the activity feed of that particular internship or select Evaluation to go to the Evaluation page.
+        </p>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>This is your internships page.</p>
+    <p>This page gives you an overview of all running internships and applications. You can check the progress of ongoing internships or evaluate finished projects.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
+
+
 
 {% endblock %}

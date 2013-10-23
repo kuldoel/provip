@@ -16,8 +16,8 @@
                 <div class="col col-lg-6">
 
                     <div class="panel">
-                        <header class="panel-heading">
-                          Internship Goals for {{ application.student}}
+                        <header class="panel-heading goals-doc">
+                          Internship Tasks for {{ application.student}}
                         </header>
 
                         <div class="panel-content">
@@ -70,7 +70,7 @@
                 <div class="col col-lg-6">
 
                     <div class="panel">
-                        <header class="panel-heading">
+                        <header class="panel-heading tasks-doc">
                             Company Internship Tasks from {{ opportunity.company }}
                         </header>
 
@@ -125,7 +125,7 @@
             <div class="row">
                 <div class="col col-lg-12">
                     <div class="panel">
-                        <header class="panel-heading">
+                        <header class="panel-heading settings-doc">
                             Internship Settings
                         </header>
 
@@ -212,7 +212,7 @@
 
 
             <div class="panel">
-                <header class="panel-heading">
+                <header class="panel-heading progress-doc">
                     Application Progress
                 </header>
 
@@ -431,5 +431,41 @@
             </div><!-- /.modal-content -->
         </div>
     </div>
+
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_bottom" data-tourtarget=".goals-doc">
+      <div>
+        <h4>HEI Internship Tasks</h4>
+        <p>These are the tasks added for each student by the study program administrator.
+        </p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".tasks-doc">
+      <div>
+        <h4>Company Internship Tasks</h4>
+        <p>These are the deliverables your company expects from the student</p>
+      </div>
+    </li>
+    <li class="tlypageguide_top" data-tourtarget=".settings-doc">
+      <div>
+        <h4>Internship Settings</h4>
+        <p>These are the default settings as proposed by your company. The start and end date can be changed according to the student's schedule.</p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".progress-doc">
+      <div>
+        <h4>Application Progress</h4>
+        <p>This shows the current status of the application. You can approve or reject the application.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>Internship Charter</p>
+    <p>Internships in Pathway are structured in Tasks and Activities. HEI and companies assign tasks to an internship opportunity. You will see that the specific tasks you added to that “Internship Opportunity” have been set as the deliverables the student has to provide to the company to successfully complete the internship. The same thing has happened with the tasks, the HEI has added to its internship milestones.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
 
 {% endblock %}

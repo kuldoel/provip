@@ -28,7 +28,7 @@
                         <label>Learning Outcomes</label>
                     </div>
                     <div class="col col-lg-9">
-                        <form class="learning-outcomes-doc" class="studyprogram-edit" action="#" method="POST">
+                        <form class="studyprogram-edit" action="#" method="POST">
                             {{ form_widget(formStudyProgram.learningOutcomes) }}
                         </form>
                     </div>
@@ -39,7 +39,7 @@
                         <label>Internship Milestones</label>
                     </div>
                     <div class="col col-lg-9">
-                        <form class="studyprogram-edit" action="#" method="POST">
+                        <form class="milestones-doc studyprogram-edit" action="#" method="POST">
                             {{ form_widget(formStudyProgram.internshipMilestones) }}
                             {{ form_rest(formStudyProgram) }}
                         </form>
@@ -84,7 +84,7 @@
                         <label>Student Internship Tasks</label><br>
                     </div>
                     <div class="col col-lg-9">
-                        <a href="#new-goal" class="btn btn-info btn-small" data-toggle="modal"><i class="icon-plus"></i> CREATE INTERNSHIP TASK</a>
+                        <a href="#new-goal" class="btn btn-info btn-small students-tasks-doc" data-toggle="modal"><i class="icon-plus"></i> CREATE INTERNSHIP TASK</a>
                         <hr>
                         <table class="table table-striped text-small">
                             <thead>
@@ -188,10 +188,18 @@
 
   <ul id="tlyPageGuide" data-tourtitle="Important information on this page">
 
-    <li class="tlypageguide_bottom" data-tourtarget=".learning-outcomes-doc">
+    <li class="tlypageguide_top" data-tourtarget=".milestones-doc">
       <div>
-  The main goal of internationalization is to develop intercultural competencies: to enable students to tolerate and embrace differences without feeling threatened in their own identity. An international work placement provides an excellent opportunity to work on these skills in a professional environment. However, their acquisition does not happen merely because a student is exposed to another cultural environment, especially when the exposure is mainly virtual. Throughout the whole internship explicit attention to the development of intercultural skills is necessary. Students need to be stimulated to reflect upon this on a regular basis.
+        <h4>Internship Milestones</h4>
+  <p>The main goal of internationalization is to develop intercultural competencies: to enable students to tolerate and embrace differences without feeling threatened in their own identity. An international work placement provides an excellent opportunity to work on these skills in a professional environment. However, their acquisition does not happen merely because a student is exposed to another cultural environment, especially when the exposure is mainly virtual. Throughout the whole internship explicit attention to the development of intercultural skills is necessary. Students need to be stimulated to reflect upon this on a regular basis.</p>
       <br><br>
+      </div>
+    </li>
+    <li class="tlypageguide_top" data-tourtarget=".students-tasks-doc">
+      <div>
+        <h4>Student Internship Tasks</h4>
+        <p>When you access Pathway for the first time, this list will be empty. When you have approved registered users under the Students tab, their names will appear here. You can then add specific tasks for the internship. These tasks will be the internship deliverables for the HEI. Tasks may include reflection assignments like “Write a blog posts every week on your internship activity” or presentation tasks “Present your current internship work at the weekly student meeting”. You can create a different task set for each student.</p>
+        <br><br>
       </div>
     </li>
   </ul>
@@ -199,8 +207,10 @@
   <div id="tlyPageGuideWelcome">
     <h4>Welcome {{ app.user }}</h4>
     <p>You are a study program administrator.</p>
-    <p>Complete all the information for your study program which will help students to apply for an internship.</p>
+    <p>Complete all the information for your study program which will help students successfully apply for an internship.</p>
     <button class="tlypageguide_dismiss">Got it, thanks</button>
   </div>
 
 {% endblock %}
+
+

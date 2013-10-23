@@ -91,4 +91,22 @@
 </form>
 <!-- / .modal -->
 
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_bottom" data-tourtarget=".goals-doc">
+      <div>
+        <h4>HEI Internship Tasks</h4>
+        <p>These are the tasks you've added for each student under study program.
+        </p>
+      </div>
+    </li>
+
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>Opportunities</p>
+    <p>To create an Internship opportunity for students, click on the “Opportunities” icon in the menu. Press the blue “Opportunity” button on the right and enter the necessary details like the title, duration and available positions. To finalize the opportunity select the opportunity from the list and click the corresponding “Complete” button.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
+
 {% endblock %}

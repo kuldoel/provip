@@ -17,7 +17,7 @@
                         <div class="row">
                             {{ form_label(form.picture, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
                             <div class="col col-lg-9 media">
-                                <div class="bg-light pull-left text-center media-large thumb-large">
+                                <div class="bg-light pull-left text-center media-large thumb-large profile-pic-doc-2">
                                     {% if app.user.picture %}
                                         <img class="img-rounded" width="150" height="150" src="{{(app.user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
                                     {% else %}
@@ -103,13 +103,18 @@
       </div>
     </li>
 
+    <li class="tlypageguide_right" data-tourtarget=".profile-pic-doc-2">
+      <div>
+        <h4>Your Profile Picture</h4>
+        <p>You can upload a profile picture. If you want to change your profile picture, make sure to delete the existing one first.</p>
+      </div>
     </li>
   </ul>
 
   <div id="tlyPageGuideWelcome">
     <h4>Welcome {{ app.user }}</h4>
     <p>This is your settings page.</p>
-    <p>You can complete your profile to tell potential interns about yourself and your role in the company.</p>
+    <p>You can upload a profile picture which will be used throughout the platform when posting announcements or giving feedback on student activities. You can also change your password and add other contact information.</p>
     <button class="tlypageguide_dismiss">Got it, thanks</button>
   </div>
 {% endblock %}
