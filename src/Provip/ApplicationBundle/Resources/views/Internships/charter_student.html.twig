@@ -114,7 +114,7 @@
 
                         <div class="line pull-in"></div>
 
-                        <a href="#" class="btn btn-block btn-small btn-alt btn-white mark-complete" data-public-id="{{ application.internship.publicId }}">Mark Internship as Complete</a>
+                        <a href="#" class="complete-intern-doc btn btn-block btn-small btn-alt btn-white mark-complete" data-public-id="{{ application.internship.publicId }}">Mark Internship as Complete</a>
 
                         <a style="display: none" href="{{ path('provip_application_internship_evaluationstudent', {'publicId': application.internship.publicId }) }}" class="btn btn-block btn-primary btn-white view-evaluation" data-public-id="{{ application.internship.publicId }}">View Evaluation</a>
 
@@ -216,6 +216,29 @@
         </div>
 
     </div>
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_bottom" data-tourtarget=".status-updates-intern-doc">
+      <div>
+        <h4>Status Updates</h4>
+        <p>When you connect your update to an activity, write a message detailing your work and select the corresponding activity. You can also indicate the current progress of that activity. An activity can have the following progress: “not yet started”, “just started”, “almost there” and “finished”. When all activities have the “finished” update, the connecting task is completed.
+        </p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".complete-intern-doc">
+      <div>
+        <h4>Complete internships</h4>
+        <p>Your HEI and Company mentor can give feedback on your updates. If you want your updates to be visible to only the HEI or only the company, select the according privacy setting. To delete an activity update, click the small delete button next to the date of the activity. Keep in mind that all corresponding feedback will be removed as well. When you want to finish the internship, click the “Complete the Internship” button next to the activity feed. You will then access the “Internship Evaluation” page.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>Internship Progress</p>
+    <p>The “Internship Progress” page gives you an overview of your status updates and feedback, a to do list of activities and the option to review the charter in detail. To make an internship activity update, click the blue “+post” button. You can either make a random post, not associated with any activity or connect your update to an internship activity.</p>
+      <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
 
 
 

@@ -60,7 +60,7 @@
     <ul class="nav navbar-nav hidden-sm">
 
         {% if is_granted('ROLE_STUDENT') %}
-            <li class="post-button-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-activity-update"><i class="icon-plus"></i> POST</a></div></li>
+            <li class="post-button-doc status-updates-intern-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-activity-update"><i class="icon-plus"></i> POST</a></div></li>
         {% elseif is_granted('ROLE_COMPANY_STAFF') %}
             <li class="post-button-doc"><div class="m-t-small"><a class="btn btn-small btn-info new-company-update"><i class="icon-plus"></i> POST</a></div></li>
         {% elseif is_granted('ROLE_HEI_STAFF') %}

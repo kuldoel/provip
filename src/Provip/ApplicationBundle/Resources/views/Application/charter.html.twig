@@ -16,7 +16,7 @@
                 <div class="col col-lg-6">
 
                     <div class="panel">
-                        <header class="panel-heading">
+                        <header class="panel-heading tasks-doc">
                            Internship tasks for {{ app.user}}
                         </header>
 
@@ -76,8 +76,8 @@
                 <div class="col col-lg-6">
 
                     <div class="panel">
-                        <header class="panel-heading">
-                            Project Goals from {{ opportunity.company }}
+                        <header class="panel-heading company-doc">
+                            Tasks from {{ opportunity.company }}
                         </header>
 
                         <div class="panel-content">
@@ -136,7 +136,7 @@
             <div class="row">
                 <div class="col col-lg-12">
                     <div class="panel">
-                        <header class="panel-heading">
+                        <header class="panel-heading settings-doc">
                             Internship Settings
                         </header>
 
@@ -157,7 +157,7 @@
 
 
             <div class="panel">
-                <header class="panel-heading">
+                <header class="panel-heading progress-doc">
                     Application Progress
                 </header>
 
@@ -340,6 +340,41 @@
             </div><!-- /.modal-content -->
         </div>
     </div>
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_bottom" data-tourtarget=".tasks-doc">
+      <div>
+        <h4>HEI Internship Tasks</h4>
+        <p>These are your tasks added by the study program administrator.
+        </p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".company-doc">
+      <div>
+        <h4>Company Internship Tasks</h4>
+        <p>These are the deliverables the company expects from you during your internship.</p>
+      </div>
+    </li>
+    <li class="tlypageguide_top" data-tourtarget=".settings-doc">
+      <div>
+        <h4>Internship Settings</h4>
+        <p>These are the default settings as proposed by your company. The start and end date can be changed according to the your schedule.</p>
+      </div>
+    </li>
+    <li class="tlypageguide_bottom" data-tourtarget=".progress-doc">
+      <div>
+        <h4>Application Progress</h4>
+        <p>This shows the current status of the application. You can see if your HEI or the company approved or denied your application. In case they denied your application you will see the reason and might use that to resubmit your application.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>Internship Charter</p>
+    <p>The internship charter lists the Goals and tasks of the internship for both your university as well as the company. Now you can add the activities you think you’ll need to do to successfully complete those tasks. A task like “Hand in an Internship Report” might need activities like “Write the report”, “Hand in an interim report” when the internship is halfway done and “Hand in the final report”. It is up to you to decide how specific you want an activity to be. Think on how you want to complete the tasks and the different steps that are essential and necessary.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
 
 
 {% endblock %}

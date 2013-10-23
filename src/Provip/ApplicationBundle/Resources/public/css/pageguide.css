@@ -356,15 +356,14 @@
   -khtml-opacity: 0;
   opacity: 0;
   position: fixed;
-  top: 0;
+  top: 100px;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index: 9999;
   width: 95%;
   margin: auto;
   max-width: 400px;
-  height: 300px;
+  height: auto;
   max-height: 80%;
   background: rgba(0, 0, 0, 0.85);
   padding: 15px 20px;

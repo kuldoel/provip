@@ -17,7 +17,7 @@
                         <div class="row">
                             {{ form_label(form.picture, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
                             <div class="col col-lg-9 media">
-                                <div class="bg-light pull-left text-center media-large thumb-large">
+                                <div class="bg-light pull-left text-center media-large thumb-large profile-pic-doc-2">
                                     {% if app.user.picture %}
                                         <img class="img-rounded" width="150" height="150" src="{{(app.user.picture.getWebPath) | imagine_filter('thumbnail')  }}" />
                                     {% else %}
@@ -112,4 +112,23 @@
         </section>
     </div>
 </div>
+
+
+  <ul id="tlyPageGuide" data-tourtitle="Get help on this page">
+    <li class="tlypageguide_right" data-tourtarget=".profile-pic-doc-2">
+      <div>
+        <h4>Profile Picture</h4>
+        <p>Upload a profile picture to customize how you appear in the Provip portal. If you want to change your picture, delete the previous one first. </p>
+      </div>
+    </li>
+  </ul>
+
+  <div id="tlyPageGuideWelcome">
+    <h4>Welcome {{ app.user }}</h4>
+    <p>Profile settings.</p>
+    <p>While awaiting your enrollment approval by the Study Program administrator, you can complete your personal profile. Click on Settings to go to your personal profile. You can upload a profile picture which will be used throughout the platform when posting announcements or internship activity updates. You can also change your password and add other contact information. You can also write down a mission statement or link to your
+      website, blog or LinkedIn page.</p>
+    <button class="tlypageguide_dismiss">Got it, thanks</button>
+  </div>
+
 {% endblock %}
