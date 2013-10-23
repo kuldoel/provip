@@ -63,7 +63,6 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
-    port: 2525
 
 # FOS UserBundle Configuration
 fos_user:
