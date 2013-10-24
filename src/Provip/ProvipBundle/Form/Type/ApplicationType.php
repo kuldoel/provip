@@ -11,16 +11,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ApplicationType extends AbstractType
 {
 
-    static $student;
+    protected $student;
 
     public function __construct(User $student)
     {
-        ApplicationType::$student = $student;
+        $this->student = $student;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
 
         $builder
             ->add('startDate','date',array(
@@ -43,13 +42,13 @@ class ApplicationType extends AbstractType
                     'class' => 'ProvipUserBundle:User',
                     'query_builder' => function(EntityRepository $er) {
 
-                        $st = ApplicationType::$student;
+                        $student = $this->student;
 
                         return $er->createQueryBuilder('u')
                             ->where('u.teachesAt = ?1')
                             ->orWhere('u.adminOf = ?2')
                             ->orderBy('u.firstName', 'ASC')
-                            ->setParameters(array('1' => $st->getEnrollment()->getStudyProgram(), '2' => $student->getEnrollment()->getStudyProgram()))
+                            ->setParameters(array('1' => $student->getEnrollment()->getStudyProgram(), '2' => $student->getEnrollment()->getStudyProgram()))
                             ;
                     },)
             )
