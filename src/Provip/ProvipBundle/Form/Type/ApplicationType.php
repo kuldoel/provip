@@ -43,8 +43,6 @@ class ApplicationType extends AbstractType
                     'class' => 'ProvipUserBundle:User',
                     'query_builder' => function(EntityRepository $er) use ($student) {
 
-                        $student = $this->student;
-
                         return $er->createQueryBuilder('u')
                             ->where('u.teachesAt = ?1')
                             ->orWhere('u.adminOf = ?2')
