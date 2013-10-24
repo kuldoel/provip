@@ -20,6 +20,9 @@ class ActivityUpdateEventType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $student = $this->student;
+
         $builder
             ->add('activity', 'entity', array(
                     'label' => 'Activity',
@@ -27,9 +30,7 @@ class ActivityUpdateEventType extends AbstractType
                     'attr' => array('class' => 'selectpicker', 'data-style' => 'btn-info'),
                     'class' => 'ProvipProvipBundle:Activity',
                     'empty_value' => 'Select Activity',
-                    'query_builder' => function(EntityRepository $er) {
-
-                        $student = $this->student;
+                    'query_builder' => function(EntityRepository $er) use ($student) {
 
                         return $er->createQueryBuilder('a')
                             ->join('a.application', 'ap')
