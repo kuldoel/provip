@@ -21,6 +21,7 @@ class ApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
+        $student = $this->student;
         $builder
             ->add('startDate','date',array(
                 'widget' => 'single_text',
@@ -40,7 +41,7 @@ class ApplicationType extends AbstractType
                     'label' => 'School Mentor',
                     'attr'  => array('class' => 'selectpicker'),
                     'class' => 'ProvipUserBundle:User',
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function(EntityRepository $er) use ($student) {
 
                         $student = $this->student;
 
