@@ -42,6 +42,8 @@ class Internship
      *
      * @ORM\OneToOne(targetEntity="Application", mappedBy="internship")
      * @Assert\Valid
+     *
+     * @var Application
      */
     protected $application;
 
@@ -227,7 +229,20 @@ class Internship
         return $this->commentsByStudent;
     }
 
+    /**
+     * @return null|User
+     */
+    public function getHeiCoach()
+    {
+        return $this->application ? $this->application->getCoach() : null;
+    }
 
-
+    /**
+     * @return null|Company
+     */
+    public function getCompany()
+    {
+        return ($this->getApplication() && $this->getApplication()->getOpportunity()) ? $this->getApplication()->getOpportunity()->getCompany() : null;
+    }
 
 }

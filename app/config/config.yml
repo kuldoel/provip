@@ -112,3 +112,6 @@ services:
     crocodoc:
         class:      Provip\ApplicationBundle\Service\Crocodoc
         arguments:  [ "%crocodoc_api_key%" ]
+    provip_crocodoc_service:
+        class:      Provip\ApplicationBundle\Service\Crocodoc
+        arguments:  [ "@crocodoc", "@doctrine.orm.entity_manager" ]

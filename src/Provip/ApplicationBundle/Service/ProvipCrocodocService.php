@@ -3,6 +3,7 @@
 namespace Provip\ApplicationBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Provip\ProvipBundle\Entity\Document;
 use Provip\UserBundle\Entity\User;
 
@@ -14,11 +15,18 @@ class ProvipCrocodocService
     private $crocodocService;
 
     /**
-     * @param CrocodocService $crocodocService
+     * @var EntityManager
      */
-    public function __construct(CrocodocService $crocodocService)
+    private $entityManager;
+
+    /**
+     * @param CrocodocService $crocodocService
+     * @param EntityManager $entityManager
+     */
+    public function __construct(CrocodocService $crocodocService, EntityManager $entityManager)
     {
         $this->crocodocService = $crocodocService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -27,7 +35,10 @@ class ProvipCrocodocService
      */
     public function uploadDocument(Document $document)
     {
-        return $this->crocodocService->uploadDocument($document->getAbsolutePath());
+        $docId = $this->crocodocService->uploadDocument($document->getAbsolutePath());
+        $document->setCrocodocId($docId);
+        $this->entityManager->persist($document);
+        $this->entityManager->flush($document);
     }
 
     /**
@@ -39,8 +50,21 @@ class ProvipCrocodocService
      */
     public function createSession(User $user, Document $document)
     {
-        // TODO: determine how internship is related to document to authorize
-        if (false){
+        $authorized = false;
+
+        if($user){
+            if($document->getOwner() == $user){
+                $authorized = true;
+            }
+            if($document->getInternship()->getHeiCoach() == $user){
+                $authorized = true;
+            }
+            if($document->getInternship()->getCompany()->isStaffMember($user)){
+                $authorized = true;
+            }
+        }
+
+        if (! $authorized){
             throw new \LogicException('Unauthorized user');
         }
 

@@ -33,6 +33,7 @@ class DefaultController extends Controller
             $em->flush();
 
             // TODO: upload to Crocodoc
+            $this->get('provip_crocodoc_service')->uploadDocument($document);
 
             return new Response('', 201);
         }
@@ -41,10 +42,18 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=200)
-     * @QueryParam(name="id", default="")
+     * @Route("/document/{id}/crocodoc_session", options={"expose"=true})
+     * TODO: restrict access to ROLE_USER
      */
-    public function crocodocSessionAction(ParamFetcher $paramFetcher) {
+    public function getCrocodocSessionAction($id, Request $request)
+    {
+        $document = $this->getDoctrine()->getRepository('ProvipProvipBundle:Document')->findOneById($id);
+
+        if(! $document){
+            return new Response('Document not found', 404);
+        }
+
+        return $this->get('provip_crocodoc_service')->createSession($this->getUser(), $document);
     }
 
 }

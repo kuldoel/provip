@@ -3,6 +3,7 @@
 namespace Provip\ProvipBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -131,6 +132,11 @@ class Company extends Organization
     public function getStaff()
     {
         return $this->staff;
+    }
+
+    public function isStaffMember(User $user)
+    {
+        return $this->staff->contains($user);
     }
 
 

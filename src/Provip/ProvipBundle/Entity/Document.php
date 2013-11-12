@@ -32,6 +32,8 @@ class Document
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     *
+     * @var string
      */
     protected $crocodocId;
 
@@ -55,28 +57,47 @@ class Document
     private $tempPath;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User")
      *
      * @var User
      */
     protected $owner;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Internship")
+     *
+     * @var Internship
+     **/
+    protected $internship;
+
+    /**
+     * @return null|string
+     */
     public function getAbsolutePath()
     {
         return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
     }
 
+    /**
+     * @return null|string
+     */
     public function getWebPath()
     {
         return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded documents should be saved
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up when displaying uploaded doc/image in the view.
@@ -84,8 +105,6 @@ class Document
     }
 
     /**
-     * Sets file.
-     *
      * @param UploadedFile $file
      */
     public function setFile(UploadedFile $file = null)
@@ -102,25 +121,15 @@ class Document
     }
 
     /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload()
     {
-        if (null !== $this->getFile()) {
+        if (null !== $this->file) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+            $this->path = $filename.'.'.$this->file->guessExtension();
         }
     }
 
@@ -130,20 +139,20 @@ class Document
      */
     public function upload()
     {
-        if (null === $this->getFile()) {
+        if (null === $this->file) {
             return;
         }
 
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+        $this->file->move($this->getUploadRootDir(), $this->path);
 
-        // check if we have an old image
+        // check if we have an old file
         if (isset($this->tempPath)) {
-            // delete the old image
+            // delete the old file
             unlink($this->getUploadRootDir().'/'.$this->tempPath);
-            // clear the temp image path
+            // clear the temp file path
             $this->tempPath = null;
         }
         $this->file = null;
@@ -159,11 +168,17 @@ class Document
         }
     }
 
+    /**
+     * @param $crocodocId string
+     */
     public function setCrocodocId($crocodocId)
     {
         $this->crocodocId = $crocodocId;
     }
 
+    /**
+     * @return string
+     */
     public function getCrocodocId()
     {
         return $this->crocodocId;
@@ -183,5 +198,21 @@ class Document
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * @param \Provip\ProvipBundle\Entity\Internship $internship
+     */
+    public function setInternship($internship)
+    {
+        $this->internship = $internship;
+    }
+
+    /**
+     * @return \Provip\ProvipBundle\Entity\Internship
+     */
+    public function getInternship()
+    {
+        return $this->internship;
     }
 }
