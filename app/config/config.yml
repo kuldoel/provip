@@ -106,3 +106,9 @@ stof_doctrine_extensions:
             timestampable: true
             sortable: true
             sluggable: true
+
+# Services
+services:
+    crocodoc:
+        class:      Provip\ApplicationBundle\Service\Crocodoc
+        arguments:  [ "%crocodoc_api_key%" ]

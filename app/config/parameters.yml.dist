@@ -13,3 +13,9 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # # #
+    # Crocodoc parameters
+    # # #
+    # The API key
+    crocodoc_api_key:  myCrocodocApiKey

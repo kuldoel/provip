@@ -23,7 +23,8 @@
         "liip/imagine-bundle":"dev-master",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "friendsofsymfony/jsrouting-bundle": "~1.1",
-        "jms/serializer-bundle": "dev-master"
+        "jms/serializer-bundle": "dev-master",
+        "crocodoc/crocodoc-php": "v1.0.1"
     },
     "scripts": {
         "post-install-cmd": [
