@@ -53,7 +53,13 @@ class DefaultController extends Controller
             return new Response('Document not found', 404);
         }
 
-        return $this->get('provip_crocodoc_service')->createSession($this->getUser(), $document);
+        try{
+            return new Response($this->get('provip_crocodoc_service')->createSession($this->getUser(), $document), 200);
+        }
+        catch(\LogicException $e){
+            return new Response('Unauthorized access', 401);
+        }
+
     }
 
 }

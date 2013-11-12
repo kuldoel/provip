@@ -110,8 +110,8 @@ stof_doctrine_extensions:
 # Services
 services:
     crocodoc:
-        class:      Provip\ApplicationBundle\Service\Crocodoc
+        class:      Provip\ApplicationBundle\Service\CrocodocService
         arguments:  [ "%crocodoc_api_key%" ]
     provip_crocodoc_service:
-        class:      Provip\ApplicationBundle\Service\Crocodoc
+        class:      Provip\ApplicationBundle\Service\ProvipCrocodocService
         arguments:  [ "@crocodoc", "@doctrine.orm.entity_manager" ]
