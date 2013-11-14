@@ -19,8 +19,11 @@ class StudyProgramType extends AbstractType
             ->add('name')
             ->add(
                 'higherEducationalInstitution',
-                new HigherEducationalInstitutionType(),
+                'entity',
                 array(
+                    'class' => 'ProvipProvipBundle:HigherEducationalInstitution',
+                    'property' => 'name',
+                    'multiple' => false,
                     'label' => 'HEI'
                 )
             )

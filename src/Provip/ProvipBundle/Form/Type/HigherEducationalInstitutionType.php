@@ -26,7 +26,8 @@ class HigherEducationalInstitutionType extends AbstractType
                 'url',
                 'text',
                 array(
-                    'label' => 'Homepage'
+                    'label' => 'Homepage',
+                    'data' => 'http://'
                 )
             )
             ->add(
@@ -43,7 +44,7 @@ class HigherEducationalInstitutionType extends AbstractType
                     'class' => 'ProvipProvipBundle:Language',
                     'property' => 'valueAttr',
                     'multiple' => false,
-                    'label' => 'Company Language',
+                    'label' => 'Hei Language',
                     'required' => false,
                 ))
         ;
