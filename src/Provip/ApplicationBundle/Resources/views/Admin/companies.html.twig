@@ -1,0 +1,65 @@
+{% extends "ProvipApplicationBundle::base_admin.html.twig" %}
+
+
+{% block main %}
+
+    <section class="main padder">
+    <div class="clearfix">
+      <h4></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    Companies
+                </header>
+                <div>
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Company Staff</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                                {% for c in companies %}
+                                    <tr>
+                                        <td>{{ c.name }}</td>
+                                        <td>
+                                            <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>Last Login</th>
+                                                            <th>Roles</th>
+                                                        </tr>
+                                                    </thead>
+                                                {% for staff in c.staff %}
+                                                    <tr>
+                                                        <td>{{ staff.fullName }}</td>
+                                                        <td>{{ staff.email }}</td>
+                                                        <td>{{ staff.lastLogin | date ('d-m-Y H:i:s')}}</td>
+                                                        <td>{%  for role in staff.roles %} {{ role }} {% endfor %}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+
+
+
+    </section>
+
+{% endblock %}

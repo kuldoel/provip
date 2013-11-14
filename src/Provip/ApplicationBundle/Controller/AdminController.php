@@ -143,4 +143,44 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @Route("/admin/list_of_students", options={"expose"=true})
+     */
+    public function listOfStudentsAction(Request $request)
+    {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
+
+        $studyProgrammes = $repo->findAll();
+
+        return $this->render(
+            'ProvipApplicationBundle:Admin:students.html.twig' ,
+            array(
+                'studyProgrammes' => $studyProgrammes
+            )
+        );
+    }
+
+    /**
+     * @Route("/admin/list_of_companies", options={"expose"=true})
+     */
+    public function listOfCompaniesAction(Request $request)
+    {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:Company');
+
+
+        $companies = $repo->findAll();
+
+        return $this->render(
+            'ProvipApplicationBundle:Admin:companies.html.twig' ,
+            array(
+                'companies' => $companies
+            )
+        );
+    }
+
+
 }
