@@ -408,4 +408,25 @@ class HeiController extends Controller
         return $this->render('ProvipApplicationBundle:Hei:profile.html.twig', array(
             'user' => $user));
     }
+
+
+    /**
+     * @Route("/hei/opportunities", options={"expose"=true})
+     */
+    public function heiOpportunitiesAction()
+    {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:Opportunity');
+
+
+        $opportunities = $repo->findAll();
+
+        return $this->render(
+            'ProvipApplicationBundle:Hei:opportunities.html.twig' ,
+            array(
+                'opportunities' => $opportunities
+            )
+        );
+    }
 }

@@ -182,5 +182,25 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * @Route("/admin/list_of_opportunities", options={"expose"=true})
+     */
+    public function listOfOpportunitiesAction(Request $request)
+    {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:Opportunity');
+
+
+        $opportunities = $repo->findAll();
+
+        return $this->render(
+            'ProvipApplicationBundle:Admin:opportunities.html.twig' ,
+            array(
+                'opportunities' => $opportunities
+            )
+        );
+    }
+
 
 }
