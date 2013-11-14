@@ -42,7 +42,7 @@ class Notification
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="notifications", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;

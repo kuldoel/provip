@@ -100,7 +100,7 @@ class Application
     protected $opportunity;
 
     /**
-     * @ORM\OneToMany(targetEntity="Activity", mappedBy="application")
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="application", cascade={"remove"})
      * @Assert\Valid
      */
     protected $charter;
@@ -115,14 +115,14 @@ class Application
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ApplicationEvent", mappedBy="application")
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ApplicationEvent", mappedBy="application", cascade={"remove"})
      * @Assert\Valid
      */
     protected $applicationEvents;
 
     /**
      *
-     * @ORM\OneToOne(targetEntity="Internship", inversedBy="application")
+     * @ORM\OneToOne(targetEntity="Internship", inversedBy="application", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="internship_id", referencedColumnName="id")
      * @Assert\Valid
      */

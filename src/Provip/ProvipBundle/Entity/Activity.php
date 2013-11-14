@@ -95,7 +95,7 @@ class Activity
     protected $student;
 
     /**
-     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ActivityUpdateEvent", mappedBy="activity")
+     * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ActivityUpdateEvent", mappedBy="activity", cascade={"remove"})
      * @Assert\Valid
      */
     protected $activityUpdateEvents;
