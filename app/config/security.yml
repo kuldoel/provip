@@ -35,4 +35,7 @@ security:
         - { path: ^/student, role: ROLE_STUDENT }
         - { path: ^/company, role: ROLE_COMPANY_STAFF }
         - { path: ^/hei, role: ROLE_HEI_STAFF }
+        - { path: ^/hei, role: ROLE_HEI_STAFF }
+        - { path: ^/document, role: ROLE_USER }
+
  

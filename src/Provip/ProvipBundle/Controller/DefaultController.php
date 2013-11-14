@@ -12,8 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/upload", options={"expose"=true})
-     * @Template()
+     * @Route("/document/upload", options={"expose"=true})
+     *
+     * TODO: test
      */
     public function uploadAction(Request $request)
     {
@@ -32,7 +33,6 @@ class DefaultController extends Controller
             $em->persist($document);
             $em->flush();
 
-            // TODO: upload to Crocodoc
             $this->get('provip_crocodoc_service')->uploadDocument($document);
 
             return new Response('', 201);
@@ -43,7 +43,6 @@ class DefaultController extends Controller
 
     /**
      * @Route("/document/{id}/crocodoc_session", options={"expose"=true})
-     * TODO: restrict access to ROLE_USER
      */
     public function getCrocodocSessionAction($id, Request $request)
     {

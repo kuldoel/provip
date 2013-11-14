@@ -9,9 +9,6 @@ use Provip\UserBundle\Entity\User;
 
 class ProvipCrocodocService
 {
-    /**
-     * @var CrocodocService
-     */
     private $crocodocService;
 
     /**
@@ -23,7 +20,7 @@ class ProvipCrocodocService
      * @param CrocodocService $crocodocService
      * @param EntityManager $entityManager
      */
-    public function __construct(CrocodocService $crocodocService, EntityManager $entityManager)
+    public function __construct($crocodocService, EntityManager $entityManager)
     {
         $this->crocodocService = $crocodocService;
         $this->entityManager = $entityManager;
