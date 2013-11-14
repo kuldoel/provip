@@ -14,6 +14,7 @@
     {% stylesheets
     'bundles/provipapplication/css/bootstrap.css' filter='cssrewrite'
     'bundles/provipapplication/css/style.css' filter='cssrewrite'
+    'bundles/provipapplication/css/register.css' filter='cssrewrite'
     'bundles/provipapplication/css/*' filter='cssrewrite'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -68,13 +69,20 @@
 '@ProvipApplicationBundle/Resources/public/js/bootstrap.js'
 '@ProvipApplicationBundle/Resources/public/js/app.js'
 '@ProvipApplicationBundle/Resources/public/js/app.data.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap.file-input.js'
+'@ProvipApplicationBundle/Resources/public/js/respond.min.js'
+'@ProvipApplicationBundle/Resources/public/js/moment.min.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap-select.min.js'
+'@ProvipApplicationBundle/Resources/public/js/bootstrap-datepicker.js'
+'@ProvipApplicationBundle/Resources/public/js/combodate.js'
 '@ProvipApplicationBundle/Resources/public/js/pageguide.min.js'
 %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 <!-- / footer -->
 <script type="text/javascript">
-  $(document).ready(function() { tl.pg.init({}); });
+  $(document).ready(function() { tl.pg.init({}); $('select').selectpicker(); });
+
 </script>
 </body>
 </html>

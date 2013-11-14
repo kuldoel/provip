@@ -44,9 +44,14 @@
                         {{ form_errors(form.plainPassword.second) }}
                     </div>
 
-                    {{ form_row(form.hei) }}
+                    <div class="block {% if form.plainPassword.second.vars.errors|length %} has-error {% endif %}">
+                        {{ form_label(form.studyProgram) }}
+                        {{ form_widget(form.studyProgram) }}
+                    </div>
 
-                    {{ form_row(form.studyProgram) }}
+                    <p style="min-height: 15px; margin: 30px 0px;"></p>
+
+
 
                     {{ form_rest(form) }}
 
