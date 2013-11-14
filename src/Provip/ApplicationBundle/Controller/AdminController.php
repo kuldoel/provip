@@ -144,7 +144,7 @@ class AdminController extends Controller
 
 
     /**
-     * @Route("/admin/list_of_students", options={"expose"=true})
+     * @Route("/admin/listofstudents", options={"expose"=true})
      */
     public function listOfStudentsAction(Request $request)
     {
@@ -163,7 +163,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/list_of_companies", options={"expose"=true})
+     * @Route("/admin/listofcompanies", options={"expose"=true})
      */
     public function listOfCompaniesAction(Request $request)
     {
@@ -183,7 +183,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/list_of_opportunities", options={"expose"=true})
+     * @Route("/admin/listofopportunities", options={"expose"=true})
      */
     public function listOfOpportunitiesAction(Request $request)
     {
