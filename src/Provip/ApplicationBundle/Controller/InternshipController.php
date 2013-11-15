@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Provip\ProvipBundle\Entity\Document;
 
 class InternshipController extends Controller
 {
@@ -114,7 +115,7 @@ class InternshipController extends Controller
     /**
      * @Route("/student/internships/{publicId}", options={"expose"=true})
      */
-    public function detailStudentAction(Internship $internship)
+    public function detailStudentAction(Internship $internship, Request $request)
     {
         if($this->getUser()->getEnrollment()->getApproved() == false)
         {
@@ -139,7 +140,47 @@ class InternshipController extends Controller
             $this->get('session')->getFlashBag()->add('warning', 'This internship has been marked as completed');
         }
 
-        return $this->render('ProvipApplicationBundle:Internships:charter_student.html.twig', array('opportunity' => $opportunity, 'application' => $application, 'activityUpdateEvents' => $activityUpdateEvents, 'activities' => $activities));
+        $document = new Document();
+
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm();
+
+
+        if ($this->getRequest()->isMethod('POST')) {
+
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $document->setInternship($internship);
+                $em->persist($document);
+
+                $this->get('provip_crocodoc_service')->uploadDocument($document);
+
+                $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
+                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublidId())));
+
+            } else {
+
+                $this->get('session')->getFlashBag()->add('success', 'There were some errors with your file');
+                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublidId())));
+            }
+
+        }
+
+        return $this->render(
+            'ProvipApplicationBundle:Internships:charter_student.html.twig',
+            array(
+                'opportunity' => $opportunity,
+                'application' => $application,
+                'activityUpdateEvents' => $activityUpdateEvents,
+                'activities' => $activities,
+                'form' => $form->createView()
+            )
+        );
 
     }
 

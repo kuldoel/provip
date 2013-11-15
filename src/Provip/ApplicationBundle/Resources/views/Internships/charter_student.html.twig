@@ -131,6 +131,29 @@
                 </div>
             </div>
 
+            <div class="panel">
+                <header class="panel-heading">
+                   Upload new document
+                </header>
+
+                <div class="panel-content">
+
+                    <form action="{{ path('provip_application_internship_detailstudent', {'publicId': application.internship.publicId}) }}" method="POST" enctype="multipart/form-data">
+
+                        <label>Name for this file:</label>
+                        {{ form_widget(form.name) }}
+                        <div class="line pull-in"></div>
+                        {{ form_widget(form.file) }}
+                        <div class="line pull-in"></div>
+                        {{ form_rest(form) }}
+
+                        <button type="submit" class="btn btn-alt btn-block btn-primary">Upload</button>
+
+                    </form>
+
+                </div>
+            </div>
+
             <section class="panel">
                 <header class="panel-heading">
                     <span class="label bg-info pull-right">{{ activities | length }}</span>

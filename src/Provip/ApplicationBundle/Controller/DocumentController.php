@@ -13,42 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DocumentController extends Controller
 {
     /**
-     * @Route("/document/upload", options={"expose"=true})
-     *
-     * TODO: test
-     */
-    public function uploadAction(Request $request)
-    {
-        $document = new Document();
-
-        $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($document);
-                $em->flush();
-
-                $this->get('provip_crocodoc_service')->uploadDocument($document);
-
-                return new Response('', 201);
-            }
-
-            return array('form' => $form->createView());
-        }
-
-        // TODO: return form widget ???
-        return null;
-    }
-
-    /**
      * @Route("/document/{id}/crocodoc_session", options={"expose"=true})
      */
     public function getCrocodocSessionAction($id, Request $request)
