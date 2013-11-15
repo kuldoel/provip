@@ -27,6 +27,7 @@ use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Provip\ProvipBundle\Entity\Document;
+use Provip\EventsBundle\Form\Type\DocumentType;
 
 class InternshipController extends Controller
 {
@@ -142,31 +143,38 @@ class InternshipController extends Controller
 
         $document = new Document();
 
-        $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file')
-            ->getForm();
+        $form = $this->createForm(new DocumentType(), $document);
 
+        if ($request->isMethod('POST')) {
 
-        if ($this->getRequest()->isMethod('POST')) {
-
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
+
                 $em = $this->getDoctrine()->getManager();
 
                 $document->setInternship($internship);
-                $em->persist($document);
+                $document->setOwner($this->getUser());
+
+                try {
+                    $em->persist($document);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
+                    $this->get('provip_crocodoc_service')->uploadDocument($document);
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
+                catch(\PDOException $e) {
+                    $this->get('session')->getFlashBag()->add('success', 'There were some errors with your file');
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
 
                 $this->get('provip_crocodoc_service')->uploadDocument($document);
 
-                $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
-                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublidId())));
 
             } else {
 
-                $this->get('session')->getFlashBag()->add('success', 'There were some errors with your file');
-                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublidId())));
+                $this->get('session')->getFlashBag()->add('warning', 'There were some errors with your file. Only pdf, ppt, pptx, doc, docx, xls and xlsx files are supported.');
+                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
             }
 
         }

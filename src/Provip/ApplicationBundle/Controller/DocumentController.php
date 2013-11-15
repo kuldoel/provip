@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DocumentController extends Controller
 {
+    
     /**
      * @Route("/document/{id}/crocodoc_session", options={"expose"=true})
      */

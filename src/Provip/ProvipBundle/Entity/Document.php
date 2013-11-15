@@ -45,7 +45,8 @@ class Document
     protected $path;
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\NotBlank
+     * @Assert\File(maxSize="5M", mimeTypes={"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/pdf", "application/x-pdf"})
      *
      * @var UploadedFile
      */
