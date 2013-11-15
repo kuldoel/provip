@@ -277,6 +277,9 @@ class StudyProgram
         return $this->internshipMilestones;
     }
 
+    public function getNameForDropdown() {
+        return $this->name . ' ['. $this->higherEducationalInstitution .'] ';
+    }
 
 
 

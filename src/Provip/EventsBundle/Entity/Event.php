@@ -82,6 +82,10 @@ class Event
      */
     protected $updated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="event",cascade={"persist","remove"})
+     */
+    protected $notifications;
 
     public function __construct($author, $message, $actionUrl, $privacy) {
         $this->author = $author;
@@ -263,6 +267,24 @@ class Event
     public function getActivity() {
 
     }
+
+    /**
+     * @param mixed $notifications
+     */
+    public function setNotifications($notifications)
+    {
+        $this->notifications = $notifications;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+
 
 
 }

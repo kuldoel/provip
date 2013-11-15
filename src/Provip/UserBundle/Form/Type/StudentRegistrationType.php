@@ -17,13 +17,14 @@ class StudentRegistrationType extends RegistrationFormType
             ->remove('username')
             ->add('firstName', 'text', array('label' => 'First Name:'))
             ->add('lastName', 'text', array('label' => 'Last Name:'))
-            ->add('hei', 'entity', array(
-                'class' => 'ProvipProvipBundle:HigherEducationalInstitution',
-                'label' => 'Select your institution:'
-            ))
             ->add('studyProgram', 'entity', array(
                 'class' => 'ProvipProvipBundle:StudyProgram',
-                'label' => 'Select your Study Program:'
+                 'property' => 'NameForDropdown',
+                'label' => 'Select your Study Program:',
+                 'attr' => array(
+                     'class' => 'selectpicker special',
+                     'data-live-search' => "true"
+                 )
             ));
 
     }

@@ -140,5 +140,4 @@ class Company extends Organization
     }
 
 
-
 }

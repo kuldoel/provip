@@ -3,7 +3,21 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+    <section id="content">
+        <div class="row">
+            <div class="col col-lg-4 col-offset-4 m-t-large">
+                <section class="panel">
+                    <header class="panel-heading text-center">
+                        Forgot your password?
+                    </header>
+                    <p>
+                        {{ 'resetting.check_email'|trans({'%email%': email}) }}
+                    </p>
+                    <p><a class="btn btn-alt btn-block" href="{{ path('provip_application_default_index') }}">Go to homepage &raquo;</a></p>
+                </section>
+            </div>
+        </div>
+    </section>
+
+
 {% endblock %}

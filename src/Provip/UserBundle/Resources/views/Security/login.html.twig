@@ -18,9 +18,10 @@
                     <input type="text" placeholder="Email or Username" id="username" name="_username" value="{{ last_username }}" required="required" class="span12" />
                     <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
                     <input type="password" placeholder="Password" id="password" name="_password" required="required" class="span12" />
-                    <label class="checkbox">
+                    <label class="checkbox pull-left">
                         <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
                     </label>
+                    <a style="display: block; margin-top: 8px;" class="pull-right" href="{{ path('fos_user_resetting_request') }}">Forgot your password?</a>
                     <input type="submit" id="_submit" class="btn btn-info btn-block" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                     <div class="line line-dashed"></div>

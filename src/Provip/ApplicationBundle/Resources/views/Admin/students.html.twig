@@ -1,0 +1,57 @@
+{% extends "ProvipApplicationBundle::base_admin.html.twig" %}
+
+
+{% block main %}
+
+    <section class="main padder">
+    <div class="clearfix">
+      <h4></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    Students
+                </header>
+                <div>
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Email</th>
+                            <th>Study Program</th>
+                            <th>HEI</th>
+                            <th>Enrollment Status</th>
+                            <th>Last Login</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for sp in studyProgrammes %}
+                                {% for e in sp.enrollments %}
+                                    <tr>
+                                        <td>{{ e.student.lastName}}</td>
+                                        <td>{{ e.student.firstName}}</td>
+                                        <td>{{ e.student.email }}</td>
+                                        <td>{{ sp }}</td>
+                                        <td>{{ sp.higherEducationalInstitution}}</td>
+                                        <td>{% if e.approved %}Approved{% elseif e.denied %}Denied{% else %}Pending{% endif %}</td>
+                                        <td>{{ e.student.lastLogin | date("d-m-Y H:i:s") }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+
+
+
+    </section>
+
+{% endblock %}

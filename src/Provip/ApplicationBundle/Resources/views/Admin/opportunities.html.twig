@@ -1,0 +1,53 @@
+{% extends "ProvipApplicationBundle::base_admin.html.twig" %}
+
+
+{% block main %}
+
+    <section class="main padder">
+    <div class="clearfix">
+      <h4></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    Opportunities
+                </header>
+                <div>
+                    <table class="table table-striped m-b-none text-small">
+                        <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Opportunity</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>Status</th>
+                            <th>Mentor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                                {% for opportunity in opportunities %}
+                                    <tr>
+                                        <td>{{ opportunity.company.name }}</td>
+                                        <td>{{ opportunity.title }}</td>
+                                        <td>{{ opportunity.description }}</td>
+                                        <td>{{ opportunity.startDate | date("d-m-Y") }}</td>
+                                        <td>{% if opportunity.published %}Published{% else %}Hidden{% endif %}</td>
+                                        <td>{{ opportunity.mentor  }} (<a href="mailto:{{ opportunity.mentor.email }}">{{ opportunity.mentor.email }}</a>)</td>
+
+                                    </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+
+
+
+    </section>
+
+{% endblock %}

@@ -16,9 +16,19 @@
                 <div>
                     <form action="{{ path('provip_application_admin_create') }}" method="POST">
 
+                        <div class="panel alert-info">
+                            <p>You can create a new Study Program by filling in this form. </p>
+
+                            <ol>
+                                <li>Choose a name for this study program</li>
+                                <li>Select the HEI from the dropdown or <strong><a href="{{ path('provip_application_admin_createhei') }}">create a new HEI</a></strong></li>
+                                <li>Create an account for the Study Program administrator</li>
+                            </ol>
+
+                        </div>
                         {{ form_widget(form) }}
 
-                        <button type="submit" class="btn btn-primary btn-alt">Save</button>
+                        <button type="submit" class="btn btn-primary btn-alt">Create Study Program</button>
 
                     </form>
                 </div>
