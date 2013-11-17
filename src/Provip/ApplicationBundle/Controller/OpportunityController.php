@@ -224,8 +224,8 @@ class OpportunityController extends Controller
 
                 if($internship instanceof Internship) {
 
-                    $internship->setDocuments(null);
-                    $em->persist($internship);
+                  var_dump($internship->getDocuments());
+                    die();
                 }
 
 
