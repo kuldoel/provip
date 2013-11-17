@@ -66,7 +66,7 @@ class Document
     protected $owner;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Internship")
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Internship", inversedBy="documents")
      *
      * @var Internship
      **/

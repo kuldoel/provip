@@ -76,6 +76,11 @@ class Internship
      */
     protected $commentsByCompany;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Document", mappedBy="internship",cascade={"persist","remove"})
+    */
+    protected $documents;
+
 
 
     public function __construct(User $student, Application $application)
@@ -244,5 +249,24 @@ class Internship
     {
         return ($this->getApplication() && $this->getApplication()->getOpportunity()) ? $this->getApplication()->getOpportunity()->getCompany() : null;
     }
+
+    /**
+     * @param mixed $documents
+     */
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+
+
 
 }
