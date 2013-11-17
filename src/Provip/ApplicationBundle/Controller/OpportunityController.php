@@ -215,7 +215,19 @@ class OpportunityController extends Controller
         }
 
 
+
         $em = $this->getDoctrine()->getManager();
+
+        foreach($opportunity->getApplications() as $app) {
+            foreach($app->getInternship() as $internship) {
+                foreach($internship->getDocuments() as $d) {
+                    $em->remove($d);
+                }
+            }
+        }
+
+        $em->flush();
+
         $em->remove($opportunity);
         $em->flush();
 
