@@ -222,9 +222,11 @@ class OpportunityController extends Controller
         foreach($opportunity->getApplications() as $app) {
             foreach($app->getInternship() as $internship) {
 
-                var_dump($internship->getDocuments());
-                die();
+                if($internship) {
+                    var_dump($internship->getDocuments());
 
+                }
+                
 
             }
         }
