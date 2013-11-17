@@ -223,10 +223,11 @@ class OpportunityController extends Controller
             foreach($app->getInternship() as $internship) {
 
                 if($internship) {
-                    var_dump($internship->getDocuments());
 
+                    $internship->setDocuments(null);
+                    $em->persist($internship);
                 }
-                
+
 
             }
         }
