@@ -224,10 +224,8 @@ class OpportunityController extends Controller
 
                 if($internship instanceof Internship) {
 
-                    foreach($internship->getDocuments() as $d) {
-                        $em->remove($d);
-                    }
-
+                    $internship->setDocuments(null);
+                    $em->persist($internship);
                 }
 
 
