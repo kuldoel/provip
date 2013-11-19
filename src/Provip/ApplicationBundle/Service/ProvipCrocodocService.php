@@ -5,6 +5,7 @@ namespace Provip\ApplicationBundle\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Provip\ProvipBundle\Entity\Document;
+use Provip\ProvipBundle\Entity\DocumentState;
 use Provip\UserBundle\Entity\User;
 
 class ProvipCrocodocService
@@ -33,9 +34,12 @@ class ProvipCrocodocService
     public function uploadDocument(Document $document)
     {
         $docId = $this->crocodocService->uploadDocument($document->getAbsolutePath());
-        $document->setCrocodocId($docId);
-        $this->entityManager->persist($document);
-        $this->entityManager->flush($document);
+        if($docId){
+            $document->setCrocodocId($docId);
+            $document->setState(DocumentState::STATE_UPLOADED_TO_CROCODOC);
+            $this->entityManager->persist($document);
+            $this->entityManager->flush($document);
+        }
     }
 
     /**

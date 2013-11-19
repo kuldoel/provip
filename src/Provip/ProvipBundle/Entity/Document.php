@@ -7,6 +7,16 @@ use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+class DocumentState
+{
+    const STATE_AWAITING_CROCODOC_UPLOAD = 'awaiting_crocodoc_upload';
+    const STATE_UPLOADED_TO_CROCODOC = 'uploaded_to_crocodoc';
+    const STATE_QUEUED = 'queued';
+    const STATE_PROCESSING = 'processing';
+    const STATE_DONE = 'done';
+    const STATE_ERROR = 'error';
+}
+
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -46,6 +56,13 @@ class Document
     protected $path;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    protected $viewable;
+
+    /**
      * @Assert\NotBlank
      * @Assert\File(maxSize="5M", mimeTypes={"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/pdf", "application/x-pdf"})
      *
@@ -66,11 +83,28 @@ class Document
     protected $owner;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Internship", inversedBy="documents")
+     * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Internship")
      *
      * @var Internship
      **/
     protected $internship;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     *
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->state = DocumentState::STATE_AWAITING_CROCODOC_UPLOAD;
+        $this->viewable = false;
+    }
 
     /**
      * @return null|string
@@ -272,5 +306,37 @@ class Document
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param boolean $viewable
+     */
+    public function setViewable($viewable)
+    {
+        $this->viewable = $viewable;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewable()
+    {
+        return $this->state === DocumentState::STATE_DONE;
     }
 }

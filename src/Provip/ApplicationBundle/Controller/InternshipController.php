@@ -168,9 +168,6 @@ class InternshipController extends Controller
                     return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
                 }
 
-                $this->get('provip_crocodoc_service')->uploadDocument($document);
-
-
             } else {
 
                 $this->get('session')->getFlashBag()->add('warning', 'There were some errors with your file. Only pdf, ppt, pptx, doc, docx, xls and xlsx files are supported.');
