@@ -3,7 +3,14 @@
 
 {% block main %}
 
-    <div id="viewer"></div>
+    <div id="viewer">
+        <a class="close-viewer btn btn-alt btn-block">Close Document</a>
+
+        <iframe src="http://www.google.com" frameborder="0" style="width: 500px; height: 100%">
+
+        </iframe>
+
+    </div>
 
     <div class="padder clearfix" style="min-height: 15px">
 
@@ -275,6 +282,12 @@
 
 
     <style type="text/css">
+
+        body {
+            transition: margin-left 1s;
+            -webkit-transition: margin-left 1s; /* Safari */
+        }
+
         #viewer {
             position: fixed;
             right: -500px;
@@ -315,11 +328,22 @@
                        var documentId = $(this).attr('data-id');
                        console.log('viewing ' + documentId);
 
-                       $('body').toggleClass('viewer');
-                       $('#viewer').toggleClass('visible');
+                       $('body').addClass('viewer');
+                       $('#viewer').addClass('visible');
 
                    }
            );
+
+           $('a.close-viewer').click(
+
+                   function(){
+
+                       $('body').removeClass('viewer');
+                       $('#viewer').removeClass('visible');
+
+                   }
+           );
+
        })
     </script>
 {% endblock %}
