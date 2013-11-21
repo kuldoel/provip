@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 class DocumentState
 {
@@ -96,6 +97,14 @@ class Document
      * @var string
      */
     protected $state;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $created;
 
     /**
      * Constructor
@@ -339,4 +348,22 @@ class Document
     {
         return $this->state === DocumentState::STATE_DONE;
     }
+
+    /**
+     * @param \Provip\ProvipBundle\Entity\datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return \Provip\ProvipBundle\Entity\datetime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+
 }
