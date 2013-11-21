@@ -28,6 +28,7 @@ use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Provip\ProvipBundle\Entity\Document;
 use Provip\EventsBundle\Form\Type\DocumentType;
+use Symfony\Component\HttpFoundation\File\File;
 
 class InternshipController extends Controller
 {
@@ -149,7 +150,9 @@ class InternshipController extends Controller
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            $document->g
+
+            if (1) {
 
                 $em = $this->getDoctrine()->getManager();
 
@@ -159,7 +162,10 @@ class InternshipController extends Controller
                 try {
                     $em->persist($document);
                     $em->flush();
-                    $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
+
+                    $file = new File($document->getFile()->getAbsolutePath());
+
+                    $this->get('session')->getFlashBag()->add('success', 'Your file with mimetype '. $file->getMimeType() . ' has been uploaded');
                     $this->get('provip_crocodoc_service')->uploadDocument($document);
                     return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
                 }
