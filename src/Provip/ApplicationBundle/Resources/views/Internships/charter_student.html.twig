@@ -298,28 +298,25 @@
         }
     </style>
 
-
-
-
-
-{% endblock %}
-
-{% block customjs %}
-
     <script type="text/javascript">
-       $(document).ready(function(){
-           $('a.view-document').click(
+        $(document).ready(function(){
+            $('a.view-document').click(
 
-                   function(){
+                    function(){
 
-                       var documentId = $(this).attr('data-id');
-                       console.log('viewing ' + documentId);
+                        var documentId = $(this).attr('data-id');
+                        console.log('viewing ' + documentId);
 
-                       $('body').toggleClass('viewer');
-                       $('#viewer').toggleClass('visible');
+                        $('body').toggleClass('viewer');
+                        $('#viewer').toggleClass('visible');
 
-                   }
-           );
-       })
+                    }
+            );
+        })
     </script>
+
+
+
+
+
 {% endblock %}
