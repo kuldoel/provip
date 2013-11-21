@@ -162,7 +162,7 @@ class InternshipController extends Controller
                     $em->persist($document);
                     $em->flush();
 
-                    $file = new File($document->getFile()->getAbsolutePath());
+                    $file = new File($document->getAbsolutePath());
 
                     $this->get('session')->getFlashBag()->add('success', 'Your file with mimetype '. $file->getMimeType() . ' has been uploaded');
                     $this->get('provip_crocodoc_service')->uploadDocument($document);
