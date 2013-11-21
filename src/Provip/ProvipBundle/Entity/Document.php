@@ -174,7 +174,7 @@ class Document
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->file->getExtension();
+            $this->path = $filename . $this->file->getClientOriginalName();
         }
     }
 
