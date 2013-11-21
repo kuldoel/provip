@@ -164,7 +164,7 @@ class InternshipController extends Controller
 
                     $file = new File($document->getAbsolutePath());
 
-                    $this->get('session')->getFlashBag()->add('success', 'Your file with mimetype '. $file->getMimeType() . ' has been uploaded');
+                    $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
                     $this->get('provip_crocodoc_service')->uploadDocument($document);
                     return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
                 }
