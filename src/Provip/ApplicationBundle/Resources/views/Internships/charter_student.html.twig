@@ -3,6 +3,8 @@
 
 {% block main %}
 
+    <div id="viewer"></div>
+
     <div class="padder clearfix" style="min-height: 15px">
 
     </div>
@@ -151,6 +153,14 @@
 
                     </form>
 
+                    <h4>List of documents</h4>
+
+                    <ul>
+                        {% for document in application.internship.documents %}
+                            <li>{{ document.created |date("d-m-Y") }} <a href="#" class="view-document" data-id="{{ document.id }}">{{ document.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+
                 </div>
             </div>
 
@@ -264,8 +274,42 @@
   </div>
 
 
+    <style type="text/css">
+        #viewer {
+            position: fixed;
+            right: -500px;
+            height: 100%;
+            background-color: #fff;
+            width: 500px;
+            transition: all 1s;
+            -webkit-transition: all 1s; /* Safari */
+        }
+
+        #viewer.visible {
+            right: 0px;
+        }
+    </style>
 
 
 
 
+
+{% endblock %}
+
+{% block customjs %}
+
+    <script type="text/javascript">
+        $('a.view-document').click(
+
+            function(){
+
+                var documentId = $(this).attr('data-id');
+                console.log('viewing ' + documentId);
+
+                $('body').toggleClass('viewer');
+                $('#viewer').toggleClass('visible');
+
+            }
+        );
+    </script>
 {% endblock %}
