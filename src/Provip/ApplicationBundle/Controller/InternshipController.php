@@ -151,7 +151,7 @@ class InternshipController extends Controller
             $form->handleRequest($request);
 
 
-            if (1) {
+            if ($form->isValid()) {
 
                 $em = $this->getDoctrine()->getManager();
 
