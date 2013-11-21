@@ -41,6 +41,26 @@ class DocumentController extends Controller
     {
         $document = $this->getDoctrine()->getRepository('ProvipProvipBundle:Document')->findOneById($id);
 
+        $internship = $document->getInternship();
+
+        if(!$this->getUser() == $internship->getStudent) {
+
+            if(!$this->getUser() == $internship->getApplication()->getCoach()) {
+
+                if(!$this->getUser() == $internship->getApplication()->getOpportunity()->getMentor()) {
+
+                    if(!$this->getUser() == $internship->getStudent()->getEnrollment()->getStudyProgram()->getAdmin()) {
+
+                        return new Response('You cannot access this document', 401);
+
+                    }
+
+                }
+
+            }
+
+        }
+
         if(! $document){
             return new Response('Document not found', 404);
         }
