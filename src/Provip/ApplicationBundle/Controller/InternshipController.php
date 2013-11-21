@@ -150,7 +150,6 @@ class InternshipController extends Controller
 
             $form->handleRequest($request);
 
-            $document->g
 
             if (1) {
 
