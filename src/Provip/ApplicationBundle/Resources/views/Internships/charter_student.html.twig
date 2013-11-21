@@ -328,6 +328,8 @@
                        var documentId = $(this).attr('data-id');
                        console.log('viewing ' + documentId);
 
+                       $('iframe').attr('src', Routing.generate('provip_application_document_getdocumentview', { id : documentId}));
+
                        $('body').addClass('viewer');
                        $('#viewer').addClass('visible');
 
