@@ -280,13 +280,21 @@
             right: -500px;
             height: 100%;
             background-color: #fff;
+            border-left: solid 2px #eee;
             width: 500px;
             transition: all 1s;
             -webkit-transition: all 1s; /* Safari */
+            top: 0px;
+            bottom: 0px;
+            z-index: 10001;
         }
 
         #viewer.visible {
             right: 0px;
+        }
+
+        body.viewer {
+            margin-left: -500px;
         }
     </style>
 
@@ -299,17 +307,19 @@
 {% block customjs %}
 
     <script type="text/javascript">
-        $('a.view-document').click(
+       $(document).ready(function(){
+           $('a.view-document').click(
 
-            function(){
+                   function(){
 
-                var documentId = $(this).attr('data-id');
-                console.log('viewing ' + documentId);
+                       var documentId = $(this).attr('data-id');
+                       console.log('viewing ' + documentId);
 
-                $('body').toggleClass('viewer');
-                $('#viewer').toggleClass('visible');
+                       $('body').toggleClass('viewer');
+                       $('#viewer').toggleClass('visible');
 
-            }
-        );
+                   }
+           );
+       })
     </script>
 {% endblock %}
