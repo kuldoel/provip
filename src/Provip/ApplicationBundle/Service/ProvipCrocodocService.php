@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Provip\ProvipBundle\Entity\Document;
 use Provip\ProvipBundle\Entity\DocumentState;
 use Provip\UserBundle\Entity\User;
+use SekoiaLearn\CrocodocBundle\Service\CrocodocService;
 
 class ProvipCrocodocService
 {
@@ -21,7 +22,7 @@ class ProvipCrocodocService
      * @param CrocodocService $crocodocService
      * @param EntityManager $entityManager
      */
-    public function __construct($crocodocService, EntityManager $entityManager)
+    public function __construct(CrocodocService $crocodocService, EntityManager $entityManager)
     {
         $this->crocodocService = $crocodocService;
         $this->entityManager = $entityManager;
@@ -51,22 +52,17 @@ class ProvipCrocodocService
      */
     public function createSession(User $user, Document $document)
     {
-        $authorized = false;
+        $internship = $document->getInternship();
 
-        if($user){
-            if($document->getOwner() == $user){
-                $authorized = true;
-            }
-            if($document->getInternship()->getHeiCoach() == $user){
-                $authorized = true;
-            }
-            if($document->getInternship()->getCompany()->isStaffMember($user)){
-                $authorized = true;
-            }
-        }
+        $allowedViewers = array(
+            ($internship->getStudent()),
+            ($internship->getApplication()->getCoach()),
+            ($internship->getApplication()->getOpportunity()->getMentor()),
+            ($internship->getStudent()->getEnrollment()->getStudyProgram()->getAdmin())
+        );
 
-        if (! $authorized){
-            throw new \LogicException('Unauthorized user');
+        if( ! in_array($user, $allowedViewers, true) ){
+            throw new \LogicException('Unauthorized access');
         }
 
         return $this->crocodocService->createSession($document->getCrocodocId(), array(

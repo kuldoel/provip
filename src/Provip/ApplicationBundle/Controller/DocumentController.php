@@ -14,52 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DocumentController extends Controller
 {
-    
-    /**
-     * @Route("/document/{id}/crocodoc_session", options={"expose"=true})
-     */
-    public function getCrocodocSessionAction($id, Request $request)
-    {
-        $document = $this->getDoctrine()->getRepository('ProvipProvipBundle:Document')->findOneById($id);
-
-        if(! $document){
-            return new Response('Document not found', 404);
-        }
-
-        try{
-            return new Response($this->get('provip_crocodoc_service')->createSession($this->getUser(), $document), 200);
-        }
-        catch(\LogicException $e){
-            return new Response('Unauthorized access', 401);
-        }
-    }
-
     /**
      * @Route("/document/{id}/view", options={"expose"=true})
      */
     public function getDocumentViewAction($id, Request $request)
     {
         $document = $this->getDoctrine()->getRepository('ProvipProvipBundle:Document')->findOneById($id);
-
-        $internship = $document->getInternship();
-
-        if(!$this->getUser() == $internship->getStudent) {
-
-            if(!$this->getUser() == $internship->getApplication()->getCoach()) {
-
-                if(!$this->getUser() == $internship->getApplication()->getOpportunity()->getMentor()) {
-
-                    if(!$this->getUser() == $internship->getStudent()->getEnrollment()->getStudyProgram()->getAdmin()) {
-
-                        return new Response('You cannot access this document', 401);
-
-                    }
-
-                }
-
-            }
-
-        }
 
         if(! $document){
             return new Response('Document not found', 404);
@@ -69,7 +29,10 @@ class DocumentController extends Controller
             return new RedirectResponse('https://crocodoc.com/view/' . $this->get('provip_crocodoc_service')->createSession($this->getUser(), $document));
         }
         catch(\LogicException $e){
-            return new Response('Unauthorized access', 401);
+            return new Response($e->getMessage(), 401);
+        }
+        catch(\CrocodocException $e){
+            return new Response('Something went wrong', 500);
         }
     }
 
@@ -79,7 +42,8 @@ class DocumentController extends Controller
      */
     public function crocodocNotificationAction(Request $request)
     {
-        $events = json_decode($request->getContent(), true);
+        $requestData = $request->request->all();
+        $events = json_decode($requestData['payload'], true);
 
         if(! $events){
             // wrong API format
