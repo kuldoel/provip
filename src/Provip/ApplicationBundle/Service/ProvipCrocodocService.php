@@ -2,7 +2,6 @@
 
 namespace Provip\ApplicationBundle\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Provip\ProvipBundle\Entity\Document;
 use Provip\ProvipBundle\Entity\DocumentState;
