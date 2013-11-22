@@ -169,7 +169,11 @@ class InternshipController extends Controller
                     return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
                 }
                 catch(\PDOException $e) {
-                    $this->get('session')->getFlashBag()->add('success', 'There were some errors with your file');
+                    $this->get('session')->getFlashBag()->add('warning', 'There were some errors with your file');
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
+                catch(\CrocodocException $e) {
+                    $this->get('session')->getFlashBag()->add('warning', 'An error occurred while processing your file');
                     return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
                 }
 

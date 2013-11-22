@@ -38,12 +38,10 @@ class ProvipCrocodocService
     public function uploadDocument(Document $document)
     {
         $docId = $this->crocodocService->uploadDocument($document->getAbsolutePath());
-        if($docId){
-            $document->setCrocodocId($docId);
-            $document->setState(DocumentState::STATE_UPLOADED_TO_CROCODOC);
-            $this->entityManager->persist($document);
-            $this->entityManager->flush($document);
-        }
+        $document->setCrocodocId($docId);
+        $document->setState(DocumentState::STATE_UPLOADED_TO_CROCODOC);
+        $this->entityManager->persist($document);
+        $this->entityManager->flush($document);
     }
 
     /**
