@@ -11,6 +11,9 @@ use SekoiaLearn\CrocodocBundle\Service\CrocodocService;
 
 class ProvipCrocodocService
 {
+    /**
+     * @var CrocodocService
+     */
     private $crocodocService;
 
     /**
@@ -78,36 +81,5 @@ class ProvipCrocodocService
             'isDemo' => false,
             'sidebar' => 'auto'
         ));
-    }
-
-    /**
-     * @param ArrayCollection|Document[] $documents
-     * @return array
-     */
-    public function getStatusForDocuments(ArrayCollection $documents)
-    {
-        $docIds = array();
-
-        foreach ($documents as $document){
-            if ($document->getCrocodocId()){
-                array_push($docIds, $document->getCrocodocId());
-            }
-        }
-
-        return $this->crocodocService->getStatus($docIds);
-    }
-
-    /**
-     * @param Document $document
-     * @return array|null
-     */
-    public function getStatusForSingleDocument(Document $document)
-    {
-        if(! $document->getCrocodocId())
-        {
-            return null;
-        }
-
-        return $this->crocodocService->getStatus($document->getCrocodocId());
     }
 }
