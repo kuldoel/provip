@@ -99,7 +99,7 @@ class Document
     protected $state;
 
     /**
-     * @var datetime $created
+     * @var \DateTime $created
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -350,7 +350,7 @@ class Document
     }
 
     /**
-     * @param \Provip\ProvipBundle\Entity\datetime $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -358,7 +358,7 @@ class Document
     }
 
     /**
-     * @return \Provip\ProvipBundle\Entity\datetime
+     * @return \DateTime
      */
     public function getCreated()
     {
