@@ -53,7 +53,6 @@ class OpportunityNewType extends AbstractType
                         ->setParameter('company', $company);
                 },
                 'label' => 'Mentor for this internship',
-                'attr' => array('class' => 'selectpicker'),
                 'error_bubbling' => true,
             ))
         ;
