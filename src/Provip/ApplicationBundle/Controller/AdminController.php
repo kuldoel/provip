@@ -2,6 +2,7 @@
 
 namespace Provip\ApplicationBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Activity;
 use Provip\ProvipBundle\Entity\Application;

@@ -24,6 +24,10 @@
                             <th>HEI</th>
                             <th>Enrollment Status</th>
                             <th>Last Login</th>
+                            <th>Nationality</th>
+                            <th>Primary Language</th>
+                            <th>Other Languages</th>
+                            <th>Applications</th>
 
                         </tr>
                         </thead>
@@ -37,7 +41,28 @@
                                         <td>{{ sp }}</td>
                                         <td>{{ sp.higherEducationalInstitution}}</td>
                                         <td>{% if e.approved %}Approved{% elseif e.denied %}Denied{% else %}Pending{% endif %}</td>
+                                        <td>{{ e.student.nationality }}</td>
                                         <td>{{ e.student.lastLogin | date("d-m-Y H:i:s") }}</td>
+                                        <td>{{ e.student.primaryLanguage.valueAttr }}</td>
+                                        <td>
+                                            {% if e.student.otherLanguages %}
+                                                {% for lang in e.student.otherLanguages %}
+                                                    {{ lang.valueAttr }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if e.student.applications %}
+                                                <table>
+                                                    {% for app in e.student.applications  %}
+                                                        <tr>
+                                                            <td>{{ app.opportunity.title }}</td>
+                                                            <td>{{ app.opportunity.company.name }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             {% endfor %}
