@@ -3,6 +3,8 @@
 namespace Provip\ProvipBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Provip\EventsBundle\Entity\ApplicationEvent;
+use Provip\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -16,6 +18,8 @@ class Application
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     protected $id;
 
@@ -48,6 +52,8 @@ class Application
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
+     *
+     * @var bool
      */
     protected $approvedByCompany = false;
 
@@ -56,6 +62,8 @@ class Application
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
+     *
+     * @var bool
      */
     protected $approvedByHei = false;
 
@@ -64,6 +72,8 @@ class Application
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
+     *
+     * @var bool
      */
     protected $rejected = false;
 
@@ -71,6 +81,8 @@ class Application
      *
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Type(type="string")
+     *
+     * @var string
      */
     protected $rejectionReason;
 
@@ -79,6 +91,8 @@ class Application
      * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="applications")
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      * @Assert\Valid
+     *
+     * @var User
      **/
     protected $student;
 
@@ -89,6 +103,8 @@ class Application
      *
      * @ORM\ManyToOne(targetEntity="Provip\UserBundle\Entity\User", inversedBy="coaching")
      * @ORM\JoinColumn(name="coach_id", referencedColumnName="id")
+     *
+     * @var User
      **/
     protected $coach;
 
@@ -96,12 +112,16 @@ class Application
      * @ORM\ManyToOne(targetEntity="Opportunity", inversedBy="applications")
      * @ORM\JoinColumn(name="opportunity_id", referencedColumnName="id")
      * @Assert\Valid
+     *
+     * @var Opportunity
      **/
     protected $opportunity;
 
     /**
      * @ORM\OneToMany(targetEntity="Activity", mappedBy="application", cascade={"remove"})
      * @Assert\Valid
+     *
+     * @var Activity
      */
     protected $charter;
 
@@ -110,6 +130,8 @@ class Application
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumn(name="rejectedby_id", referencedColumnName="id")
      * @Assert\Valid
+     *
+     * @var Organization
      */
     protected $rejectedBy;
 
@@ -117,6 +139,8 @@ class Application
     /**
      * @ORM\OneToMany(targetEntity="Provip\EventsBundle\Entity\ApplicationEvent", mappedBy="application", cascade={"remove"})
      * @Assert\Valid
+     *
+     * @var ApplicationEvent
      */
     protected $applicationEvents;
 
@@ -125,6 +149,8 @@ class Application
      * @ORM\OneToOne(targetEntity="Internship", inversedBy="application", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="internship_id", referencedColumnName="id")
      * @Assert\Valid
+     *
+     * @var Internship
      */
     protected $internship;
 

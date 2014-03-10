@@ -42,6 +42,8 @@ class Internship
      *
      * @ORM\OneToOne(targetEntity="Application", mappedBy="internship")
      * @Assert\Valid
+     *
+     * @var Application
      */
     protected $application;
 
@@ -73,6 +75,11 @@ class Internship
      * @Assert\Type(type="string")
      */
     protected $commentsByCompany;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Document", mappedBy="internship",cascade={"persist","remove"})
+    */
+    protected $documents;
 
 
 
@@ -225,6 +232,38 @@ class Internship
     public function getCommentsByStudent()
     {
         return $this->commentsByStudent;
+    }
+
+    /**
+     * @return null|User
+     */
+    public function getHeiCoach()
+    {
+        return $this->application ? $this->application->getCoach() : null;
+    }
+
+    /**
+     * @return null|Company
+     */
+    public function getCompany()
+    {
+        return ($this->getApplication() && $this->getApplication()->getOpportunity()) ? $this->getApplication()->getOpportunity()->getCompany() : null;
+    }
+
+    /**
+     * @param mixed $documents
+     */
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
 

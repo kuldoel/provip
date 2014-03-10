@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Provip\ApplicationBundle\ProvipApplicationBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new SekoiaLearn\CrocodocBundle\SekoiaLearnCrocodocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

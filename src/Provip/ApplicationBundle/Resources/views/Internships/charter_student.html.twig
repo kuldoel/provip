@@ -3,6 +3,15 @@
 
 {% block main %}
 
+    <div id="viewer">
+        <a class="close-viewer btn btn-info btn-alt btn-block">Close Document</a>
+
+        <iframe src="http://www.google.com" frameborder="0" style="width: 800px; height: 100%">
+
+        </iframe>
+
+    </div>
+
     <div class="padder clearfix" style="min-height: 15px">
 
     </div>
@@ -131,6 +140,37 @@
                 </div>
             </div>
 
+            <div class="panel">
+                <header class="panel-heading">
+                   Upload new document
+                </header>
+
+                <div class="panel-content">
+
+                    <form action="{{ path('provip_application_internship_detailstudent', {'publicId': application.internship.publicId}) }}" method="POST" enctype="multipart/form-data">
+
+                        <label>Name for this file:</label>
+                        {{ form_widget(form.name) }}
+                        <div class="line pull-in"></div>
+                        {{ form_widget(form.file) }}
+                        <div class="line pull-in"></div>
+                        {{ form_rest(form) }}
+
+                        <button type="submit" class="btn btn-alt btn-block btn-primary">Upload</button>
+
+                    </form>
+
+                    <h4>List of documents</h4>
+
+                    <ul>
+                        {% for document in application.internship.documents %}
+                            <li>{{ document.created |date("d-m-Y") }} <a href="#" class="view-document" data-id="{{ document.id }}">{{ document.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+
             <section class="panel">
                 <header class="panel-heading">
                     <span class="label bg-info pull-right">{{ activities | length }}</span>
@@ -241,8 +281,71 @@
   </div>
 
 
+    <style type="text/css">
+
+        body {
+            transition: margin-left 1s;
+            -webkit-transition: margin-left 1s; /* Safari */
+        }
+
+        #viewer {
+            position: fixed;
+            right: -800px;
+            height: 100%;
+            background-color: #fff;
+            border-left: solid 2px #eee;
+            width: 800px;
+            transition: all 1s;
+            -webkit-transition: all 1s; /* Safari */
+            top: 0px;
+            bottom: 0px;
+            z-index: 10001;
+        }
+
+        #viewer.visible {
+            right: 0px;
+        }
+
+        body.viewer {
+            margin-left: -800px;
+        }
+    </style>
 
 
 
 
+
+{% endblock %}
+
+{% block customjs %}
+
+    <script type="text/javascript">
+       $(document).ready(function(){
+           $('a.view-document').click(
+
+                   function(){
+
+                       var documentId = $(this).attr('data-id');
+                       console.log('viewing ' + documentId);
+
+                       $('iframe').attr('src', Routing.generate('provip_application_document_getdocumentview', { id : documentId}));
+
+                       $('body').addClass('viewer');
+                       $('#viewer').addClass('visible');
+
+                   }
+           );
+
+           $('a.close-viewer').click(
+
+                   function(){
+
+                       $('body').removeClass('viewer');
+                       $('#viewer').removeClass('visible');
+
+                   }
+           );
+
+       })
+    </script>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace Provip\ApplicationBundle\Controller;
 
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Deliverable;
+use Provip\ProvipBundle\Entity\Internship;
 use Provip\ProvipBundle\Entity\Opportunity;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
 use Provip\ProvipBundle\Form\Type\DeliverableCompanyType;
@@ -215,7 +216,24 @@ class OpportunityController extends Controller
         }
 
 
+
         $em = $this->getDoctrine()->getManager();
+
+        foreach($opportunity->getApplications() as $app) {
+            foreach($app->getInternship() as $internship) {
+
+                if($internship) {
+
+                    $internship->setDocuments(null);
+                    $em->persist($internship);
+                }
+
+
+            }
+        }
+
+        $em->flush();
+
         $em->remove($opportunity);
         $em->flush();
 

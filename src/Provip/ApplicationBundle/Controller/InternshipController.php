@@ -26,6 +26,9 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Provip\ProvipBundle\Entity\Document;
+use Provip\EventsBundle\Form\Type\DocumentType;
+use Symfony\Component\HttpFoundation\File\File;
 
 class InternshipController extends Controller
 {
@@ -114,7 +117,7 @@ class InternshipController extends Controller
     /**
      * @Route("/student/internships/{publicId}", options={"expose"=true})
      */
-    public function detailStudentAction(Internship $internship)
+    public function detailStudentAction(Internship $internship, Request $request)
     {
         if($this->getUser()->getEnrollment()->getApproved() == false)
         {
@@ -139,7 +142,59 @@ class InternshipController extends Controller
             $this->get('session')->getFlashBag()->add('warning', 'This internship has been marked as completed');
         }
 
-        return $this->render('ProvipApplicationBundle:Internships:charter_student.html.twig', array('opportunity' => $opportunity, 'application' => $application, 'activityUpdateEvents' => $activityUpdateEvents, 'activities' => $activities));
+        $document = new Document();
+
+        $form = $this->createForm(new DocumentType(), $document);
+
+        if ($request->isMethod('POST')) {
+
+            $form->handleRequest($request);
+
+
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+
+                $document->setInternship($internship);
+                $document->setOwner($this->getUser());
+
+                try {
+                    $em->persist($document);
+                    $em->flush();
+
+                    $file = new File($document->getAbsolutePath());
+
+                    $this->get('session')->getFlashBag()->add('success', 'Your file has been uploaded');
+                    $this->get('provip_crocodoc_service')->uploadDocument($document);
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
+                catch(\PDOException $e) {
+                    $this->get('session')->getFlashBag()->add('warning', 'There were some errors with your file');
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
+                catch(\CrocodocException $e) {
+                    $this->get('session')->getFlashBag()->add('warning', 'An error occurred while processing your file');
+                    return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+                }
+
+            } else {
+
+                $this->get('session')->getFlashBag()->add('warning', 'There were some errors with your file. Only pdf, ppt, pptx, doc, docx, xls and xlsx files are supported.');
+                return $this->redirect($this->generateUrl('provip_application_internship_detailstudent', array('publicId' => $internship->getPublicId())));
+            }
+
+        }
+
+        return $this->render(
+            'ProvipApplicationBundle:Internships:charter_student.html.twig',
+            array(
+                'opportunity' => $opportunity,
+                'application' => $application,
+                'activityUpdateEvents' => $activityUpdateEvents,
+                'activities' => $activities,
+                'form' => $form->createView()
+            )
+        );
 
     }
 
