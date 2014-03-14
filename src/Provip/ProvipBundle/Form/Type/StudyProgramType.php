@@ -28,10 +28,13 @@ class StudyProgramType extends AbstractType
                 )
             )
             ->add(
-                'admin',
-                new StudyProgramAdminType(),
+                'admins',
+                'collection',
                 array(
-                    'label' => 'Study Program Administrator'
+                    'type' => new StudyProgramAdminType(),
+                    'label' => 'Study Program Administrator',
+                    'allow_add' => true,
+                    'allow_delete' => true
                 )
             )
         ;

@@ -33,10 +33,10 @@ security:
         - { path: ^/js, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/document/crocodoc_notification, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        - { path: ^/admin, role: ROLE_SUPER_ADMIN }
+
+        - { path: ^/admin, roles: [ROLE_SUPER_ADMIN, ROLE_HEI_STAFF_ADMIN] }
         - { path: ^/student, role: ROLE_STUDENT }
         - { path: ^/company, role: ROLE_COMPANY_STAFF }
-        - { path: ^/hei, role: ROLE_HEI_STAFF }
         - { path: ^/hei, role: ROLE_HEI_STAFF }
         - { path: ^/document, role: ROLE_USER }
 

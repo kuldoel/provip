@@ -1,5 +1,5 @@
 {% extends "ProvipApplicationBundle::base_admin.html.twig" %}
-{% form_theme form 'ProvipApplicationBundle:Form:fields.html.twig' %}
+{% form_theme form 'ProvipApplicationBundle:Form:studyprogram_create.html.twig' %}
 
 {% block main %}
 
@@ -26,7 +26,52 @@
                             </ol>
 
                         </div>
-                        {{ form_widget(form) }}
+
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.higherEducationalInstitution) }}
+
+                        <div class="row row-form">
+
+                            {{ form_label(form.admins, label|default(null), { 'label_attr': { 'class': 'col col-lg-3 control-label' } }) }}
+
+                            <div class="col col-lg-9">
+
+                                <div id="admins-list" data-prototype="{{ form_widget(form.admins.vars.prototype)|e }}">
+                                    {{ form_widget(form.admins) }}
+                                </div>
+
+                                <a href="#" id="add-an-admin">Add an admin</a>
+
+                            </div>
+
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <script type="text/javascript" src="{{ asset('bundles/provipapplication/js//jquery.min.js') }}"></script>
+                        <script type="text/javascript">
+                            // keep track of how many admin fields have been rendered
+                            var adminCount = '{{ form.admins | length }}';
+
+                            jQuery(document).ready(function() {
+                                jQuery('#add-an-admin').click(function() {
+                                    var admins = jQuery('#admins-list');
+
+                                    // grab the prototype template
+                                    var newWidget = admins.attr('data-prototype');
+                                    // replace the "__name__" used in the id and name of the prototype
+                                    // with a number that's unique to your admins
+                                    // end name attribute looks like name="contact[emails][2]"
+                                    newWidget = newWidget.replace(/__name__/g, adminCount);
+                                    adminCount++;
+
+                                    // create a new list element and add it to the list
+                                    admins.append(newWidget + '<hr />');
+
+                                    return false;
+                                });
+                            })
+                        </script>
 
                         <button type="submit" class="btn btn-primary btn-alt">Create Study Program</button>
 
