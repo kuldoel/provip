@@ -102,7 +102,7 @@ class User extends BaseUser
     protected $profileComplete = false;
 
     /**
-     * Language is an relation attribute of Student and is the native language of the Student
+     * Language is a relation attribute of Student and is the native language of the Student
      *
      *
      * @ORM\ManyToOne(targetEntity="Provip\ProvipBundle\Entity\Language")
@@ -112,7 +112,7 @@ class User extends BaseUser
     protected $language;
 
     /**
-     * supportedLanguages is an relation attribute of Student and are the other languages that the Student speaks
+     * supportedLanguages is a relation attribute of Student and are the other languages that the Student speaks
      *
      *
      * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Entity\Language")
@@ -146,7 +146,7 @@ class User extends BaseUser
     protected $teachesAt;
 
     /**
-     * If a user is a Student they have a indirect link to a HEI using the Enrollment class.
+     * If a user is a Student they have an indirect link to a HEI using the Enrollment class.
      * An Enrollment is default set to false and has to be approved by the HEI
      *
      *
@@ -228,8 +228,8 @@ class User extends BaseUser
     protected $picture;
 
     /**
-     * @ORM\OneToOne(targetEntity="Provip\ProvipBundle\Entity\StudyProgram", inversedBy="admin")
-     * @ORM\JoinColumn(name="is_admin_of_studyprogram", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Provip\ProvipBundle\Entity\StudyProgram", mappedBy="admins", fetch="EAGER")
+     *
      */
     protected $adminOf;
 
@@ -251,16 +251,17 @@ class User extends BaseUser
         parent::__construct();
 
         $this->username = md5(crypt(rand(0, 50000).time()));
-        $this->supportedLanguages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mentoring = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->coaching = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->studentEvents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->internships = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->supportedLanguages = new ArrayCollection();
+        $this->mentoring = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+        $this->coaching = new ArrayCollection();
+        $this->studentEvents = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->internships = new ArrayCollection();
+        $this->adminOf = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -481,7 +482,9 @@ class User extends BaseUser
     /**
      * Add supportedLanguages
      *
-     * @param \Provip\ProvipBundle\Entity\Language $supportedLanguages
+     * @param \Provip\ProvipBundle\Entity\Language $supportedLanguage
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Language $supportedLanguages
      * @return User
      */
     public function addSupportedLanguage(\Provip\ProvipBundle\Entity\Language $supportedLanguage)
@@ -494,7 +497,9 @@ class User extends BaseUser
     /**
      * Remove supportedLanguages
      *
-     * @param \Provip\ProvipBundle\Entity\Language $supportedLanguages
+     * @param \Provip\ProvipBundle\Entity\Language $supportedLanguage
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Language $supportedLanguages
      */
     public function removeSupportedLanguage(\Provip\ProvipBundle\Entity\Language $supportedLanguage)
     {
@@ -555,7 +560,9 @@ class User extends BaseUser
     /**
      * Add mentoring
      *
-     * @param \Provip\ProvipBundle\Entity\Opportunity $mentoring
+     * @param \Provip\ProvipBundle\Entity\Opportunity $opportunity
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Opportunity $mentoring
      * @return User
      */
     public function addMentoring(\Provip\ProvipBundle\Entity\Opportunity $opportunity)
@@ -568,7 +575,9 @@ class User extends BaseUser
     /**
      * Remove mentoring
      *
-     * @param \Provip\ProvipBundle\Entity\Opportunity $mentoring
+     * @param \Provip\ProvipBundle\Entity\Opportunity $opportunity
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Opportunity $mentoring
      */
     public function removeMentoring(\Provip\ProvipBundle\Entity\Opportunity $opportunity)
     {
@@ -588,7 +597,9 @@ class User extends BaseUser
     /**
      * Add applications
      *
-     * @param \Provip\ProvipBundle\Entity\Application $applications
+     * @param \Provip\ProvipBundle\Entity\Application $application
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Application $applications
      * @return User
      */
     public function addApplication(\Provip\ProvipBundle\Entity\Application $application)
@@ -601,7 +612,9 @@ class User extends BaseUser
     /**
      * Remove applications
      *
-     * @param \Provip\ProvipBundle\Entity\Application $applications
+     * @param \Provip\ProvipBundle\Entity\Application $application
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Application $applications
      */
     public function removeApplication(\Provip\ProvipBundle\Entity\Application $application)
     {
@@ -621,7 +634,9 @@ class User extends BaseUser
     /**
      * Add coaching
      *
-     * @param \Provip\ProvipBundle\Entity\Application $coaching
+     * @param \Provip\ProvipBundle\Entity\Application $application
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Application $coaching
      * @return User
      */
     public function addCoaching(\Provip\ProvipBundle\Entity\Application $application)
@@ -634,7 +649,9 @@ class User extends BaseUser
     /**
      * Remove coaching
      *
-     * @param \Provip\ProvipBundle\Entity\Application $coaching
+     * @param \Provip\ProvipBundle\Entity\Application $application
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Application $coaching
      */
     public function removeCoaching(\Provip\ProvipBundle\Entity\Application $application)
     {
@@ -654,7 +671,9 @@ class User extends BaseUser
     /**
      * Add studentEvents
      *
-     * @param \Provip\EventsBundle\Entity\StudentEvent $studentEvents
+     * @param \Provip\EventsBundle\Entity\StudentEvent $studentEvent
+     *
+     * @internal param \Provip\EventsBundle\Entity\StudentEvent $studentEvents
      * @return User
      */
     public function addStudentEvent(\Provip\EventsBundle\Entity\StudentEvent $studentEvent)
@@ -667,7 +686,9 @@ class User extends BaseUser
     /**
      * Remove studentEvents
      *
-     * @param \Provip\EventsBundle\Entity\StudentEvent $studentEvents
+     * @param \Provip\EventsBundle\Entity\StudentEvent $studentEvent
+     *
+     * @internal param \Provip\EventsBundle\Entity\StudentEvent $studentEvents
      */
     public function removeStudentEvent(\Provip\EventsBundle\Entity\StudentEvent $studentEvent)
     {
@@ -687,7 +708,9 @@ class User extends BaseUser
     /**
      * Add notifications
      *
-     * @param \Provip\EventsBundle\Entity\Notification $notifications
+     * @param \Provip\EventsBundle\Entity\Notification $notification
+     *
+     * @internal param \Provip\EventsBundle\Entity\Notification $notifications
      * @return User
      */
     public function addNotification(\Provip\EventsBundle\Entity\Notification $notification)
@@ -700,7 +723,9 @@ class User extends BaseUser
     /**
      * Remove notifications
      *
-     * @param \Provip\EventsBundle\Entity\Notification $notifications
+     * @param \Provip\EventsBundle\Entity\Notification $notification
+     *
+     * @internal param \Provip\EventsBundle\Entity\Notification $notifications
      */
     public function removeNotification(\Provip\EventsBundle\Entity\Notification $notification)
     {
@@ -840,7 +865,24 @@ class User extends BaseUser
      */
     public function getAdminOf()
     {
-        return $this->adminOf;
+        return $this->adminOf ?: $this->adminOf = new ArrayCollection();
+    }
+
+    /**
+     * @param $studyProgram
+     *
+     * @return $this
+     * @internal param mixed $adminOf
+     */
+    public function addAdminOf($studyProgram)
+    {
+        if(!$this->getAdminOf()->contains($studyProgram))
+        {
+            $this->adminOf[] = $studyProgram;
+            $studyProgram->addAdmin($this);
+        }
+
+        return $this;
     }
 
     /**
@@ -934,5 +976,6 @@ class User extends BaseUser
 
         return $this->internships->last();
     }
+
 
 }

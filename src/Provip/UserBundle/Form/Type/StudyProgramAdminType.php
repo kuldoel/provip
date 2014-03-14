@@ -28,7 +28,8 @@ class StudyProgramAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Provip\UserBundle\Entity\User'
+            'data_class' => 'Provip\UserBundle\Entity\User',
+            'label' => false
         ));
     }
 

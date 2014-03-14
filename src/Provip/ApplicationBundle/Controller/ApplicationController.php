@@ -311,9 +311,12 @@ class ApplicationController extends Controller
         $opportunity = $application->getOpportunity();
         $student = $application->getStudent();
 
-        if($student->getEnrollment()->getStudyProgram() != $this->getUser()->getAdminOf())
+        foreach($this->getUser()->getAdminOf() as $studyProgram)
         {
-            return new Response("Not Authorized", 403);
+            if($student->getEnrollment()->getStudyProgram() != $studyProgram)
+            {
+                return new Response("Not Authorized", 403);
+            }
         }
 
         if ('POST' === $request->getMethod()) {
@@ -326,7 +329,7 @@ class ApplicationController extends Controller
 
                 $application->setRejected(true);
                 $application->setSubmittedForReview(false);
-                $application->setRejectedBy($this->getUser()->getAdminOf()->getHigherEducationalInstitution());
+                $application->setRejectedBy($student->getEnrollment()->getStudyProgram()->getHigherEducationalInstitution());
 
                 $event = new ApplicationEvent($this->getUser(), ' has rejected the internship application', $application->getId(), 'privacy.internship', $application);
 

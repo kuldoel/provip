@@ -36,11 +36,11 @@
                                 <table class="table table-striped m-b-none text-small">
                                     <tr>
                                         <td><small>University</small></td>
-                                        <td><small>{{ student.enrollment.studyprogram.higherEducationalInstitution }}</small></td>
+                                        <td><small>{% if student.enrollment %}{{ student.enrollment.studyprogram.higherEducationalInstitution }}{% endif %}</small></td>
                                     </tr>
                                     <tr>
                                         <td><small>Study Program</small></td>
-                                        <td><small>{{ student.enrollment.studyprogram }}</small></td>
+                                        <td><small>{% if student.enrollment %}{{ student.enrollment.studyprogram }}{% endif %}</small></td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
@@ -55,10 +55,12 @@
     &lt;tr&gt;
         &lt;td&gt;Skills&lt;/td&gt;
         &lt;td&gt;
+        {% if student.enrollment %}
             {% for skill in student.enrollment.studyProgram.skills %}
 
                 &lt;span class=&quot;label bg-success&quot;&gt;{{ skill.value }}&lt;/span&gt;
             {% endfor %}
+        {% endif %}
         &lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
