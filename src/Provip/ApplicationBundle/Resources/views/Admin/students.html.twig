@@ -24,12 +24,17 @@
                             <th>HEI</th>
                             <th>Enrollment Status</th>
                             <th>Last Login</th>
+                            <th>Nationality</th>
+                            <th>Primary Language</th>
+                            <th>Other Languages</th>
+                            <th>Applications</th>
 
                         </tr>
                         </thead>
                         <tbody>
                             {% for sp in studyProgrammes %}
                                 {% for e in sp.enrollments %}
+                                    {% if e.student %}
                                     <tr>
                                         <td>{{ e.student.lastName}}</td>
                                         <td>{{ e.student.firstName}}</td>
@@ -38,7 +43,29 @@
                                         <td>{{ sp.higherEducationalInstitution}}</td>
                                         <td>{% if e.approved %}Approved{% elseif e.denied %}Denied{% else %}Pending{% endif %}</td>
                                         <td>{{ e.student.lastLogin | date("d-m-Y H:i:s") }}</td>
+                                        <td>{{ e.student.nationality }}</td>
+                                        <td>{% if e.student.language %}{{ e.student.language.valueAttr }}{% endif %}</td>
+                                        <td>
+                                            {% if e.student.supportedLanguages %}
+                                                {% for lang in e.student.supportedLanguages %}
+                                                    {{ lang.valueAttr }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if e.student.applications %}
+                                                <table>
+                                                    {% for app in e.student.applications  %}
+                                                        <tr>
+                                                            <td>{{ app.opportunity.title }}</td>
+                                                            <td>{{ app.opportunity.company.name }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            {% endif %}
+                                        </td>
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                             {% endfor %}
                         </tbody>

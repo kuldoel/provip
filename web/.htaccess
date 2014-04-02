@@ -435,6 +435,18 @@ DirectoryIndex app.php
     RewriteCond %{REQUEST_URI} ^/hei/account\-settings$
     RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_settings,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:settingsAction]
 
+    # provip_application_hei_choose
+    RewriteCond %{REQUEST_URI} ^/hei/hei\-choose$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_choose,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:chooseAction]
+
+    # provip_application_hei_choose_1
+    RewriteCond %{REQUEST_URI} ^/hei/hei\-choose/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_choose_1,E=_ROUTING_param_route:%1,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:chooseAction]
+
+    # provip_application_hei_choose_2
+    RewriteCond %{REQUEST_URI} ^/hei/hei\-choose/([^/]++)/([^/]++)$
+    RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_choose_2,E=_ROUTING_param_route:%1,E=_ROUTING_param_studyProgramId:%2,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:chooseAction]
+
     # provip_application_hei_info
     RewriteCond %{REQUEST_URI} ^/hei/hei\-settings$
     RewriteRule .* app.php [QSA,L,E=_ROUTING_route:provip_application_hei_info,E=_ROUTING_default__controller:Provip\\ApplicationBundle\\Controller\\HeiController\:\:infoAction]
@@ -710,4 +722,6 @@ DirectoryIndex app.php
         RedirectMatch 302 ^/$ /app.php/
         # RedirectTemp cannot be used instead
     </IfModule>
+
+    RewriteCond %{REQUEST_URI} !^/static/.*
 </IfModule>

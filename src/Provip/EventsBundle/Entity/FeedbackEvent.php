@@ -105,9 +105,12 @@ class FeedbackEvent extends Event
                 }
             }
 
-            if(!$recipients->contains($studyProgram->getAdmin()))
+            foreach($studyProgram->getAdmins() as $admin)
             {
-                $recipients[] = $studyProgram->getAdmin();
+                if(!$recipients->contains($admin))
+                {
+                    $recipients[] = $admin;
+                }
             }
         }
 

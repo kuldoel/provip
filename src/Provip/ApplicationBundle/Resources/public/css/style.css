@@ -465,6 +465,7 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
   #nav{position: relative;width: 150px;position: absolute;z-index:1000;left:0;top:50px;bottom: 0;border-right:1px solid #162636}
   #nav.bg-light{border-color:#bfc7d0}
   #nav.nav-vertical {width: 90px}
+  #nav.nav-vertical > ul {width: inherit}
   #nav + #content{margin-left: 150px;}
   #nav.nav-vertical + #content {margin-left: 90px;}
   .nav-primary.nav-doc > ul > li > a{border-bottom: none;padding: 3px 15px;text-shadow:none;}

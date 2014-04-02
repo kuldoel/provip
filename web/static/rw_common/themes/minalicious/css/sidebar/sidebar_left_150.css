@@ -1,0 +1,14 @@
+#sidebarContainer {
+	float: left;
+	width : 150px;
+}
+
+#contentContainer {
+	border-right: none;
+	margin-left: 150px;
+	margin-right: 0px;
+}
+
+#contentContainer #content {
+	border-right: none;	
+}

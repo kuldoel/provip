@@ -2,6 +2,7 @@
 
 namespace Provip\ProvipBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -69,9 +70,17 @@ class StudyProgram
     protected $staff;
 
     /**
-     * @ORM\OneToOne(targetEntity="Provip\UserBundle\Entity\User", mappedBy="adminOf", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Provip\UserBundle\Entity\User", inversedBy="adminOf", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinTable(name="studyprogram_admins",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="studyProgram", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
+     *   }
+     * )
      */
-    protected $admin;
+    protected $admins;
 
 
     /**
@@ -79,15 +88,40 @@ class StudyProgram
      */
     public function __construct()
     {
-        $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->enrollments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->staff = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
+        $this->staff = new ArrayCollection();
+        $this->admins = new ArrayCollection();
     }
-    
+
+    /**
+     * @param mixed $id
+     *
+     * @return StudyProgram
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
     /**
      * Set studyProgram
      *
-     * @param string $studyProgram
+     * @param $hei
+     *
+     * @internal param string $studyProgram
      * @return HigherEducationalInstitution
      */
     public function setHigherEducationalInstitution($hei)
@@ -110,7 +144,9 @@ class StudyProgram
     /**
      * Add skills
      *
-     * @param \Provip\ProvipBundle\Entity\Skill $skills
+     * @param Skill $skill
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Skill $skills
      * @return HigherEducationalInstitution
      */
     public function addSkill(\Provip\ProvipBundle\Entity\Skill $skill)
@@ -123,7 +159,9 @@ class StudyProgram
     /**
      * Remove skills
      *
-     * @param \Provip\ProvipBundle\Entity\Skill $skills
+     * @param Skill $skill
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Skill $skills
      */
     public function removeSkill(\Provip\ProvipBundle\Entity\Skill $skill)
     {
@@ -143,7 +181,9 @@ class StudyProgram
     /**
      * Add enrollments
      *
-     * @param \Provip\ProvipBundle\Entity\Enrollment $enrollments
+     * @param Enrollment $enrollment
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Enrollment $enrollments
      * @return HigherEducationalInstitution
      */
     public function addEnrollment(\Provip\ProvipBundle\Entity\Enrollment $enrollment)
@@ -156,7 +196,9 @@ class StudyProgram
     /**
      * Remove enrollments
      *
-     * @param \Provip\ProvipBundle\Entity\Enrollment $enrollments
+     * @param Enrollment $enrollment
+     *
+     * @internal param \Provip\ProvipBundle\Entity\Enrollment $enrollments
      */
     public function removeEnrollment(\Provip\ProvipBundle\Entity\Enrollment $enrollment)
     {
@@ -230,19 +272,41 @@ class StudyProgram
     }
 
     /**
-     * @param mixed $admin
+     * @param mixed $admins
+     *
+     * @return StudyProgram
      */
-    public function setAdmin($admin)
+    public function setAdmins($admins)
     {
-        $this->admin = $admin;
+        $this->admins = $admins;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getAdmin()
+    public function getAdmins()
     {
-        return $this->admin;
+        return $this->admins ?: $this->admins = new ArrayCollection();
+    }
+
+    /**
+     * @param $admin
+     *
+     * @internal param $user
+     *
+     * @return $this
+     */
+    public function addAdmin($admin)
+    {
+        if(!$this->getAdmins()->contains($admin))
+        {
+            $this->admins[] = $admin;
+            $admin->addAdminOf($this);
+        }
+
+        return $this;
     }
 
     /**
@@ -280,10 +344,4 @@ class StudyProgram
     public function getNameForDropdown() {
         return $this->name . ' ['. $this->higherEducationalInstitution .'] ';
     }
-
-
-
-
-
-
 }

@@ -50,12 +50,17 @@
                                 <span class="text">{{ app.user }}</span>
                             </div>
                         </div>
+
+
+
                         <div class="row">
-                            <label class="col col-lg-3 control-label">Institution</label>
+                            <label class="col col-lg-3 control-label">Institution(s)</label>
                             <div class="col col-lg-9">
                                 <a href="#" class="text link">
                                     {% if app.user.adminOf %}
-                                        {{ app.user.adminOf.higherEducationalInstitution }}
+                                        {% for sp in app.user.adminOf %}
+                                            {{ sp.higherEducationalInstitution }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
                                     {% else %}
                                         {{ app.user.teachesAt.higherEducationalInstitution }}
                                     {% endif %}
@@ -63,17 +68,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col col-lg-3 control-label">Study Program</label>
+                            <label class="col col-lg-3 control-label">Study Program(s)</label>
                             <div class="col col-lg-9">
                                 <a href="#" class="text link">
                                     {% if app.user.adminOf %}
-                                        {{ app.user.adminOf }}
+                                        {% for sp in app.user.adminOf %}
+                                            {{ sp }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
                                     {% else %}
                                         {{ app.user.teachesAt }}
                                     {% endif %}
                                 </a>
                             </div>
                         </div>
+
                         <div class="row">
                             <label class="col col-lg-3 control-label">Phone Number</label>
                             <div class="col col-lg-9">

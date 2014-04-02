@@ -2,6 +2,7 @@
 
 namespace Provip\ApplicationBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Entity\Activity;
 use Provip\ProvipBundle\Entity\Application;
@@ -58,51 +59,80 @@ class AdminController extends Controller
      */
     public function createAction(Request $request)
     {
-        $studyProgram = new StudyProgram();
-        $form = $this->createForm(new StudyProgramType(), $studyProgram);
+        $securityContext = $this->container->get('security.context');
 
-        if ($request->getMethod() === 'POST') {
+        if($securityContext->isGranted('ROLE_SUPER_ADMIN'))
+        {
+            $studyProgram = new StudyProgram();
 
-            $form->handleRequest($request);
+            $form = $this->createForm(new StudyProgramType(), $studyProgram);
 
-            if ($form->isValid()) {
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($studyProgram);
-                $em->flush();
-
-
-                $userManager = $this->get('fos_user.user_manager');
-                $user = $userManager->findUserByEmail($studyProgram->getAdmin()->getEmail());
-                $user->setPlainPassword($user->getPassword());
-                $user->setEnabled(true);
-                $user->addRole('ROLE_HEI_STAFF_ADMIN');
-                $user->setAdminOf($studyProgram);
-                $userManager->updateUser($user);
-                $studyProgram->setAdmin($user);
-
-                $em->persist($studyProgram);
-                $em->flush();
-
-
-
-
-                $this->get('session')->getFlashBag()->add('success', 'Study Programme has been created.');
-                return $this->redirect($this->generateUrl('provip_application_admin_index'));
-
-            }
-            else
+            if($request->getMethod() === 'POST')
             {
-                $this->get('session')->getFlashBag()->add('danger', 'There were some issues saving this form.');
-            }
-        }
+                $form->handleRequest($request);
 
-        return $this->render(
-            'ProvipApplicationBundle:Admin:create.html.twig' ,
-            array(
-                'form' => $form->createView()
-            )
-        );
+                if($form->isValid())
+                {
+                    $em = $this->getDoctrine()->getManager();
+
+
+                    $admins = $studyProgram->getAdmins();
+
+                    $studyProgram->setAdmins(null);
+
+                    $em->persist($studyProgram);
+                    $em->flush();
+
+                    $studyProgram->addAdmin($this->getUser());
+
+                    foreach($admins as $admin)
+                    {
+                        $userManager = $this->get('fos_user.user_manager');
+                        $user = $userManager->findUserByEmail($admin->getEmail());
+
+                        if(!$user)
+                        {
+                            $user = $userManager->createUser();
+
+                            $user->setFirstName($admin->getFirstName());
+                            $user->setLastName($admin->getLastName());
+                            $user->setEmail($admin->getEmail());
+                        }
+
+                        $user->setPlainPassword($admin->getPassword());
+                        $user->setEnabled(true);
+                        $user->addRole('ROLE_HEI_STAFF_ADMIN');
+                        $user->addAdminOf($studyProgram);
+
+                        $userManager->updateUser($user);
+
+                        $studyProgram->addAdmin($user);
+                    }
+
+                    $em->persist($studyProgram);
+                    $em->flush();
+
+                    $this->get('session')->getFlashBag()->add('success', 'Study Programme has been created.');
+                    return $this->redirect($this->generateUrl('provip_application_admin_index'));
+
+                }
+                else
+                {
+                    $this->get('session')->getFlashBag()->add('danger', 'There were some issues saving this form.');
+                }
+            }
+
+            return $this->render(
+                'ProvipApplicationBundle:Admin:create.html.twig' ,
+                array(
+                    'form' => $form->createView()
+                )
+            );
+        }
+        else
+        {
+            return new Response("Not Authorized", 403);
+        }
     }
 
 

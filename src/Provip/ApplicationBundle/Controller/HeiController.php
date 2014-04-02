@@ -77,22 +77,53 @@ class HeiController extends Controller
     }
 
     /**
+     * @Route("/hei/hei-choose")
+     * @Route("/hei/hei-choose/{route}")
+     * @Route("/hei/hei-choose/{route}/{studyProgramId}")
+     */
+    public function chooseAction($route = null, $studyProgramId = null)
+    {
+        if(!$studyProgramId)
+        {
+            $studyPrograms = $this->getUser()->getAdminOf();
+
+            return $this->render('ProvipApplicationBundle:Hei:hei_settings_choose.html.twig', array(
+                'studyPrograms' => $studyPrograms,
+                'route' => $route));
+        }
+        else
+        {
+            $this->get('session')->set('spConfig', $studyProgramId);
+
+            if(!$route)
+            {
+                $route = 'provip_application_hei_info';
+            }
+
+            return $this->redirect($this->generateUrl($route));
+        }
+    }
+
+    /**
      * @Route("/hei/hei-settings", options={"expose"=true})
      */
     public function infoAction(Request $request)
     {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
 
-        $studyProgram = $this->getUser()->getAdminOf();
+        $studyProgram = $repo->find($this->get('session')->get('spConfig'));
 
         $learningGoal = new Deliverable();
         $skill        = new Skill();
 
-        $formGoal           = $this->createForm(new DeliverableType($this->getUser()->getAdminOf()), $learningGoal);
+        $formGoal           = $this->createForm(new DeliverableType($studyProgram), $learningGoal);
         $formSkill          = $this->createForm(new SkillType(), $skill);
         $formStudyProgram   = $this->createForm(new StudyProgramProfileType(), $studyProgram);
 
 
-        if ($request->isMethod('POST'))
+        if($request->isMethod('POST'))
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -212,7 +243,13 @@ class HeiController extends Controller
      */
     public function staffAction(Request $request)
     {
-        $staff = $this->getUser()->getAdminOf()->getStaff();
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
+
+        $studyProgram = $repo->find($this->get('session')->get('spConfig'));
+
+        $staff = $studyProgram->getStaff();
 
         $user = new User();
         $form = $this->createForm(new NewStaffType(), $user);
@@ -231,7 +268,7 @@ class HeiController extends Controller
                 $userManager = $this->get('fos_user.user_manager');
 
                 $user->addRole('ROLE_HEI_STAFF');
-                $user->setTeachesAt($this->getUser()->getAdminOf());
+                $user->setTeachesAt($studyProgram);
 
                 $userManager->updateUser($user);
 
@@ -271,14 +308,15 @@ class HeiController extends Controller
      */
     public function searchAction($q)
     {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
 
-        $studyProgram = $this->getUser()->getAdminOf();
+        $studyProgram = $repo->find($this->get('session')->get('spConfig'));
 
         $staff = $this->getDoctrine()->getRepository('ProvipUserBundle:User')->getHeiStaffByPartial($q, $studyProgram);
 
         return $this->render('ProvipApplicationBundle:Widgets:company_staff_search.html.twig',array('staff' => $staff, 'status' => ''));
-
-
     }
 
 
@@ -287,14 +325,15 @@ class HeiController extends Controller
      */
     public function searchStudentAction($q)
     {
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
 
-        $studyProgram = $this->getUser()->getAdminOf();
+        $studyProgram = $repo->find($this->get('session')->get('spConfig'));
 
         $staff = $this->getDoctrine()->getRepository('ProvipUserBundle:User')->getStudentByPartial($q, $studyProgram);
 
         return $this->render('ProvipApplicationBundle:Widgets:hei_student_search.html.twig',array('staff' => $staff, 'status' => ''));
-
-
     }
 
     /**
@@ -302,11 +341,17 @@ class HeiController extends Controller
      */
     public function studentsAction(Request $request)
     {
-        $enrollments = $this->getUser()->getAdminOf()->getEnrollments();
+        $repo = $this
+            ->getDoctrine()
+            ->getRepository('ProvipProvipBundle:StudyProgram');
+
+        $studyProgram = $repo->find($this->get('session')->get('spConfig'));
+
+        $enrollments = $studyProgram->getEnrollments();
+
         return $this->render('ProvipApplicationBundle:Hei:hei_students.html.twig', array(
                 'enrollments' => $enrollments)
         );
-
     }
 
     /**

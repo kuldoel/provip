@@ -24,27 +24,32 @@ class BroadcastHei extends Event
             $studyProgram = $this->getAuthor()->getAdminOf();
         }
 
-        foreach($studyProgram->getStaff() as $staffMember)
+        foreach($this->getAuthor()->getAdminOf() as $studyProgram)
         {
-            if(!$recipients->contains($staffMember))
+            foreach($studyProgram->getStaff() as $staffMember)
             {
-                $recipients[] = $staffMember;
+                if(!$recipients->contains($staffMember))
+                {
+                    $recipients[] = $staffMember;
+                }
+            }
+
+            foreach($studyProgram->getEnrollments() as $enrollment)
+            {
+                if(!$recipients->contains($enrollment->getStudent()))
+                {
+                    $recipients[] = $enrollment->getStudent();
+                }
+            }
+
+            foreach($studyProgram->getAdmins() as $admin)
+            {
+                if(!$recipients->contains($admin))
+                {
+                    $recipients[] = $admin;
+                }
             }
         }
-
-        foreach($studyProgram->getEnrollments() as $enrollment)
-        {
-            if(!$recipients->contains($enrollment->getStudent()))
-            {
-                $recipients[] = $enrollment->getStudent();
-            }
-        }
-
-        if(!$recipients->contains($studyProgram->getAdmin()))
-        {
-            $recipients[] = $studyProgram->getAdmin();
-        }
-
 
         return $recipients;
     }

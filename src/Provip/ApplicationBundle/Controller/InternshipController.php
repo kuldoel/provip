@@ -57,16 +57,24 @@ class InternshipController extends Controller
 
         if( $this->container->get('security.context')->isGranted('ROLE_HEI_STAFF_ADMIN') )
         {
+            $repo = $this
+                ->getDoctrine()
+                ->getRepository('ProvipProvipBundle:StudyProgram');
+
+            $studyProgram = $repo->find($this->get('session')->get('spConfig'));
+
             $applications = $this->getDoctrine()
                 ->getRepository('ProvipUserBundle:User')
                 ->getApplicationByHei(
-                    $this->getUser()->getAdminOf()
+                    $studyProgram
                 );
+
+
 
             $internships = $this->getDoctrine()
                 ->getRepository('ProvipUserBundle:User')
                 ->getInternshipByHei(
-                    $this->getUser()->getAdminOf()
+                    $studyProgram
                 );
 
         }
@@ -267,11 +275,16 @@ class InternshipController extends Controller
         $application = $internship->getApplication();
         $student     = $internship->getStudent();
 
-        if($this->getUser()->getAdminOf() != $student->getEnrollment()->getStudyProgram() && $this->getUser()->getTeachesAt() != $application->getCoach())
+
+        foreach($this->getUser()->getAdminOf() as $sp)
         {
-            $this->get('session')->getFlashBag()->add('danger', 'You cannot access this internship.');
-            return $this->redirect($this->generateUrl('provip_application_hei_dashboard'));
+            if($sp != $student->getEnrollment()->getStudyProgram() && $this->getUser()->getTeachesAt() != $application->getCoach())
+            {
+                $this->get('session')->getFlashBag()->add('danger', 'You cannot access this internship.');
+                return $this->redirect($this->generateUrl('provip_application_hei_dashboard'));
+            }
         }
+
 
         if(!$internship->getCompleted())
         {
