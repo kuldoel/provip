@@ -32,6 +32,5 @@ UPGRADE.md
 .idea/*
 /web/media/*
 .DS_STORE
-static/*
 composer.phar
 composer.lock
