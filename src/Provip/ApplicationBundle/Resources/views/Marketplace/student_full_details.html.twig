@@ -1,0 +1,80 @@
+{% extends "ProvipApplicationBundle::base_company.html.twig" %}
+
+{% block main %}
+
+  <section id="content" class="bg-white">
+    <div class="page-title clearfix hidden-print">
+
+      <a class="btn btn-sm pull-right btn-primary" style="margin-left: 15px;" href="{{ path('provip_application_marketplace_companymarketplace') }}">&laquo; Back</a>
+      <button class="btn btn-sm pull-right" onclick="window.print();">Print</button>
+
+
+
+      {% if student.picture %}
+      <img class="img-circle img-profile" width="50" height="50" src="{{ student.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+      {% else %}
+      <img class="img-circle img-profile" width="50" height="50" src="{{ asset('bundles/provipapplication/images/default-user-icon-profile.png') }}" />
+      {% endif %}
+
+    </div>
+
+    <div class="padder clearfix" style="min-height: 25px;">
+
+    </div>
+
+    <div class="row">
+      <div class="col col-lg-12">
+        <h3>{{ student.getFullName }}</h3>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-lg-6">
+
+        <table class="table table-bordered">
+          <tr>
+            <td>Nationality</td>
+            <td>{{ student.nationality }}</td>
+          </tr>
+          <tr>
+            <td>University</td>
+            <td>{% if student.enrollment %}{{ student.enrollment.studyprogram.higherEducationalInstitution }}{% endif %}</td>
+          </tr>
+          <tr>
+            <td>Study programme</td>
+            <td>{% if student.enrollment %}{{ student.enrollment.studyprogram }}{% endif %}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+          </tr>
+            <tr>
+              <td>Skills</td>
+              <td>
+                {% for skill in student.enrollment.studyProgram.skills %}
+                  <span class="label bg-success">{{ skill.value }}</span>
+                {% endfor %}
+              </td>
+            </tr>
+            <tr>
+              <td>Primart language</td>
+              <td>{{ student.language }}</small></td>
+            </tr>
+            <tr>
+              <td>Other languages</td>
+              <td>
+                {% for language in student.supportedLanguages %}
+                  <span class="label bg-success">{{ language.valueAttr }}</span>
+                {% endfor %}
+              </td>
+            </tr>
+        </table>
+
+      </div>
+    </div>
+
+
+  </section>
+
+{% endblock %}

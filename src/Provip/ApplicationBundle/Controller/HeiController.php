@@ -252,7 +252,7 @@ class HeiController extends Controller
         $staff = $studyProgram->getStaff();
 
         $user = new User();
-        $form = $this->createForm(new NewStaffType(), $user);
+        $form = $this->createForm(new NewStaffType($studyProgram), $user);
 
         if ('POST' === $request->getMethod()) {
 
@@ -268,7 +268,6 @@ class HeiController extends Controller
                 $userManager = $this->get('fos_user.user_manager');
 
                 $user->addRole('ROLE_HEI_STAFF');
-                $user->setTeachesAt($studyProgram);
 
                 $userManager->updateUser($user);
 

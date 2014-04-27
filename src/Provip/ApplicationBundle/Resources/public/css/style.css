@@ -462,7 +462,7 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
   .nav-vertical > ul > li > a > i{display: block;font-size: 1.4em;margin:0 auto}
   .nav-vertical > ul > li > a{text-align: center;font-size: 12px;border-bottom: none}
 
-  #nav{position: relative;width: 150px;position: absolute;z-index:1000;left:0;top:50px;bottom: 0;border-right:1px solid #162636}
+  #nav{position: relative;width: 150px;position: absolute;z-index:1000;left:0;top:46px;bottom: 0;border-right:1px solid #162636}
   #nav.bg-light{border-color:#bfc7d0}
   #nav.nav-vertical {width: 90px}
   #nav.nav-vertical > ul {width: inherit}
@@ -650,4 +650,14 @@ ul.thumbnails {
 
 textarea {
     height: auto !important;
+}
+
+.img-profile {
+    border: solid 1px #d3d6d9;
+    position: absolute;
+    top: 35px;
+}
+
+.main {
+    background-color: #fff !important;
 }

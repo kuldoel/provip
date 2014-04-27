@@ -1,0 +1,127 @@
+{% extends "ProvipApplicationBundle::base_hei.html.twig" %}
+
+{% block main %}
+
+    <div class="padder clearfix" style="min-height: 15px">
+
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-8">
+            <div class="panel">
+                <header class="panel-heading">
+                    {{ opportunity }}
+                </header>
+                <div class="panel-content">
+                    <span class="kpi-title">Description</span>
+                    <p class="text-small">{{ opportunity.description }}</p>
+
+                    <span class="kpi-title">Internship date</span>
+                    <p class="text-small">{{ opportunity.startDate | date("d M Y") }} &mdash; {{ opportunity.endDate | date("d M Y") }}</p>
+
+                    <span class="kpi-title">Available positions for this internship</span>
+                    <p class="text-small">{{ opportunity.nbrOfPositions }}</p>
+
+                    <span class="kpi-title">Skills required</span>
+                    <p class="text-small">
+                        {% for skill in opportunity.skills %}
+                            {% if loop.index > 1 %}
+                                &mdash;
+                            {% endif %}
+                            {{ skill.value }}
+                        {% endfor %}
+                    </p>
+
+                    <span class="kpi-title">Selection procedure</span>
+                    <p class="text-small">{{ opportunity.selectionProcedure }}</p>
+
+                    <span class="kpi-title">How to contact?</span>
+                    <p class="text-small">{{ opportunity.communicationProtocol }}</p>
+
+                    <span class="kpi-title">Company Internship Goals</span>
+                    <ul class="text-small">
+                        {% for goal in opportunity.projectGoals %}
+                            <li><strong>{{ goal.description }}</strong>
+                                <ul class="text-small">
+                                    {% for task in goal.tasks  %}
+                                        <li>{{ task.title }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <span class="kpi-title">Contact person for this internship</span>
+                    <p class="text-small">
+                        <a class="btn btn-alt btn-white btn-small" href="#" data-html="true" data-placement="right" data-trigger="click" data-title="{{ opportunity.mentor }}" data-content="  <span class='kpi-title'>Email</span>
+                        {{ opportunity.mentor.email }} <br>
+                        <span class='kpi-title'>Phone</span>
+                        {{ opportunity.mentor.phone }}<br>
+                        <span class='kpi-title'>Job Description</span>
+                        {{ opportunity.mentor.jobDescription }} <br>
+                        <span class='kpi-title'>You can contact me for</span>
+                        {{ opportunity.mentor.responsibleFor }}" data-toggle="popover">{{ opportunity.mentor }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-lg-4">
+
+
+            <div class="panel">
+                <header class="panel-heading">
+                    About {{ opportunity.company }}
+                </header>
+                <div class="panel-content">
+                    <div class="media multi-padder">
+                                <span class="pull-left thumb-small">
+                                    {% if opportunity.company.picture %}
+                                        <img class="img-circle" width="150" height="150" src="{{ opportunity.company.picture.getWebPath | imagine_filter('thumbnail')  }}" />
+                                    {% else %}
+                                        <img class="img-circle" width="150" height="150" src="{{ asset('bundles/provipapplication/images/default-user-icon-company.png') }}" />
+                                    {% endif %}
+                                </span>
+
+                        <div class="media-body">
+                            <div><a href="#" class="h5">{{ opportunity.company }}</a></div>
+                            <small class="text-muted">{{ opportunity.company.country }} <br />
+                        </div>
+                    </div>
+
+                    <span class="kpi-title">Company Description</span>
+                    <p class="text-small">
+                        {{ opportunity.company.description }}
+                    </p>
+
+                    <span class="kpi-title">Sector</span>
+                    <p class="text-small">
+                        {{ opportunity.company.field }}
+                    </p>
+
+                    <span class="kpi-title">Homepage</span>
+                    <p class="text-small">
+                        <a href="{{ opportunity.company.url }}">{{ opportunity.company.url }}</a>
+                    </p>
+
+                    <span class="kpi-title">Primary Language</span>
+                    <p class="text-small">
+                        {% if opportunity.company.language %}
+                            {{ opportunity.company.language.valueAttr }}
+                        {% endif %}
+                    </p>
+
+                    <span class="kpi-title">Other languages</span>
+                    <p class="text-small">
+                        {% for language in opportunity.company.supportedLanguages %}
+                            {{ language.valueAttr }}
+                        {% endfor %}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

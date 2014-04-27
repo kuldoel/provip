@@ -44,12 +44,17 @@ class ApplicationType extends AbstractType
                     'query_builder' => function(EntityRepository $er) use ($student) {
 
                         return $er->createQueryBuilder('u')
+                            ->leftJoin('u.adminOf', 'ad')
                             ->where('u.teachesAt = ?1')
-                            ->orWhere('u.adminOf = ?2')
+                            ->orWhere('ad = ?2')
                             ->orderBy('u.firstName', 'ASC')
-                            ->setParameters(array('1' => $student->getEnrollment()->getStudyProgram(), '2' => $student->getEnrollment()->getStudyProgram()))
-                            ;
-                    },)
+                            ->setParameters(
+                                array(
+                                    '1' => $student->getEnrollment()->getStudyProgram(),
+                                    '2' => $student->getEnrollment()->getStudyProgram()
+                                )
+                            ) ;
+                    })
             )
         ;
     }

@@ -962,7 +962,6 @@ Date.now = Date.now || function() { return +new Date; };
           })
               .done(function(data) {
                   $('.activity-update-form').html(data);
-                  $('.selectpicker').selectpicker();
                   $('#new-activity-update').modal('show');
               })
               .always(function() { $('.loader').hide(); });
@@ -1004,7 +1003,6 @@ Date.now = Date.now || function() { return +new Date; };
           })
               .done(function(data) {
                   $('.company-update-form').html(data);
-                  $('.selectpicker').selectpicker();
                   $('#new-company-update').modal('show');
               })
               .always(function() { $('.loader').hide(); });
@@ -1047,7 +1045,6 @@ Date.now = Date.now || function() { return +new Date; };
           })
               .done(function(data) {
                   $('.hei-update-form').html(data);
-                  $('.selectpicker').selectpicker();
                   $('#new-hei-update').modal('show');
               })
               .always(function() { $('.loader').hide(); });

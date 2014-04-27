@@ -30,6 +30,15 @@ class MarketplaceController extends Controller
         return $this->render('ProvipApplicationBundle:Marketplace:company.html.twig',array('students' => $students));
     }
 
+
+    /**
+     * @Route("/company/marketplace/detail/{slug}")
+     */
+    public function companyMarketplaceDetailAction(User $student)
+    {
+        return $this->render('ProvipApplicationBundle:Marketplace:student_full_details.html.twig',array('student' => $student));
+    }
+
     /**
      * @Route("/student/marketplace")
      */
@@ -59,6 +68,26 @@ class MarketplaceController extends Controller
         if($opportunity->getPublished())
         {
             return $this->render('ProvipApplicationBundle:Marketplace:opportunity_detail.html.twig', array('opportunity' => $opportunity, 'application' => $application));
+        }
+        else
+        {
+            return new Response("",404);
+        }
+
+
+    }
+
+
+    /**
+     * @Route("/hei/marketplace/internship/{slug}", options={"expose"=true})
+     */
+    public function detailHeiAction(Opportunity $opportunity)
+    {
+
+
+        if($opportunity->getPublished())
+        {
+            return $this->render('ProvipApplicationBundle:Marketplace:opportunity_hei_detail.html.twig', array('opportunity' => $opportunity));
         }
         else
         {

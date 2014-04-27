@@ -164,9 +164,16 @@ class Enrollment
         return $this->deliverables;
     }
 
+    /**
+     * @return string
+     */
     function __toString()
     {
-       return $this->getStudent()->getFullName();
+       if($this->getStudent()) {
+           return $this->getStudent()->getFullName();
+       } else {
+           return '???';
+       }
     }
 
 

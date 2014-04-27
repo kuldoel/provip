@@ -50,35 +50,7 @@
 
                                 <div class="line pull-in"></div>
                                 <p>
-                                    <a rel="popover" data-content="
-                                    &lt;table class=&quot;table&quot;&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Skills&lt;/td&gt;
-        &lt;td&gt;
-        {% if student.enrollment %}
-            {% for skill in student.enrollment.studyProgram.skills %}
-
-                &lt;span class=&quot;label bg-success&quot;&gt;{{ skill.value }}&lt;/span&gt;
-            {% endfor %}
-        {% endif %}
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Language&lt;/small&gt;&lt;/td&gt;
-        &lt;td&gt;{{ student.language }}&lt;/small&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Other languages&lt;/td&gt;
-        &lt;td&gt;
-            {% for language in student.supportedLanguages %}
-                &lt;span class=&quot;label bg-success&quot;&gt;{{ language.valueAttr }}&lt;/span&gt;
-            {% endfor %}
-        &lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;
-                                    " data-html="true" data-student="{{ student.slug }}" data-placement="right" data-title="{{ student }}" class="btn btn-white btn-small">Details</a>
-
-
+                                   <a href="{{ path('provip_application_marketplace_companymarketplacedetail', {'slug': student.slug}) }}" class="btn btn-white btn-small">Details</a>
                                 </p>
 
 
