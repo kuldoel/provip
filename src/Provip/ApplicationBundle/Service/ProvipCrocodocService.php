@@ -57,9 +57,14 @@ class ProvipCrocodocService
         $allowedViewers = array(
             ($internship->getStudent()),
             ($internship->getApplication()->getCoach()),
-            ($internship->getApplication()->getOpportunity()->getMentor()),
-            ($internship->getStudent()->getEnrollment()->getStudyProgram()->getAdmin())
+            ($internship->getApplication()->getOpportunity()->getMentor())
         );
+
+        $admins = $internship->getStudent()->getEnrollment()->getStudyProgram()->getAdmins();
+
+        foreach($admins as $admin) {
+            $allowedViewers[] = $admin;
+        }
 
         if( ! in_array($user, $allowedViewers, true) ){
             throw new \LogicException('Unauthorized access');
