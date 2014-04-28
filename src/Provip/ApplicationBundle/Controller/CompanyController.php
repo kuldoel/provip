@@ -6,6 +6,7 @@ use Provip\EventsBundle\Entity\Picture;
 use Provip\ProvipBundle\Form\Type\CompanyProfileType;
 use Provip\UserBundle\Entity\User;
 use Provip\UserBundle\Form\Type\CompanyStaffProfileType;
+use Provip\UserBundle\Form\Type\NewCompanyStaffType;
 use Provip\UserBundle\Form\Type\NewStaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -156,7 +157,7 @@ class CompanyController extends Controller
         $staff = $this->getUser()->getCompany()->getStaff();
 
         $user = new User();
-        $form = $this->createForm(new NewStaffType(), $user);
+        $form = $this->createForm(new NewCompanyStaffType(), $user);
 
         if ('POST' === $request->getMethod()) {
 
