@@ -1,4 +1,4 @@
-html{background-color: #f5f6f7}
+html{background-color: #fff}
 body{background-color: transparent;color:#657483;font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial,sans-serif;position: relative;}
 body:before { content:'.'; display:block; height:0; clear:both; visibility:hidden; }
 a{color:#3a5a7a}
