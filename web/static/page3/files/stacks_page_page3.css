@@ -8,3 +8,18 @@
 	float:right;
 	width:49%;
 }
+#stacks_in_313_page3 .stacks_left {
+	float:left;
+	width:32%;
+}
+
+#stacks_in_313_page3 .stacks_right {
+	float:right;
+	width:32%;
+}
+
+#stacks_in_313_page3 .stacks_middle {
+	position:relative;
+	margin:0 auto;
+	width:32%;
+}

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://pathway.pw/index.html</loc>
+		<loc>https://pathway-internships.eu/index.html</loc>
 	</url>
 	<url>
-		<loc>https://pathway.pw/page1/index.html</loc>
+		<loc>https://pathway-internships.eu/page1/index.html</loc>
 	</url>
 	<url>
-		<loc>https://pathway.pw/page2/index.html</loc>
+		<loc>https://pathway-internships.eu/page2/index.html</loc>
 	</url>
 	<url>
-		<loc>https://pathway.pw/page3/index.html</loc>
+		<loc>https://pathway-internships.eu/page3/index.html</loc>
 	</url>
 	<url>
-		<loc>https://pathway.pw/page4/index.html</loc>
+		<loc>https://pathway-internships.eu/page5/index.html</loc>
+	</url>
+	<url>
+		<loc>https://pathway-internships.eu/page4/index.html</loc>
 	</url>
 </urlset>

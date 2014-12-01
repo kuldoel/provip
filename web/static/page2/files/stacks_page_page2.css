@@ -1,1 +1,16 @@
-/* empty */
+
+#stacks_in_279_page2 .stacks_left {
+	float:left;
+	width:32%;
+}
+
+#stacks_in_279_page2 .stacks_right {
+	float:right;
+	width:32%;
+}
+
+#stacks_in_279_page2 .stacks_middle {
+	position:relative;
+	margin:0 auto;
+	width:32%;
+}
